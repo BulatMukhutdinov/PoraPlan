@@ -1,6 +1,5 @@
 # Create your views here.
 
-
 from django.http import HttpResponse
 from django.template import loader
 from django.contrib.auth import authenticate, login
@@ -26,6 +25,17 @@ def index(request):
     #    return HttpResponse(template.render(context, request))
     #else:
     #    return redirect('/app/login')
+
+
+def sign_in(request):
+    template = loader.get_template('scripts/sign_in.html')
+    return HttpResponse(template.render(request))
+
+
+def sign_up(request):
+    template = loader.get_template('scripts/sign_up.html')
+    return HttpResponse(template.render(request))
+
 
 def user_exists(username):
     user_count = User.objects.filter(username=username).count()
