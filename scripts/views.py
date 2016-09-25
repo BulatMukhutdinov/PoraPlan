@@ -12,29 +12,34 @@ def root_index(request):
     return redirect('/app')
 
 
+def sign_up(request):
+    return render(request, 'scripts/sign_up.html')
+
+
+def error(request):
+    return render(request, 'scripts/error.html')
+
+
+def profile(request):
+    return render(request, 'scripts/profile.html')
+
+
+def sign_up_process(request):
+    post = request.POST
+    if not user_exists(post['email']):
+        user = create_user(username=post['email'], email=post['email'], password=post['password'])
+        return auth_and_login(request)
+    else:
+        return redirect("/app/error")
+
+
 def index(request):
     template = loader.get_template('scripts/startpage.html')
     return HttpResponse(template.render(request))
 
 
-    #template = loader.get_template('scripts/index.html')
-    #if request.user.is_authenticated():
-    #    context = {
-    #        'user':request.user
-    #    }
-    #    return HttpResponse(template.render(context, request))
-    #else:
-    #    return redirect('/app/login')
-
-
 def sign_in(request):
-    template = loader.get_template('scripts/sign_in.html')
-    return HttpResponse(template.render(request))
-
-
-def sign_up(request):
-    template = loader.get_template('scripts/sign_up.html')
-    return HttpResponse(template.render(request))
+    return render(request, 'scripts/sign_in.html')
 
 
 def user_exists(username):
@@ -44,15 +49,7 @@ def user_exists(username):
     return True
 
 
-def login2(request):
-    template = loader.get_template('scripts/login.html')
-    context = {
-
-    }
-    return HttpResponse(template.render(context, request))
-
-
-def auth_and_login(request, onsuccess='/', onfail='/login/'):
+def auth_and_login(request, onsuccess='/app/profile', onfail='/login/'):
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
@@ -68,13 +65,7 @@ def create_user(username, email, password):
     return user
 
 
-def sign_up_in(request):
-    post = request.POST
-    if not user_exists(post['email']):
-        user = create_user(username=post['email'], email=post['email'], password=post['password'])
-        return auth_and_login(request)
-    else:
-        return redirect("/login/")
+
 
 
 def detail(request, question_id):
