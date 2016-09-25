@@ -49,7 +49,7 @@ def user_exists(username):
     return True
 
 
-def auth_and_login(request, onsuccess='/app/profile', onfail='/login/'):
+def auth_and_login(request, onsuccess='/app/profile', onfail='/app/error/'):
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
