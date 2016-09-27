@@ -9,14 +9,18 @@ Function views
 Class-based views
     1. Add an import:  from other_app.views import Home
     2. Add a URL to urlpatterns:  url(r'^$', Home.as_view(), name='home')
-Including another URLconf
+Including another URLConf
     1. Import the include() function: from django.conf.urls import url, include
     2. Add a URL to urlpatterns:  url(r'^blog/', include('blog.urls'))
 """
-from django.conf.urls import url, include
+from django.conf.urls import include, url
 from django.contrib import admin
+from django.views.generic import RedirectView
 
 urlpatterns = [
     url(r'^account/', include('accounts.urls')),
+    url(r'^$', RedirectView.as_view(url='/app/')),
+    url(r'^app/', include('scripts.urls')),
     url(r'^admin/', admin.site.urls),
+
 ]
