@@ -57,7 +57,7 @@ ROOT_URLCONF = 'poraPlan.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': ['static/templates','C:\Server\Poraplan' ],
+        'DIRS': ['static/templates','C:/Server/Poraplan' ],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
