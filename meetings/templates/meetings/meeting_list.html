@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+
+    <h1>Meetings</h1>
+    <br/>
+
+    <a href="{% url 'agenda_list' %}">Agendas</a><br/><br/>
+
+    <a class="btn btn-info" href="{% url 'meeting_new' %}">Add new meeting</a>
+    <br/><br/>
+    <table class="table table-hover">
+        <thead>
+        <th>Name</th>
+        <th></th>
+        <th></th>
+        </thead>
+        <tbody>
+        {% for server in object_list %}
+            <tr>
+                <td>{{ server.name }} :</td>
+                <td><a href="{% url 'meeting_edit' server.id %}">edit</a></td>
+                <td><a href="{% url 'meeting_delete' server.id %}">delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

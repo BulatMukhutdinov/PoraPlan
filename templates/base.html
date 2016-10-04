@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html lang="en">
+{% block header %}
+    {% include "header.html" %}
+{% endblock %}
+
+<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
+    {% block content %}My Cool Website{% endblock %}
+</div>
+
+{% block footer %}
+    {% include "footer.html" %}
+{% endblock %}
+</html>
