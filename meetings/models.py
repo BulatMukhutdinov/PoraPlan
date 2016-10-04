@@ -4,11 +4,11 @@ from projects.models import Project
 
 
 class Agenda(models.Model):
-    date_time = models.DateTimeFieldField()
+    date_time = models.DateTimeField()
 
 
 class AgendaDetail(models.Model):
-    meeting = models.ManyToOneRel(Agenda, on_delete=models.CASCADE)
+    meeting = models.ForeignKey(Agenda, on_delete=models.CASCADE)
     topic = models.TextField()
     time_allocated = int
     priority = int
@@ -18,14 +18,14 @@ class AgendaDetail(models.Model):
 
 
 class AgendaAction(models.Model):
-    agenda_detail = models.ManyToOneRel(AgendaDetail, on_delete=models.CASCADE)
-    name = models.CharField(250)
+    agenda_detail = models.ForeignKey(AgendaDetail, on_delete=models.CASCADE)
+    name = models.CharField(max_length=250)
     deadline = models.DateField()
 
 
 class Meeting(models.Model):
-    project = models.ManyToOneRel(Project, on_delete=models.CASCADE)
+    project = models.ForeignKey(Project, on_delete=models.CASCADE)
     topic = models.CharField(max_length=250)
     date = models.DateTimeField()
-    agenda = models.OneToOneRel(Agenda, on_delete=None)
+    agenda = models.OneToOneField(Agenda, on_delete=None)
 
