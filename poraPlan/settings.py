@@ -80,6 +80,12 @@ WSGI_APPLICATION = 'poraPlan.wsgi.application'
 # https://docs.djangoproject.com/en/1.10/ref/settings/#databases
 
 DATABASES = {
+    # 'default': {
+    #     'ENGINE': 'django.db.backends.mysql',
+    #     'OPTIONS': {
+    #         'read_default_file': os.path.join(BASE_DIR, 'my.cnf'),
+    #     },
+    # }
     'default': {
         'ENGINE': 'django.db.backends.mysql',
         'OPTIONS': {
