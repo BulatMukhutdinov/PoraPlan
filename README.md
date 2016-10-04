@@ -48,7 +48,7 @@ This parts based on the different metrics and present in the visualise format fo
 - Draw charts based on metrics and surveys to analyze data
 
 ##Contact information
-Site: www.poraplan.pro
+Site: [www.poraplan.pro](poraplan.pro)
 
 E-mail: support@poraplan.pro
 
