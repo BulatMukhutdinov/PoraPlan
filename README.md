@@ -19,7 +19,7 @@ The whole functional consist from the three main parts.
 -	holding meetings
 -	analyze meetings
 
-##Planning meetings:
+###Planning meetings:
 This part based on different templates of agenda that might be customised to the user.
 The main parts are:
 - Create different teams for different projects
@@ -29,7 +29,7 @@ The main parts are:
   - Booking a meeting room
   - Fill the tasks to the meeting 
 
-##Holding meetings:
+###Holding meetings:
 This parts based on the different roles of the participants and provide a different interface to maximize the effectiveness of holding meetings.
 - Note-taker - provide the screen that shows the table with tasks for a meeting and special fields to enter information about meeting decision.
 - _Time-keeper_ - provide the screen that shows the agenda, planning time, and provide access to enters real time spent on the task.
@@ -37,7 +37,7 @@ This parts based on the different roles of the participants and provide a differ
 - _Participants_ - provide the screen view that shows agenda, time, summarized info) 
 - _Moderator_ - do not provide a special screen, the moderator might use collective screen view.
 
-##Analyze meetings:
+###Analyze meetings:
 This parts based on the different metrics and present in the visualise format for analysis.
 - Metrics connected with time tracking collected automatically
 - Possibility to add custom metrics and fill them
