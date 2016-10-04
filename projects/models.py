@@ -9,5 +9,5 @@ class ProjectStatus(models.Model):
 class Project(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField()
-    deadline = models.DateField()
-    status = models.ForeignKey(ProjectStatus, on_delete=None)
+    deadline = models.DateField(null=True)
+    status = models.ForeignKey(ProjectStatus, on_delete=None,null=True)
