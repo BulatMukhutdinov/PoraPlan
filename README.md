@@ -2,11 +2,11 @@
 Innopolis Fall 2016 Managing Software Development project
 
 ##Team
-- Bobrov Evgnii
-- Bobko Igor
-- Timur Fayzrakhmanov
-- Bulat Mukhutdinov
-- Vyacheslav Stepanov
+- Bobrov Evgnii [@EugeneBobrov](https://github.com/Eugenebobrov)
+- Bulat Mukhutdinov [@BulatMukhutdinov](https://github.com/BulatMukhutdinov)
+- Bobko Igor [@IBobko](https://github.com/IBobko)
+- Vyacheslav Stepanov [@sweb2020](https://github.com/sweb2020)
+- Timur Fayzrakhmanov [@timfayz](https://github.com/timfayz)
 
 ##Customer
 - Vasilii Artemev
@@ -22,8 +22,10 @@ The whole functional consist from the three main parts.
 The project developed based on the SCRUM methodology, that might be find on [YouTack](http://www.poraplan.pro:8081/dashboard)
 
 ##Contact information
-Site: (www.poraplan.pro)
-E-mail: (support@poraplan.pro)
+Site: www.poraplan.pro
+
+E-mail: support@poraplan.pro
+
 Address: Innopolis, Yniversitetskaya 1, cave room.
 
 
