@@ -10,7 +10,7 @@ class ProjectList(ListView):
 class ProjectCreate(CreateView):
     model = Project
     success_url = reverse_lazy('project_list')
-    fields = ['name', 'description']
+    fields = ['name', 'description','deadline']
 
 
 class ProjectUpdate(UpdateView):
