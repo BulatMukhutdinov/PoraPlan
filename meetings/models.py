@@ -4,7 +4,7 @@ from projects.models import Project
 
 
 class Agenda(models.Model):
-    date_time = models.DateTimeField()
+    date_time = models.DateTimeField(null=True)
 
 
 class AgendaDetail(models.Model):
@@ -25,7 +25,7 @@ class AgendaAction(models.Model):
 
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    topic = models.CharField(max_length=250)
-    date = models.DateTimeField()
-    agenda = models.OneToOneField(Agenda, on_delete=None)
+    topic = models.CharField(max_length=250,null=True)
+    date = models.DateTimeField(null=True)
+    agenda = models.OneToOneField(Agenda, on_delete=None,null=True)
 
