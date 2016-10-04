@@ -11,6 +11,9 @@ Innopolis Fall 2016 Managing Software Development project
 ##Customer
 - Vasilii Artemev
 
+##Process
+The project developed based on the SCRUM methodology, that might be find on [YouTack](http://www.poraplan.pro:8081/dashboard)
+
 ##Short Description
 __Poraplan.pro__ – it’s a software that help people to planning and holding meetings.
 The whole functional consist from the three main parts.
@@ -43,9 +46,6 @@ This parts based on the different metrics and present in the visualise format fo
 - Possibility to add custom metrics and fill them
 - Possibility to create survey
 - Draw charts based on metrics and surveys to analyze data
-
-##Process
-The project developed based on the SCRUM methodology, that might be find on [YouTack](http://www.poraplan.pro:8081/dashboard)
 
 ##Contact information
 Site: www.poraplan.pro
