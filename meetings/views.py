@@ -2,12 +2,13 @@ from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 from meetings.models import Meeting,Agenda
 from django.core.urlresolvers import reverse_lazy
 
-
+from django.contrib.auth.decorators import permission_required
 # Create your views here.
+#@permission_required('polls.can_vote')
 
 class MeetingList(ListView):
-    model = Meeting
 
+    model = Meeting
 
 class MeetingCreate(CreateView):
     model = Meeting
@@ -29,10 +30,11 @@ class MeetingDelete(DeleteView):
 class AgendaList(ListView):
     model = Agenda
 
+
 class AgendaCreate(CreateView):
     model = Agenda
     success_url = reverse_lazy('agenda_list')
-    fields = ['date_time']
+    fields = ['date_time','time_keeper','facilitator']
 
 class AgendaUpdate(UpdateView):
     model = Agenda

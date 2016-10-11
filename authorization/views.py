@@ -1,7 +1,6 @@
 # Create your views here.
 
 from django.http import HttpResponse
-from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.models import User
@@ -31,7 +30,6 @@ def sign_up_process(request):
 
 def sign_in(request):
     return render(request, 'sign_in.html')
-
 
 
 def user_exists(username):
