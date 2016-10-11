@@ -30,9 +30,11 @@
     <div id="navbar">
         <nav class="nav navbar-nav pull-xs-left">
             <a class="nav-item nav-link" href="/">Home</a>
-            <a class="nav-item nav-link" href="{% url 'project_list' %}">Projects</a>
-            <a class="nav-item nav-link" href="{% url 'meeting_list' %}">Meetings</a>
-            <a class="nav-item nav-link" href="#">Account</a>
+            {% if user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'project_list' %}">Projects</a>
+                <a class="nav-item nav-link" href="{% url 'meeting_list' %}">Meetings</a>
+                <a class="nav-item nav-link" href="#">Account</a>
+            {% endif %}
         </nav>
 
         {#        <form class="pull-xs-right">#}
@@ -40,8 +42,12 @@
         {#        </form>#}
 
         <nav class="nav navbar-nav pull-xs-right">
-            <a class="nav-item nav-link" href="/app/signup">Sign up</a>
-            <a class="nav-item nav-link" href="/app/signin">Sign in</a>
+            {% if not user.is_authenticated %}
+                <a class="nav-item nav-link" href="{% url 'sign_up' %}">Sign up</a>
+                <a class="nav-item nav-link" href="{% url 'sign_in' %}">Sign in</a>
+            {% else %}
+                <a class="nav-item nav-link" href="{% url 'log_out' %}">Log out</a>
+            {% endif %}
         </nav>
 
     </div>
