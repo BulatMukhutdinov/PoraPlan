@@ -1,10 +1,10 @@
 from django.conf.urls import url
-
+from django.contrib.auth.decorators import login_required
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.ProjectList.as_view(), name='project_list'),
-    url(r'new', views.ProjectCreate.as_view(), name='project_new'),
-    url(r'^edit/(?P<pk>\d+)$', views.ProjectUpdate.as_view(), name='project_edit'),
-    url(r'^delete/(?P<pk>\d+)$', views.ProjectDelete.as_view(), name='project_delete'),
+    url(r'^$', login_required(views.ProjectList.as_view()), name='project_list'),
+    url(r'^new', login_required(views.ProjectCreate.as_view()), name='project_new'),
+    url(r'^edit/(?P<pk>\d+)$', login_required(views.ProjectUpdate.as_view()), name='project_edit'),
+    url(r'^delete/(?P<pk>\d+)$', login_required(views.ProjectDelete.as_view()), name='project_delete'),
 ]

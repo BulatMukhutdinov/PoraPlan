@@ -29,6 +29,8 @@ def sign_up_process(request):
 
 
 def sign_in(request):
+    if 'next' in request.GET:
+        request.next_page = request.GET['next']
     return render(request, 'sign_in.html')
 
 
@@ -39,12 +41,14 @@ def user_exists(username):
     return True
 
 
-def auth_and_login(request, onsuccess='/', onfail='/error/'):
+def auth_and_login(request, onsuccess='/', onfail='sign_in'):
+    next_page = request.POST['next']
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
-        return redirect(onsuccess)
+        return redirect(next_page)
     else:
+        request.session['login_message'] = 'Enter the username and password correctly'
         return redirect(onfail)
 
 
