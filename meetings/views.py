@@ -34,7 +34,7 @@ class AgendaList(ListView):
 class AgendaCreate(CreateView):
     model = Agenda
     success_url = reverse_lazy('agenda_list')
-    fields = ['date_time']
+    fields = ['date_time','time_keeper','facilitator']
 
 class AgendaUpdate(UpdateView):
     model = Agenda
