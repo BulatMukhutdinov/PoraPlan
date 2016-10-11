@@ -10,7 +10,7 @@ class MeetingType(models.Model):
 
 
 class MeetingRoles(models.Model):
-    type = models.ForeignKey(MeetingType, on_delete=models.PROTECT)
+    type = models.ForeignKey(MeetingType, on_delete=models.PROTECT,null=True)
     name = models.CharField(max_length=25)
 
 
@@ -18,21 +18,21 @@ class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     topic = models.CharField(max_length=250,null=True)
     date = models.DateTimeField(null=True)
-    meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT)
+    meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT,null=True)
 
 
-class MeetingPatricipators(models.Model):
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
+class MeetingParticipators(models.Model):
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE,null=True)
     participator = models.ForeignKey(TeamMembers, on_delete=models.PROTECT)
     role = models.ForeignKey(MeetingRoles, on_delete=models.PROTECT)
     rate = int
 
 
 class Agenda(models.Model):
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE,null=True)
     date_time = models.DateTimeField(null=True)
-    time_keeper = models.ForeignKey(MeetingPatricipators,related_name='time_keeper_user_profile',on_delete=models.PROTECT,null=True)
-    facilitator = models.ForeignKey(MeetingPatricipators,related_name='facilitator_user_profile',on_delete=models.PROTECT,null=True)
+    time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile', on_delete=models.PROTECT, null=True)
+    facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile', on_delete=models.PROTECT, null=True)
     created_by = models.ForeignKey(UserProfile,on_delete=models.PROTECT,null=True)
 
 
@@ -44,13 +44,13 @@ class AgendaDetail(models.Model):
     summary = models.TextField(null=True)
     conclusion = models.TextField(null=True)
     solution = models.TextField(null=True)
-    presenter = models.ForeignKey(MeetingPatricipators,on_delete=models.PROTECT)
+    presenter = models.ForeignKey(MeetingParticipators, on_delete=models.PROTECT, null=True)
 
 
 class AgendaAction(models.Model):
     agenda_detail = models.ForeignKey(AgendaDetail, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
-    responsible = models.ForeignKey(MeetingPatricipators,on_delete=models.PROTECT)
+    responsible = models.ForeignKey(MeetingParticipators, on_delete=models.PROTECT, null=True)
     deadline = models.DateField()
 
 

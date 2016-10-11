@@ -10,8 +10,7 @@ from django.contrib.auth.models import User
 class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
     homepage = models.URLField()
-    first_name = models.CharField(max_length=25)
-    last_name = models.CharField(max_length=25)
+
 def assure_user_profile_exists(pk):
     """
     Creates a user profile if a User exists, but the

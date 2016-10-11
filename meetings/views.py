@@ -5,7 +5,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.contrib.auth.decorators import permission_required
 
 # Create your views here.
-#@permission_required('polls.can_vote')
+@permission_required('polls.can_vote')
 class MeetingList(ListView):
     def get_context_data(self, **kwargs):
         context = super(MeetingList, self).get_context_data(**kwargs)
