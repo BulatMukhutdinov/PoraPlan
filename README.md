@@ -2,7 +2,7 @@
 Innopolis Fall 2016 Managing Software Development project
 
 ##Team
-- Bobrov Evgnii [@EugeneBobrov](https://github.com/Eugenebobrov)
+- Bobrov Evgnii [@EugeneBobrov](https://github.com/Eugenebobrov) (SCRUM master)
 - Bulat Mukhutdinov [@BulatMukhutdinov](https://github.com/BulatMukhutdinov)
 - Bobko Igor [@IBobko](https://github.com/IBobko)
 - Vyacheslav Stepanov [@sweb2020](https://github.com/sweb2020)
