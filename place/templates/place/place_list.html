@@ -1,0 +1,37 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <h1>List places</h1>
+    <br/>
+    <a class="btn btn-info" href="{% url 'place_new' %}">Add new place</a>
+    <br/><br/>
+    <table class="table table-hover">
+        <thead>
+        <th>ID</th>
+        <th>Room</th>
+        <th>White/black board</th>
+        <th>Projector</th>
+        <th>Participants</th>
+        <th>Start date</th>
+        <th>Duration</th>
+        <th>Action</th>
+        </thead>
+        <tbody>
+        {% for server in object_list %}
+            <tr>
+              <td>{{ server.id }}. </td>
+              <td>{{ server.room_number }}</td>
+              <td>{% if server.white_board %} available {% else %} none {% endif %}/
+                {% if server.black_board %} available {% else %} none {% endif %}</td>
+              <td>{% if server.projector %} available {% else %} none {% endif %}</td>
+              <td>{{ server.num_of_persons }}</td>
+              <td>{{ server.duration }}</td>
+              <td>{{ server.start_date }}</td>
+              <td><a href="{% url 'place_edit' server.id %}">edit</a> /
+              <a href="{% url 'place_delete' server.id %}">delete</a></td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
