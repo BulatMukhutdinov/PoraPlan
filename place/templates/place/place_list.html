@@ -13,8 +13,8 @@
         <th>White/black board</th>
         <th>Projector</th>
         <th>Participants</th>
-        <th>Start date</th>
         <th>Duration</th>
+        <th>Start date</th>
         <th>Action</th>
         </thead>
         <tbody>
@@ -26,7 +26,7 @@
                 {% if server.black_board %} available {% else %} none {% endif %}</td>
               <td>{% if server.projector %} available {% else %} none {% endif %}</td>
               <td>{{ server.num_of_persons }}</td>
-              <td>{{ server.duration }}</td>
+              <td>{{ server.duration }}m</td>
               <td>{{ server.start_date }}</td>
               <td><a href="{% url 'place_edit' server.id %}">edit</a> /
               <a href="{% url 'place_delete' server.id %}">delete</a></td>
