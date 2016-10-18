@@ -1,10 +1,10 @@
 {% extends "base.html" %}
-
+{% block page-header %}
+    <div class="page-header">
+        <h1>Meetings</h1>
+    </div>
+{% endblock %}
 {% block content %}
-
-
-    <h1>Meetings</h1>
-    <br/>
 
     <a href="{% url 'agenda_list' %}">Agendas</a><br/><br/>
 

@@ -1,8 +1,10 @@
 {% extends "base.html" %}
-
+{% block page-header %}
+    <div class="page-header">
+        <h1>Agenda</h1>
+    </div>
+{% endblock %}
 {% block content %}
-    <h1>Agenda</h1>
-    <br/>
     <form method="post">{% csrf_token %}
         {{ form.as_p }}
         <input type="submit" value="Submit"/>

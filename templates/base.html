@@ -4,8 +4,16 @@
     {% include "header.html" %}
 {% endblock %}
 
-<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-    {% block content %}My Cool Website{% endblock %}
+
+<div class="container">
+    {% block page-header %}
+        <div class="page-header">
+            <h1>It is time to plan!</h1>
+        </div>
+    {% endblock %}
+    <p class="lead">
+        {% block content %}
+        {% endblock %}
 </div>
 
 {% block footer %}
