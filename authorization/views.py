@@ -22,7 +22,7 @@ def profile(request):
 def sign_up_process(request):
     post = request.POST
     if not user_exists(post['email']):
-        user = create_user(username=post['email'], email=post['email'], password=post['password'])
+        create_user(username=post['email'], email=post['email'], password=post['password'])
         return auth_and_login(request)
     else:
         return redirect("/error")
@@ -42,7 +42,9 @@ def user_exists(username):
 
 
 def auth_and_login(request, onsuccess='/', onfail='sign_in'):
-    next_page = request.POST['next']
+    next_page = onsuccess
+    if 'next' in request.GET:
+        next_page = request.POST['next']
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
