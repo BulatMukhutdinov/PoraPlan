@@ -20,8 +20,8 @@ class ProjectStatus(models.Model):
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
-    description = models.TextField()
+    description = models.TextField(null=True)
     deadline = models.DateField(null=True)
-    team_members =models.ManyToManyField(TeamMembers)
-    team_users = models.ManyToManyField(User)
+    team_members =models.ManyToManyField(TeamMembers,null=True)
+    team_users = models.ManyToManyField(User,null=True)
     status = models.ForeignKey(ProjectStatus, on_delete=models.PROTECT,null=True)
