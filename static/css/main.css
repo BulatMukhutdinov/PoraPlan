@@ -1,0 +1,13 @@
+body {
+  font-family: 'Exo 2', sans-serif;
+}
+
+.pdd-t-xs {padding-top:   20px;}
+.pdd-l-xs {padding-left:  20px;}
+.pdd-r-xs {padding-right: 20px;}
+.pdd-b-xs {padding-bottom:20px;}
+
+.pdd-t-s {padding-top:   40px;}
+.pdd-l-s {padding-left:  40px;}
+.pdd-r-s {padding-right: 40px;}
+.pdd-b-s {padding-bottom:40px;}
