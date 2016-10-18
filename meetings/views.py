@@ -10,13 +10,13 @@ class MeetingList(ListView):
 class MeetingCreate(CreateView):
     model = Meeting
     success_url = reverse_lazy('meeting_list')
-    fields = ['topic', 'project', 'date', 'agenda']
+    fields = ['topic', 'project', 'date']
 
 
 class MettingUpdate(UpdateView):
     model = Meeting
     success_url = reverse_lazy('meeting_list')
-    fields = ['topic', 'project', 'date', 'agenda']
+    fields = ['topic', 'project', 'date']
 
 
 class MeetingDelete(DeleteView):
