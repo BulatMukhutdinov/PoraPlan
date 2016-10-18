@@ -30,12 +30,10 @@
     <a class="navbar-brand" href="#">Poraplan</a>
     <div id="navbar">
         <nav class="nav navbar-nav pull-xs-left">
-            {% if user.is_authenticated %}
-                <a class="nav-item nav-link" href="/">Home</a>
-                <a class="nav-item nav-link" href="{% url 'project_list' %}">Projects</a>
-                <a class="nav-item nav-link" href="{% url 'meeting_list' %}">Meetings</a>
-                <a class="nav-item nav-link" href="#">Account</a>
-            {% endif %}
+            <a class="nav-item nav-link" href="/">Home</a>
+            <a class="nav-item nav-link" href="{% url 'project_list' %}">Projects</a>
+            <a class="nav-item nav-link" href="{% url 'meeting_list' %}">Meetings</a>
+            <a class="nav-item nav-link" href="#">Account</a>
         </nav>
 
         {#        <form class="pull-xs-right">#}
