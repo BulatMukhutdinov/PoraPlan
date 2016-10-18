@@ -4,17 +4,9 @@
     {% include "header.html" %}
 {% endblock %}
 
-
 <div class="container">
-    {% block page-header %}
-        <div class="page-header">
-            <h1>It is time to plan!</h1>
-        </div>
-    {% endblock %}
-    <p class="lead">
-        {% block content %}
-        {% endblock %}
-</div>
+    {% block page-header %} {% endblock %}
+        {% block content %} {% endblock %}
 
 {% block footer %}
     {% include "footer.html" %}
