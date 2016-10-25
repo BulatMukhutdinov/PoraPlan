@@ -1,0 +1,225 @@
+// _set-type.scss adds the most commonly used sets for basic page layout.
+// Customize it yourself.
+
+$s: (); // temp sets storage
+
+// Define Basic Variables
+// --------------------------------------------------
+// Set calc-line() baseline relative to line-height
+$calc-line-baseline: $_line-height;
+$calc-line-threshold: 100%;
+// Spacing variables
+$sz-default:  def   calc-line(1);
+$sz-xxlg:     xxlg      calc-line(7);
+$sz-xlg:      xlg       calc-line(5);
+$sz-lg:       lg        calc-line(4);
+$sz-md:       md        calc-line(3);
+$sz-sm:       sm        calc-line(2);
+$sz-xsm:      xsm       calc-line(0.5);
+$sz-xxsm:     xxsm      calc-line(0.25);
+
+// Define Sets
+// --------------------------------------------------
+// Top, Right, Bottom, Left
+$trbl-set: (
+  0, 0,
+  auto, auto,
+  nth($sz-default, 1), nth($sz-default, 2),
+  nth($sz-xxlg, 1), nth($sz-xxlg, 2),
+  nth($sz-xlg, 1), nth($sz-xlg, 2),
+  nth($sz-lg, 1), nth($sz-lg, 2),
+  nth($sz-md, 1), nth($sz-md, 2),
+  nth($sz-sm, 1), nth($sz-sm, 2),
+  nth($sz-xsm, 1), nth($sz-xsm, 2),
+  nth($sz-xxsm, 1), nth($sz-xxsm, 2),
+);
+$s: add($s, top, $Top, $trbl-set);
+$s: add($s, right, $Right, $trbl-set);
+$s: add($s, bottom, $Bottom, $trbl-set);
+$s: add($s, left, $Left, $trbl-set);
+
+// Margin
+$margin-set: (
+  0, 0,
+  auto, auto,
+  nth($sz-default, 1), nth($sz-default, 2),
+  nth($sz-xxlg, 1), nth($sz-xxlg, 2),
+  nth($sz-xlg, 1), nth($sz-xlg, 2),
+  nth($sz-lg, 1), nth($sz-lg, 2),
+  nth($sz-md, 1), nth($sz-md, 2),
+  nth($sz-sm, 1), nth($sz-sm, 2),
+  nth($sz-xsm, 1), nth($sz-xsm, 2),
+  nth($sz-xxsm, 1), nth($sz-xxsm, 2),
+);
+$s: add($s, margin, $Margin, $margin-set);
+$s: add($s, margin-top, $Margin-top, $margin-set);
+$s: add($s, margin-right, $Margin-right, $margin-set);
+$s: add($s, margin-bottom, $Margin-bottom, $margin-set);
+$s: add($s, margin-left, $Margin-left, $margin-set);
+
+// Padding
+$padding-set: (
+  0, 0,
+  nth($sz-default, 1), nth($sz-default, 2),
+  nth($sz-xxlg, 1), nth($sz-xxlg, 2),
+  nth($sz-xlg, 1), nth($sz-xlg, 2),
+  nth($sz-lg, 1), nth($sz-lg, 2),
+  nth($sz-md, 1), nth($sz-md, 2),
+  nth($sz-sm, 1), nth($sz-sm, 2),
+  nth($sz-xsm, 1), nth($sz-xsm, 2),
+  nth($sz-xxsm, 1), nth($sz-xxsm, 2),
+);
+$s: add($s, padding, $Padding, $padding-set);
+$s: add($s, padding-top, $Padding-top, $padding-set);
+$s: add($s, padding-right, $Padding-right, $padding-set);
+$s: add($s, padding-bottom, $Padding-bottom, $padding-set);
+$s: add($s, padding-left, $Padding-left, $padding-set);
+
+// Height, Width
+$width-height-set: (
+  default: (
+    0, 0,
+    100, 100%,
+    auto, auto,
+    nth($sz-default, 1), nth($sz-default, 2),
+    nth($sz-xxlg, 1), nth($sz-xxlg, 2),
+    nth($sz-xlg, 1), nth($sz-xlg, 2),
+    nth($sz-lg, 1), nth($sz-lg, 2),
+    nth($sz-md, 1), nth($sz-md, 2),
+    nth($sz-sm, 1), nth($sz-sm, 2),
+    nth($sz-xsm, 1), nth($sz-xsm, 2),
+    nth($sz-xxsm, 1), nth($sz-xxsm, 2),
+  ),
+  media: all (prefix,
+    100, 100%,
+    auto, auto,
+  ),
+);
+$s: add($s, height, $Height, $width-height-set);
+$s: add($s, width, $Width, $width-height-set);
+
+// Position
+$s: add($s, position, $Position, (
+  all: (prefix,
+    fixed, fixed,
+    relative, relative,
+    absolute, absolute,
+  ),
+));
+
+// Z-index
+$s: add($s, z-index, $Z-index, (
+  1000, 1000,
+  100, 100,
+  50, 50,
+  25, 25,
+  5, 5,
+  0, 0,
+  n1, -1,
+));
+
+// Display
+$s: add($s, display, $Display, (
+  all: (prefix,
+    none, none,
+    block, block,
+    inline, inline,
+    inline-block, inline-block,
+    flex, flex,
+  ),
+));
+
+// Floats
+$s: add($s, $Float, float, (
+  left, left,
+  right, right,
+  none, none,
+));
+
+// Visibility
+$s: add($s, $Visibility, visibility, (
+  all: (prefix,
+    visible, visible,
+    hidden, hidden,
+  ),
+));
+
+// Opacity
+$s: add($s, $Opacity, opacity, (
+  0, 0,
+  1, 1,
+));
+
+// Overflow
+$overflow-set: (
+  auto, auto,
+  hidden, hidden,
+);
+$s: add($s, overflow, $Overflow, $overflow-set);
+$s: add($s, overflow-x, $Overflow-x, $overflow-set);
+$s: add($s, overflow-y, $Overflow-y, $overflow-set);
+
+// Vertical-Align
+$s: add($s, vertical-align, $Vertical-align, (
+  top, top,
+  middle, middle,
+  bottom, bottom,
+));
+
+// Flex
+$s: add($s, flex, $Flex, (
+  1, 1,
+  2, 2,
+  3, 3,
+  4, 4,
+));
+
+// Order
+$s: add($s, order, $Order, (
+  1, 1,
+  2, 2,
+  3, 3,
+  4, 4,
+));
+
+// Justify-content
+$s: add($s, justify-content, $Justify-content, (
+  start, flex-start,
+  end, flex-end,
+  center, center,
+  between, space-between,
+));
+
+// Align-content
+$align-set: (
+  start, flex-start,
+  end, flex-end,
+  stretch, stretch,
+  center, center,
+  between, space-between,
+);
+$s: add($s, align-content, $Align-content, $align-set);
+$s: add($s, align-items, $Align-items, $align-set);
+$s: add($s, align-self, $Align-self, $align-set);
+
+// Flex-direction
+//$s: add($s, flex-direction, null, (
+//  all: (prefix,
+//    row, row,
+//    row-reverse, row-reverse,
+//    column, column,
+//    column-reverse, column-reverse,
+//    nowrap, nowrap
+//  )
+//));
+
+// Cursor
+$s: add($s, cursor, $Cursor, (
+  default, default,
+  pointer, pointer,
+));
+
+// Render Styles
+// --------------------------------------------------
+// render all stored sets
+@include sets($s, $media);
