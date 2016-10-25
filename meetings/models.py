@@ -19,8 +19,8 @@ class MeetingRoles(models.Model):
 
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    name = models.CharField(max_length=250, null=True)
-    date = models.DateTimeField(null=True)
+    name = models.CharField(max_length=250, null=False)
+    date = models.CharField(max_length=100, null=True)
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
 
 
