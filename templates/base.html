@@ -1,16 +1,14 @@
-{% include "top.html" %}
+<!DOCTYPE html>
+<html lang="en" class="gr__getbootstrap_com">
 {% block header %}
     {% include "header.html" %}
 {% endblock %}
 
-<br>
-<br>
-
 <div class="container">
     {% block page-header %} {% endblock %}
-        {% block content %} {% endblock %}
+    {% block content %} {% endblock %}
 
-{% block footer %}
-    {% include "footer.html" %}
-{% endblock %}
-{% include "bottom.html" %}
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}
+</html>

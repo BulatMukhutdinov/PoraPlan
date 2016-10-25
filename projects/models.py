@@ -24,3 +24,6 @@ class Project(models.Model):
     deadline = models.DateField(null=True)
     team_members = models.ManyToManyField(TeamMembers)
     status = models.ForeignKey(ProjectStatus, on_delete=models.PROTECT, null=True)
+
+    def __str__(self):
+        return self.name

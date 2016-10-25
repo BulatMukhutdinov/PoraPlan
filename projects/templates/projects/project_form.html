@@ -9,10 +9,10 @@
 {% block content %}
 
     <script>
-    function t(v) {
-       // $('#members tbody').append($(v).html());
-        $('#id_team_members').append("<option selected value='" + $(v).html() + "'>" + $(v).html() + "</option>");
-    }
+        function t(v) {
+            // $('#members tbody').append($(v).html());
+            $('#id_team_members').append("<option selected value='" + $(v).html() + "'>" + $(v).html() + "</option>");
+        }
     </script>
 
     <!-- Modal -->
@@ -62,14 +62,14 @@
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">
                         Users
                     </button>
-{{ form.form.team_members.errors }}{{ form.team_members }}
-{#                    <table class="table" id="members">#}
-{#                        <tbody>#}
-{#                        <tr>#}
-{##}
-{#                        </tr>#}
-{#                        </tbody>#}
-{#                    </table>#}
+                    {{ form.form.team_members.errors }}{{ form.team_members }}
+                    {#                    <table class="table" id="members">#}
+                    {#                        <tbody>#}
+                    {#                        <tr>#}
+                    {##}
+                    {#                        </tr>#}
+                    {#                        </tbody>#}
+                    {#                    </table>#}
 
                 </td>
             </tr>
