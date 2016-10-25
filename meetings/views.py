@@ -22,6 +22,10 @@ class MeetingCreate(TemplateView):
         context['projects'] = Project.objects.all()
         return context
 
+    def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        return super(TemplateView, self).render_to_response(context)
+
 
 class MeetingUpdate(UpdateView):
     model = Meeting
