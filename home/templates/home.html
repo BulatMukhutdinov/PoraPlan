@@ -1,9 +1,9 @@
-{% extends "base.html" %}
+{% include "top.html" %}
 {% block header %}
-    {{ block.super }}
     <div class="container">
       <h1 class="pdd-t">PoraPlan.pro</h1>
-      Innopolis Fall 2016 Managing Software Development project
+      Innopolis Fall 2016 Managing Software Development project<br>
+      <a href="/authorization/sign_in">Sign in</a>
 
       <h2 class="pdd-t-xs">Team</h2>
 
@@ -72,4 +72,7 @@
 
         Address: Innopolis, Yniversitetskaya 1, cave room.<br>
     </div>
+    <br>
+    <br>
 {% endblock %}
+{% include "bottom.html" %}
