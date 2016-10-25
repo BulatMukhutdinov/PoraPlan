@@ -1,0 +1,305 @@
+// _css-utils.scss provide the most common css utils like clearfix, bulletproof font-face etc.
+
+// clearfix
+// is a way to prevent the zero-height container problem for floated elements.
+// Apply it on elements containing the only floated elements within.
+@mixin clearfix() {
+  &::after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+// font-face
+// generate bulletproof @font-face rule for your custom fonts. You can generate fonts
+// here: fontsquirrel.com/tools/webfont-generator.
+//    fonts/my-font.eot
+//    fonts/my-font.ttf
+//    fonts/my-font.woff
+//    fonts/my-font.woff2
+//    fonts/my-font.svg
+//    styles/main.scss:
+//      ...
+//      @include font-face(myFont, "../fonts/my-font", eot ttf woff woff2 svg);
+@mixin font-face($font-family, $font-path, $formats:null, $font-weight:normal, $font-style:normal, $svg-font-name:null, $version:null) {
+  $src: ();
+  // append query param to font path it's useful if we
+  // update the font and want to reset browser cache as well
+  $query: if($version,'?v=#{$version}', null);
+  $add-query: if($version,'&v=#{$version}', null);
+  @font-face {
+    font-family: $font-family;
+    font-weight: $font-weight;
+    font-style: $font-style;
+
+    // aggregate each font format separately
+    @if index($formats, eot) {
+      $src: append($src,
+        unquote("url('#{$font-path}.eot#{$query}'); src: url('#{$font-path}.eot?#iefix#{$add-query}') format('embedded-opentype')"), comma);
+    }
+    @if index($formats, woff2) {
+      $src: append($src, unquote("url('#{$font-path}.woff2') format('woff2')"), comma);
+    }
+    @if index($formats, woff) {
+      $src: append($src, unquote("url('#{$font-path}.woff') format('woff')"), comma);
+    }
+    @if index($formats, ttf) {
+      $src: append($src, unquote("url('#{$font-path}.ttf') format('truetype')"), comma);
+    }
+    @if index($formats, svg) {
+      $svg-font-name: if($svg-font-name, $svg-font-name, $font-family);
+      $src: append($src, unquote("url('#{$font-path}.svg#{$query}##{$svg-font-name}') format('svg')"), comma);
+    }
+
+    // render
+    src: $src;
+  }
+}
+
+// media
+// renders a content blocks under associated query string.
+// $map is a map where key is name of query and value is the query string
+// itself. If $map is presented, $key must be actual key. If there is no pair
+// corresponding to $key function outputs nothing. If $map is null, $key must
+// be a query string itself.
+// If you type CSS unit before the map (as in the example below) or after a
+// query string, function automatically retrieve the numbers and converts them
+// according to specified unit.
+//    $queries: rem (
+//       tablet:   '@media screen and (max-width: 740px)',
+//       mobile:   '@media screen and (max-width: 480px)',
+//       touch:    '.touch',
+//    );
+//    @include media(mobile, $queries) { .test {color: white;} }
+//    or
+//    @include media('@media screen and (max-width: 480px)' rem) { .test {color: white;} }
+//    result of both is the same:
+//    @media screen and (max-width: 30rem) { .test {color: white;} }
+@mixin media($key, $map:null) {
+  // `root` query name is exception, just pass through
+  @if $key == root {
+    @content;
+  } @else {
+    $query: null;
+    $params: null;
+    // if $map is presented, get query string from associated $key
+    @if $map {
+      // split map from unit params
+      @if length($map) == 2 and type-of(nth($map, 2)) == map {
+        $params: nth($map, 1);
+        $query: map-get(nth($map, 2), $key);
+      } @else {
+        $query: map-get($map, $key);
+      }
+    }
+    // else use $key as actual query string
+    @else {
+      $query: $key;
+    }
+
+    @if $query {
+      @if length($query) == 2 {
+        $params: nth($query, 2);
+        $query: nth($query, 1);
+      }
+      @if has-prefix($query, '@media') {
+        $query: trim-left($query, '@media ');
+        @if $params != null {
+          $nums: get-numbers($query);
+          $unit: nth($params, 1);
+          $parent: if(length($params) == 2, nth($params, 2), 16);
+          $res: ();
+          @each $num in $nums {
+            $res: append($res, convert-length($num, $unit, $parent));
+          }
+          $query: str-replace($query, $nums, $res);
+        }
+        @media #{$query} {
+          @content;
+        }
+      } @else {
+        #{$query} {
+          @content;
+        }
+      }
+    }
+    // else output nothing
+  }
+}
+
+// container
+// generates ._container class(es) for centering content within. $data can be
+// (1) width for root container, or (2) - if $query-map is presented - param map
+// where key = query name, value = width of container under this query.
+// 1. @include container(960px); ->
+//    ...
+//    ._container {width: 960px}
+//
+// 2. $devices: (mobile: '@media (max-width: 480px)', ...);
+//    @include container((root: 960px, mobile: 100%), $devices); ->
+//    ...
+//    ._container {width: 960px}
+//    @media (max-width: 480px) {._container, .mobile_container {width: 100%;}}
+@mixin container($data, $query-map:()) {
+  // prepare query map and query name list
+  $q-map: if(length($query-map) == 2 and type-of(nth($query-map, 2)) == map,
+  nth($query-map, 2), $query-map);
+  $q-names: if($q-map, map-keys($q-map), ());
+
+  $db:();
+  @if type-of($data) == map {
+    @each $key, $param in $data {
+      // all:
+      @if $key == all {
+        // if root isn't specified explicitly
+        @if index($q-names, root) == null {
+          $db: map-merge($db, (root:$param));
+        }
+        // go through all available queries
+        @each $q in $q-names {
+          $db: map-merge($db, ($q:$param));
+        }
+      }
+      // query*:
+      @else if has-prefix($key, 'query') {
+        $subq: nth($param, 1); // names after (query: (names) (...))
+        $param: unwrap(slice($param, 2));
+        // all queries, except root
+        @if $subq == all {
+          @each $q in remove($q-names, root) {
+            @if map-get($q-map, $q) { $db: map-merge($db, ($q:$param)); }
+          }
+        }
+        // explicitly specified
+        @else {
+          @each $q in $subq {
+            @if map-get($q-map, $q) { $db: map-merge($db, ($q:$param)); }
+          }
+        }
+      }
+      // root/others:
+      @else {
+        $db: map-merge($db, ($key:$param));
+      }
+    }
+  }
+  // $data is root parameter then
+  @else {
+    $db: (root: $data);
+  }
+
+  // init class container
+  ._container {
+    position: relative;
+    margin-left: auto;
+    margin-right: auto;
+  }
+  // generate query containers
+  @each $q-name, $param in $db {
+    @include media($q-name, $query-map) {
+      @if $q-name == root {
+        ._container { width: $param; }
+      } @else {
+        ._container, .#{$q-name}_container { width: $param; }
+      }
+    }
+  }
+}
+
+// ruler
+// generates ruler to check vertical/horizontal rhythm of page layout. 1st argument
+// should be your document's base line-height in px, pt or rem. Intended to be applied
+// on the whole page (eg body).
+//    rem example: body { font-size: 16px; line-height: 1.375; } 1.375*16 = 22px
+//    px example: body { font-size: 16px; line-height: 22px; } nothing to calc
+//    body::after {
+//      @include ruler(22px, red);
+//    }
+@mixin ruler($line-height: 16px, $color: rgba(0,0,0,0.2), $z-index: null, $type: horizontal) {
+  $a: null;
+  $b: $line-height;
+  @if unit($line-height) == px {
+    $a: $line-height - 1;
+  } @else if unit($line-height) == rem or unit($line-height) == em {
+    $a: $line-height - convert-length(1px, rem);
+  } @else if unit($line-height) == pt {
+    $a: $line-height - convert-length(1px, pt);
+  }
+  @if $a == null { @error "@mixin ruler(): 1st argument must be in px, rem or pt"; }
+  content: " ";
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  top:0;
+  left: 0;
+  @if $type == horizontal {
+    background-image: -moz-linear-gradient(top, rgba(0,0,0,0) $a, $color $b);
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop($a, rgba(0,0,0,0)), color-stop($b, $color));
+    background-image: -webkit-linear-gradient(top, rgba(0,0,0,0) $a, $color $b);
+    background-image: -o-linear-gradient(top, rgba(0,0,0,0) $a, $color $b);
+    background-image: -ms-linear-gradient(top, rgba(0,0,0,0) $a, $color $b);
+    background-image: linear-gradient(to bottom, rgba(0,0,0,0) $a, $color $b);
+    background-repeat: repeat-y;
+    background-position: 0 1px;
+    background-size: 100% $b;
+  } @if $type == vertical {
+    background-image: linear-gradient(to right, #fff 21px, #ddd 22px);
+    background-repeat: repeat-x;
+    background-size: 22px 100%;
+  }
+  @if type-of($z-index) == number {
+    z-index: $z-index;
+  }
+}
+
+// icon-set
+// generate bare minimum of styles to use font icons.
+// style rules inspired by FontAwesome and Web Starter Kit
+// TODO: test after, before and from title
+@mixin icon-set($font-family:null, $class-prefix:null, $pseudo-element:before, $content-map:(), $from-title:false) {
+
+  .#{$class-prefix}, #{if($pseudo-element == before, ".#{$class-prefix}-after::before", ".#{$class-prefix}-before::after")} {
+    display: inline-block;
+    font-family: $font-family;
+    font-style: normal;
+    font-variant: normal;
+    font-weight: normal;
+    font-size: inherit;
+    line-height: inherit;
+    text-rendering: auto;
+    //width: 1em;
+    //height: 1em;
+    //line-height: 1;
+    text-transform: none;
+    letter-spacing: normal;
+    word-wrap: normal;
+    // Support for all WebKit browsers.
+    -webkit-font-smoothing: antialiased;
+    // Support for Firefox.
+    -moz-osx-font-smoothing: grayscale;
+    // Support for Safari and Chrome.
+    text-rendering: optimizeLegibility;
+    // Support for IE.
+    font-feature-settings: 'liga';
+    @content;
+  }
+
+  @if $from-title {
+    .#{$class-prefix}-prefix::before {
+      content: attr(title);
+    }
+    .#{$class-prefix}-postfix::after {
+      content: attr(title);
+    }
+  }
+
+  @if length($content-map) > 0 {
+    @each $key, $val in $content-map {
+      .#{$class-prefix}-#{$key}::#{$pseudo-element} {
+        content: '#{$val}';
+      }
+    }
+  }
+}
+
