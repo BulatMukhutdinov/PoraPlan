@@ -2,7 +2,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from meetings.form import MeetingForm
-from meetings.models import Meeting, Agenda
+from meetings.models import Meeting, Agenda, Topic
 
 
 class MeetingList(ListView):
@@ -22,7 +22,19 @@ class MeetingCreate(CreateView):
         # context['projects'] = Project.objects.all()
         return context
 
-    def form_valid(self, form):
+    def form_valid(self, form, **kwargs):
+        topics = self.request.POST.get("agenda", "")
+        topics = topics.split("\r\n")
+        topics.pop(0)
+        agenda = Agenda()
+        agenda.time = 60
+        agenda.save()
+        for topic in topics:
+            t = Topic()
+            t.name = topic
+            t.agenda = agenda
+            t.save()
+        form.instance.agenda = agenda
         form.save()
         return super(MeetingCreate, self).form_valid(form)
 
@@ -35,7 +47,7 @@ class MeetingUpdate(UpdateView):
 
 class MeetingDelete(DeleteView):
     model = Meeting
-    success_url = reverse_lazy('metting_list')
+    success_url = reverse_lazy('meeting_list')
 
 
 class AgendaList(ListView):

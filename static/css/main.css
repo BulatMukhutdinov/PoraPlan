@@ -1083,3 +1083,7 @@ sup {
 
 .brd-l-solid {
   border-left: 1px solid; }
+
+#dynamicInput .input-group {
+  margin-bottom: 15px;
+}

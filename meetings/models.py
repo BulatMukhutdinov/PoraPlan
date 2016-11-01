@@ -17,11 +17,27 @@ class MeetingRoles(models.Model):
     name = models.CharField(max_length=25)
 
 
+class Agenda(models.Model):
+    time = models.IntegerField(default=0)
+    # meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
+    # time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile',
+    #                                 on_delete=models.PROTECT, null=True)
+    # # facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile',
+    #                                 on_delete=models.PROTECT, null=True)
+    # created_by = models.ForeignKey(UserProfile, on_delete=models.PROTECT, null=True)
+
+
+class Topic(models.Model):
+    name = models.CharField(max_length=100)
+    agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT, null=True)
+
+
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
     name = models.CharField(max_length=250, null=False)
     date = models.CharField(max_length=100, null=True)
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
+    agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT, null=True)
 
 
 class MeetingParticipators(models.Model):
@@ -29,16 +45,6 @@ class MeetingParticipators(models.Model):
     participator = models.ForeignKey(TeamMembers, on_delete=models.PROTECT)
     role = models.ForeignKey(MeetingRoles, on_delete=models.PROTECT)
     rate = int
-
-
-class Agenda(models.Model):
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
-    date_time = models.DateTimeField(null=True)
-    time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile',
-                                    on_delete=models.PROTECT, null=True)
-    facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile',
-                                    on_delete=models.PROTECT, null=True)
-    created_by = models.ForeignKey(UserProfile, on_delete=models.PROTECT, null=True)
 
 
 class AgendaDetail(models.Model):

@@ -40,18 +40,67 @@
             <label for="datetimepicker">Date</label>
             <div class='input-group date' id='datetimepicker'>
                 <input name="date" type='text' class="form-control"
-                        required/>
+                       required/>
                 <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar"></span>
                 </span>
             </div>
         </div>
 
-        <input type="submit" value="Submit" class="btn btn-primary"/>
+        <div class="form-group">
+            <hr>
+            <h3>Agenda</h3>
+
+            <div id="dynamicInput" class="form-group">
+            </div>
+            <button type="button" onclick="addInput('dynamicInput');" class="btn btn-info pull-right">Add item</button>
+            <br>
+        </div>
+        <input type="submit" onclick="onSubmit()" value="Submit" class="btn btn-primary"/>
+        <input type="hidden" id="agenda-elems" name="agenda"/>
     </form>
     <script type="text/javascript">
         $(function () {
             $('#datetimepicker').datetimepicker();
         });
+        var topicsCount = 0;
+        var ids = [];
+        function addInput(divName) {
+            topicsCount++;
+            var newdiv = document.createElement('div');
+            newdiv.setAttribute('id', topicsCount);
+            newdiv.setAttribute('class', 'input-group');
+            ids.push(topicsCount);
+            newdiv.innerHTML =
+                    "<input type='text' class='form-control' placeholder='Topic'>" +
+                    "<span class='input-group-btn'>" +
+                    "<button type='button' class='btn btn-danger' onclick='removeElement("
+                    + topicsCount + ")');'>Remove</button>" +
+                    "</span>";
+            document.getElementById(divName).appendChild(newdiv);
+        }
+        function removeElement(id) {
+            var elem = document.getElementById(id);
+            elem.parentNode.removeChild(elem);
+            ids.remove(id);
+        }
+        function onSubmit() {
+            var agendaInput = $("#agenda-elems");
+            agendaInput.val("");
+            $.each(ids, function (i, val) {
+                var agendaElem = $("#dynamicInput").find("#" + val + " input").val();
+                agendaInput.val(agendaInput.val() + '\n' + agendaElem);
+            });
+        }
+        Array.prototype.remove = function () {
+            var what, a = arguments, L = a.length, ax;
+            while (L && this.length) {
+                what = a[--L];
+                while ((ax = this.indexOf(what)) !== -1) {
+                    this.splice(ax, 1);
+                }
+            }
+            return this;
+        };
     </script>
 {% endblock %}
