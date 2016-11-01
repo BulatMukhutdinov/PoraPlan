@@ -9,12 +9,12 @@ $s: (); // temp sets storage
 $calc-line-baseline: $_line-height;
 $calc-line-threshold: 100%;
 // Spacing variables
-$sz-default:  def   calc-line(1);
+$sz-default:  def       calc-line(1);
 $sz-xxlg:     xxlg      calc-line(7);
 $sz-xlg:      xlg       calc-line(5);
-$sz-lg:       lg        calc-line(4);
-$sz-md:       md        calc-line(3);
-$sz-sm:       sm        calc-line(2);
+$sz-lg:       lg        calc-line(3);
+$sz-md:       md        calc-line(2);
+$sz-sm:       sm        calc-line(1.5);
 $sz-xsm:      xsm       calc-line(0.5);
 $sz-xxsm:     xxsm      calc-line(0.25);
 
@@ -77,7 +77,7 @@ $s: add($s, padding-left, $Padding-left, $padding-set);
 
 // Height, Width
 $width-height-set: (
-  default: (
+  root: (
     0, 0,
     100, 100%,
     auto, auto,
@@ -109,11 +109,11 @@ $s: add($s, position, $Position, (
 
 // Z-index
 $s: add($s, z-index, $Z-index, (
-  1000, 1000,
-  100, 100,
   50, 50,
-  25, 25,
+  20, 20,
+  10, 10,
   5, 5,
+  1, 1,
   0, 0,
   n1, -1,
 ));
@@ -145,8 +145,11 @@ $s: add($s, $Visibility, visibility, (
 ));
 
 // Opacity
-$s: add($s, $Opacity, opacity, (
+$s: add($s, opacity, $Opacity, (
   0, 0,
+  xsm, 0.1,
+  sm, 0.3,
+  md, 0.5,
   1, 1,
 ));
 
