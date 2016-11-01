@@ -1,16 +1,15 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView, DetailView
+from django.views.generic import UpdateView
 from account.models import Account
 from django.core.urlresolvers import reverse_lazy
-from django.shortcuts import render
 
 
-#
-# class AccountPage(DetailView):
-#     model = Account
-#
-#     def get_object(self):
-#         return get_object_or_404(Account, pk=request.session['user_id'])
 
+class AccountView(UpdateView):
+    model = Account
+    success_url = reverse_lazy('account_view')
+    fields = ['avatar','birthday', 'company', 'position']
 
-def account(request):
-    return render(request, 'account.html')
+    def get_object(self):
+        instance, created = Account.objects.get_or_create(user=self.request.user, defaults={'user': self.request.user})
+        instance.save()
+        return instance
