@@ -41,7 +41,7 @@ def user_exists(username):
     return True
 
 
-def auth_and_login(request, onsuccess='/', onfail='sign_in'):
+def auth_and_login(request, onsuccess='/projects', onfail='sign_in'):
     next_page = onsuccess
     if 'next' in request.GET:
         next_page = request.POST['next']
