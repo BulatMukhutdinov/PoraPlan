@@ -20,7 +20,6 @@ class ProjectCreate(CreateView):
         return context
 
     def form_valid(self, form):
-
         form.save()
         return super(ProjectCreate, self).form_valid(form)
 

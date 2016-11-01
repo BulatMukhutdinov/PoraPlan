@@ -1,19 +1,33 @@
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from meetings.models import Meeting, Agenda
 from django.core.urlresolvers import reverse_lazy
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+
+from meetings.form import MeetingForm
+from meetings.models import Meeting, Agenda
 
 
 class MeetingList(ListView):
+    template_name = "meetings.html"
     model = Meeting
 
 
 class MeetingCreate(CreateView):
     model = Meeting
+    template_name = "meeting_create.html"
     success_url = reverse_lazy('meeting_list')
-    fields = ['topic', 'project', 'date']
+    form_class = MeetingForm
+
+    def get_context_data(self, **kwargs):
+        context = super(MeetingCreate, self).get_context_data(**kwargs)
+        # context['meetingTypes'] = MeetingType.objects.all()
+        # context['projects'] = Project.objects.all()
+        return context
+
+    def form_valid(self, form):
+        form.save()
+        return super(MeetingCreate, self).form_valid(form)
 
 
-class MettingUpdate(UpdateView):
+class MeetingUpdate(UpdateView):
     model = Meeting
     success_url = reverse_lazy('meeting_list')
     fields = ['topic', 'project', 'date']

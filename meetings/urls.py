@@ -5,7 +5,7 @@ from . import views
 urlpatterns = [
     url(r'^$', login_required(views.MeetingList.as_view()), name='meeting_list'),
     url(r'^new$', login_required(views.MeetingCreate.as_view()), name='meeting_new'),
-    url(r'^edit/(?P<pk>\d+)$', login_required(views.MettingUpdate.as_view()), name='meeting_edit'),
+    url(r'^edit/(?P<pk>\d+)$', login_required(views.MeetingUpdate.as_view()), name='meeting_edit'),
     url(r'^delete/(?P<pk>\d+)$', login_required(views.MeetingDelete.as_view()), name='meeting_delete'),
 
     url(r'^agenda$', login_required(views.AgendaList.as_view()), name='agenda_list'),

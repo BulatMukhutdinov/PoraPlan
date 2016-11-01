@@ -33,18 +33,18 @@ STATICFILES_DIRS = [
 ]
 
 INSTALLED_APPS = [
+    'authorization.apps.ScriptsConfig',
+    'meetings.apps.MeetingsConfig',
+    'projects.apps.ProjectsConfig',
+    'home.apps.HomeConfig',
+    'account.apps.AccountConfig',
+    'place.apps.PlaceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authorization',
-    'meetings',
-    'projects',
-    'home',
-    'account',
-    'place',
 ]
 
 MIDDLEWARE = [

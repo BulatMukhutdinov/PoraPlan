@@ -22,6 +22,8 @@ class Project(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True)
     deadline = models.DateField(null=True)
-    team_members =models.ManyToManyField(TeamMembers,null=True)
-    team_users = models.ManyToManyField(User,null=True)
-    status = models.ForeignKey(ProjectStatus, on_delete=models.PROTECT,null=True)
+    team_members = models.ManyToManyField(TeamMembers)
+    status = models.ForeignKey(ProjectStatus, on_delete=models.PROTECT, null=True)
+
+    def __str__(self):
+        return self.name

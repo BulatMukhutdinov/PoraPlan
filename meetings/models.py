@@ -8,32 +8,37 @@ from authorization.models import UserProfile
 class MeetingType(models.Model):
     type = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.type
+
 
 class MeetingRoles(models.Model):
-    type = models.ForeignKey(MeetingType, on_delete=models.PROTECT,null=True)
+    type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
     name = models.CharField(max_length=25)
 
 
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    topic = models.CharField(max_length=250,null=True)
-    date = models.DateTimeField(null=True)
-    meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT,null=True)
+    name = models.CharField(max_length=250, null=False)
+    date = models.CharField(max_length=100, null=True)
+    meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
 
 
 class MeetingParticipators(models.Model):
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE,null=True)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
     participator = models.ForeignKey(TeamMembers, on_delete=models.PROTECT)
     role = models.ForeignKey(MeetingRoles, on_delete=models.PROTECT)
     rate = int
 
 
 class Agenda(models.Model):
-    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE,null=True)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
     date_time = models.DateTimeField(null=True)
-    time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile', on_delete=models.PROTECT, null=True)
-    facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile', on_delete=models.PROTECT, null=True)
-    created_by = models.ForeignKey(UserProfile,on_delete=models.PROTECT,null=True)
+    time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile',
+                                    on_delete=models.PROTECT, null=True)
+    facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile',
+                                    on_delete=models.PROTECT, null=True)
+    created_by = models.ForeignKey(UserProfile, on_delete=models.PROTECT, null=True)
 
 
 class AgendaDetail(models.Model):
@@ -52,8 +57,3 @@ class AgendaAction(models.Model):
     name = models.CharField(max_length=250)
     responsible = models.ForeignKey(MeetingParticipators, on_delete=models.PROTECT, null=True)
     deadline = models.DateField()
-
-
-
-
-

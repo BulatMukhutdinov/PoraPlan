@@ -1,0 +1,41 @@
+/*!
+ * Name: PoraPlan.pro
+ * Version: 1.0
+ * Authors: Timur Fayzrakhamanov
+ * Author URL: timfayz.github.io
+ */
+
+// Elementcss
+// --------------------------------------------------
+@import 'elementcss/core.scss';
+
+// Globals
+// --------------------------------------------------
+// Partitioning
+$_left: left;
+$media: em (
+  mobile:     '@media screen and (min-width: 768px)',
+  //tablet:     '@media screen and (max-width: 1024px)',
+  laptop:     '@media screen and (min-width: 1200px)',
+);
+
+// Grid system
+@include grid(float, (
+  all: (12 gap 3%) column,
+  mobile: (12 gap 1.5%) column,
+), $media);
+
+// Container
+@include container((root: 1170px), $media);
+._container {
+  padding-left: 15px;
+  padding-right: 15px;
+}
+
+// Components
+// --------------------------------------------------
+@import 'components/_palette.scss';
+@import 'components/_helper.scss';
+@import 'components/_type.scss';
+@import 'components/_layout.scss';
+@import 'components/_styling.scss';
