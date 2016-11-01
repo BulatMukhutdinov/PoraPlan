@@ -20,16 +20,16 @@ $_font-family:    $_font-family-sans;
 $calc-line-baseline: $_line-height;
 $calc-line-threshold: 90%;
 // Type set (name, font-size, line-height, font-weight)
-$_type-max:       disp4  112px  calc-line(112px) lighter;
-$_type-xxlg:      disp3  56px   calc-line(56px)  normal;
-$_type-xlg:       disp2  45px   calc-line(45px)  normal;
-$_type-lg:        disp1  34px   calc-line(34px)  normal;
-$_type-md:        head   24px   calc-line(24px)  normal;
-$_type-sm:        titl   20px   calc-line(20px)  bolder;
-$_type-xsm:       subh   16px   calc-line(16px)  normal;
-$_type-xxsm:      butt   14px   calc-line(14px)  bolder;
-$_type-min:       capt   12px   calc-line(12px)  normal;
-$_type-default:   body   14px   calc-line(14px)  normal;
+$_type-max:       disp4  114px  calc-line(112px) lighter;
+$_type-xxlg:      disp3  60px   calc-line(56px)  normal;
+$_type-xlg:       disp2  47px   calc-line(45px)  normal;
+$_type-lg:        disp1  36px   calc-line(34px)  normal;
+$_type-md:        head   26px   calc-line(24px)  normal;
+$_type-sm:        titl   22px   calc-line(20px)  bolder;
+$_type-xsm:       subh   18px   calc-line(16px)  normal;
+$_type-xxsm:      butt   16px   calc-line(14px)  bolder;
+$_type-min:       capt   14px   calc-line(12px)  normal;
+$_type-default:   body   16px   calc-line(14px)  normal;
 
 // Define Sets
 // --------------------------------------------------
@@ -92,7 +92,7 @@ $s: add($s, list-style, $List-style, (
 // --------------------------------------------------
 html {
   //line-height: round-unit($_line-height, em);
-  @include media(default) {
+  @include media(root) {
     font-size: $_font-size;
   }
   //@include media(tablet, $media) { font-size: 14px; }

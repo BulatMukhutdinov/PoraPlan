@@ -6,11 +6,21 @@ $s: (); // temp sets storage
 // Define Sets
 // --------------------------------------------------
 // Color
+// ==========================
 $s: add($s, color, $Color, (
-  green, green,
+  wht, m($c,white),
+  gra30, m($c,gray300),
+  gra40, m($c,gray400),
+  gra50, m($c,gray500),
+  gra60, m($c,gray600),
+  grn50, m($c,green500),
+  blu50, m($c,blue500),
+  blcH, m($c,blackHigh),
+  blcL, m($c,blackLow),
 ));
 
 // Border
+// ==========================
 $border-set: (
   0, 0,
   solid, 1px solid,
@@ -20,14 +30,84 @@ $s: add($s, border-top, $Border-top, $border-set);
 $s: add($s, border-right, $Border-right, $border-set);
 $s: add($s, border-bottom, $Border-bottom, $border-set);
 $s: add($s, border-left, $Border-left, $border-set);
+// border-color
+$s: add($s, border-color, $Border-color, (
+  blu50, m($c,blue500),
+  blu30, m($c,blue300),
+  blcH, m($c,blackHigh),
+  blcM, m($c,blackMid),
+  blcL, m($c,blackLow),
+));
 
-// etc...
+// Background
+// ==========================
+$s: add($s, background, $Background, (
+  blc, m($c,black),
+  nature, url(../images/nature1.jpg) center center/cover,
+));
+// background-color
+$s: add($s, background-color, $Background-color, (
+  blc, m($c,black),
+  blu50, m($c,blue500),
+  blu40, m($c,blue400),
+  blu30, m($c,blue300),
+));
+
+// Text-shadow
+// ==========================
+$s: add($s, text-shadow, $Text-shadow, (
+  whtH, 0 1px 1px m($c, whiteHigh),
+  blcH, 0 1px 1px m($c, blackHigh),
+  blcM, 0 1px 1px m($c, blackMid),
+  blcM-md, 0 2px 2px m($c, blackHigh),
+));
+
+// Box-shadow
+// ==========================
+$s: add($s, box-shadow, $Box-shadow, (
+  whtH, 0 1px 1px m($c, whiteHigh),
+  blcH, 0 1px 1px m($c, blackHigh),
+  blcM, 0 1px 1px m($c, blackMid),
+  blcM-md, 0 2px 2px m($c, blackHigh),
+));
 
 // Render Styles
 // --------------------------------------------------
 // cursor selection color
 ::selection {
   background-color: gray;
+}
+
+// Buttons
+// ======================
+._btn {
+  @extend .pdd-xxsm;
+  @extend .c-wht;
+  @extend .brd-solid;
+  @extend .txsh-blcM;
+}
+._btn:hover {
+  cursor:pointer;
+  @extend .c-wht;
+}
+
+._btn-blu {
+  @extend .brcl-blu30;
+  @extend .bgcl-blu50;
+}
+._btn-blu:hover {
+  @extend .bgcl-blu40;
+}
+
+
+// MISC
+// ======================
+.fill {
+  @extend .w-100;
+  @extend .h-100;
+  @extend .l-0;
+  @extend .t-0;
+  @extend .pst-absolute;
 }
 
 // render all stored sets

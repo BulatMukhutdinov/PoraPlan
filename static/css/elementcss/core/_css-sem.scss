@@ -122,7 +122,7 @@
     @each $type in $s-type {
       // construct
       $selector:
-        "#{$s-pre}#{$type}#{$q-pre}#{$s-bpre}#{$s-bname}#{$s-bpost}#{$q-post}#{$s-post}";
+        unquote("#{$s-pre}#{$type}#{$q-pre}#{$s-bpre}#{$s-bname}#{$s-bpost}#{$q-post}#{$s-post}");
       //[selectr]+[./#/%]+[mobil-]+[prefix-]+[bg-/mrg-]+[ name  ]+[-mobile]+[selectr]
       // note the constructor uses either $q-pre or $q-post, but not both at once
       //@debug SPRE $s-pre TYPE $type QPRE $q-pre SBPRE $s-bpre SBNAME $s-bname SBPOST $s-bpost QPOST $q-post SPOST $s-post;
