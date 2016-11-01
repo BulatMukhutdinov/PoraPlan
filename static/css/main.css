@@ -1227,3 +1227,7 @@ sup {
 
 .bxsh-blcM-md {
   box-shadow: 0 2px 2px rgba(9, 9, 9, 0.54); }
+
+#dynamicInput .input-group {
+  margin-bottom: 15px;
+}
