@@ -2,6 +2,7 @@ from django.conf.urls import url
 from django.contrib.auth.decorators import login_required
 from . import views
 
+
 urlpatterns = [
     url(r'^$', login_required(views.ProjectList.as_view()), name='project_list'),
     url(r'^send_invite$', login_required(views.send_invite), name='project_invite'),
