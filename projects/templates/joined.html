@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block page-header %}
+    <div class="page-header">
+        <h1>You have joined to project {{ project.id }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    You can see project if you click <a href="{% url "project_view" %}?project_id={{ project.id }}">here</a>.
+{% endblock %}
