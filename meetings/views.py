@@ -11,7 +11,7 @@ class MeetingList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MeetingList, self).get_context_data(**kwargs)
-        context['meetings'] = Meeting.objects.exclude(id=1)
+        context['meetings'] = Meeting.objects.all
         # context['projects'] = Project.objects.all()
         return context
 
@@ -30,6 +30,7 @@ class MeetingCreate(CreateView):
 
     def form_valid(self, form, **kwargs):
         topics = self.request.POST.get("agenda", "")
+        relative_meeting = str(self.request.POST.get("relative_meeting", ""))
         topics = topics.split("\r\n")
         topics.pop(0)
         agenda = Agenda()
@@ -41,14 +42,21 @@ class MeetingCreate(CreateView):
             t.agenda = agenda
             t.save()
         form.instance.agenda = agenda
+        if len(relative_meeting) != 0:
+            form.instance.relative_meeting = Meeting.objects.get(pk=relative_meeting)
         form.save()
         return super(MeetingCreate, self).form_valid(form)
 
 
 class MeetingUpdate(UpdateView):
     model = Meeting
+    template_name = "meeting_create.html"
     success_url = reverse_lazy('meeting_list')
-    fields = ['topic', 'project', 'date']
+    fields = ['project', 'meeting_type', 'date', 'name']
+
+    def form_valid(self, form, **kwargs):
+        form.save()
+        return super(MeetingUpdate, self).form_valid(form)
 
 
 class MeetingDelete(DeleteView):

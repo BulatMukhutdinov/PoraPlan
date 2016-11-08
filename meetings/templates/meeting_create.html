@@ -22,6 +22,7 @@
                 </div>
             </div>
         </div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 
         <div class="row">
             <div class="form-group col-md-4" id="project_select">
@@ -46,13 +47,16 @@
                 {#                            </select>#}
             </div>
 
+
             <div class="form-group col-md-4" id="relative_meeting">
                 <label for="relative_meeting">Relative meeting</label>
-                <select name="meeting_type" class="form-control" id="relative_meeting">
+                <select class="form-control" id="relative_meeting">
+                    <option value=""></option>
                     {% for meeting in relativeMeetings %}
                         <option value="{{ meeting.id }}">{{ meeting }}</option>
                     {% endfor %}
                 </select>
+                <input type="hidden" id="relative_meeting_value" name="relative_meeting"/>
             </div>
 
 
@@ -75,10 +79,10 @@
                         <a class="nav-link" id="profile-tab" data-toggle="tab" href="#time_place" role="tab"
                            aria-controls="profile">Time and Place</a>
                     </li>
-
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div role="tabpanel" class="tab-pane fade in" aria-expanded="true" id="general_info"
+
+                    <div role="tabpanel" class="tab-pane fade in active" aria-expanded="true" id="general_info"
                          aria-labelledby="home-tab">
                         <div class="form-group col-xs-8">
                             <label for="meeting_name">Name</label>
@@ -153,7 +157,16 @@
     </form>
 
     <script type="text/javascript">
-        $('.nav-tabs a:first').tab('show');
+        $("#relative_meeting").change(function () {
+            var relativeInput = $("#relative_meeting_value");
+            relativeInput.val($("#relative_meeting option:selected").val());
+        });
+
+        jQuery('a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        {#        $('.nav-tabs a:first').tab('show');#}
         $("#project_select").change(function () {
             if ($("#project_select option:selected").val() == "") {
                 if (point['project'] == true) {
@@ -182,16 +195,7 @@
             }
             $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
         });
-        {#        $(document).ready(function () {#}
-        {#            if ($("#project_select option:selected").length) {#}
-        {#                alert('!');#}
-        {#            }#}
-        {#        });#}
 
-        {#        $(".nav a").on("click", function () {#}
-        {#            $(".nav-item").find(".active").removeClass("active");#}
-        {#            $(this).parent().addClass("active");#}
-        {#        });#}
         var valeur = 0;
         var point = {
             "meeting_subject": false,
