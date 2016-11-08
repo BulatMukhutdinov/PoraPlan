@@ -133,8 +133,9 @@ MEDIA_URL = '/images/'
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
 
-EMAIL_USE_TLS = True
+
 EMAIL_HOST = 'smtp.yandex.ru'
-EMAIL_HOST_USER = 'support@poraplan.ru'
+EMAIL_HOST_USER = 'support@poraplan.pro'
 EMAIL_HOST_PASSWORD = '123456'
-EMAIL_PORT = 465
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

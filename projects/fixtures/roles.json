@@ -1,0 +1,16 @@
+[
+  {
+    "model": "projects.ProjectRoles",
+    "pk": 1,
+    "fields": {
+      "name": "Participator"
+    }
+  },
+  {
+    "model": "projects.ProjectRoles",
+    "pk": 2,
+    "fields": {
+      "name": "Moderator"
+    }
+  }
+]
