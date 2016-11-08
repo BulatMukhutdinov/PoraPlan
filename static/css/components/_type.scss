@@ -27,7 +27,7 @@ $_type-lg:        disp1  36px   calc-line(34px)  normal;
 $_type-md:        head   26px   calc-line(24px)  normal;
 $_type-sm:        titl   22px   calc-line(20px)  bolder;
 $_type-xsm:       subh   18px   calc-line(16px)  normal;
-$_type-xxsm:      butt   16px   calc-line(14px)  bolder;
+$_type-xxsm:      butt   18px   calc-line(14px)  bolder;
 $_type-min:       capt   14px   calc-line(12px)  normal;
 $_type-default:   body   16px   calc-line(14px)  normal;
 
@@ -61,7 +61,7 @@ $s: add($s, font-style, $Font-style, (
 
 // Text-Decoration
 $s: add($s, text-decoration, $Text-decoration, (
-  underline, underline,
+  under, underline,
   through, line-through
 ));
 

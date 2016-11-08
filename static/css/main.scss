@@ -23,7 +23,7 @@ $media: em (
 
 // Grid system
 @include grid(float, (
-  all: (12 gap 3%) column,
+  all: (12 gap 3%) column offset,
   mobile: (12 gap 1.5%) column,
 ), $media);
 
