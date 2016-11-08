@@ -9,6 +9,12 @@ class MeetingList(ListView):
     template_name = "meetings.html"
     model = Meeting
 
+    def get_context_data(self, **kwargs):
+        context = super(MeetingList, self).get_context_data(**kwargs)
+        context['meetings'] = Meeting.objects.exclude(id=1)
+        # context['projects'] = Project.objects.all()
+        return context
+
 
 class MeetingCreate(CreateView):
     model = Meeting
@@ -18,7 +24,7 @@ class MeetingCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(MeetingCreate, self).get_context_data(**kwargs)
-        # context['meetingTypes'] = MeetingType.objects.all()
+        context['relativeMeetings'] = Meeting.objects.all
         # context['projects'] = Project.objects.all()
         return context
 

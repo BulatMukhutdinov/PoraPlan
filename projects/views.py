@@ -1,14 +1,14 @@
 from django.contrib.auth.models import User
-from django.views.generic import ListView, CreateView, UpdateView, DeleteView
-from projects.models import Project, TeamMembers
+from django.core.mail import EmailMultiAlternatives
 from django.core.urlresolvers import reverse_lazy
+from django.http import HttpResponse
+from django.shortcuts import render
+from django.template import Context
+from django.template.loader import get_template
+from django.views.generic import ListView, CreateView, UpdateView, DeleteView
+
 from projects.form import ProjectForm
-from django.core.mail import send_mail
-
-import smtplib
-
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
+from projects.models import Project, TeamMembers, ProjectRoles
 
 
 class ProjectList(ListView):
@@ -40,31 +40,44 @@ class ProjectDelete(DeleteView):
     model = Project
     success_url = reverse_lazy('project_list')
 
+def view(request):
+    context = {"project":Project.objects.get(pk=2)}
+
+    return render(request,"project.html",context)
+
 
 def join(request):
     pk = request.GET["project_id"]
+    email = request.GET["email"]
+
     obj = Project.objects.get(pk=pk)
 
+    role = ProjectRoles.objects.get(name="Participator")
+
     team_member = TeamMembers()
-    User.objects.get_by_natural_key(request.GET["email"])
-    team_member.member = team_member
+    team_member.member = User.objects.get(username=email)
+    team_member.role = role
     team_member.save()
     obj.team_members.add(team_member)
+    obj.save()
+    return HttpResponse("", "text/plain", 200)
 
-    return None
 
 def send_invite(request):
-
-    u = "http://poraplan.pro/projects/join?project_id=" + request.GET["project_id"] + "&email=" + request.GET["email"]
-
-    send_mail(
-        subject='PORAPLAN.PRO: You have been invited to project',
-        html_message='Click <a href="'+u+'">here</a> to join',
-        message="",
-        from_email='support@poraplan.pro',
-        recipient_list=['limit-speed@yandex.ru'],
-        fail_silently=False,
+    plaintext = get_template('email.txt')
+    htmly = get_template('email.html')
+    d = Context(
+        {'username': "Igor Bobko",
+         'project_id': request.GET["project_id"],
+         'user_email': request.GET["email"],
+         }
     )
 
-    return None
-
+    subject = 'PORAPLAN.PRO: You have been invited to project'
+    from_email, to = 'support@poraplan.pro', 'limit-speed@yandex.ru'
+    text_content = plaintext.render(d)
+    html_content = htmly.render(d)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
+    return HttpResponse("", "text/plain", 200)

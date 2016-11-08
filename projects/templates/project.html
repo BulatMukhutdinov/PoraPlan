@@ -1,0 +1,17 @@
+{% extends "base.html" %}
+
+{% block page-header %}
+    <div class="page-header">
+        <h1>Project {{ project.id }}</h1>
+    </div>
+{% endblock %}
+
+{% block content %}
+    Description: {{ project.description}}<br/>
+    Projects members: {% for member in project.team_members.all  %}
+        {{ member.role.name }}
+    {% endfor %}
+
+{{project.team_members }}
+
+{% endblock %}

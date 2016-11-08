@@ -7,7 +7,7 @@
 {% block content %}
     {#Should be inside of concrete meeting#}
     {#    <a href="{% url 'agenda_list' %}">Agendas</a><br/><br/>#}
-    {% if object_list.all %}
+    {% if meetings|length %}
         <table class="table table-hover">
             <thead>
             <th>Name</th>
@@ -18,7 +18,7 @@
             <th></th>
             </thead>
             <tbody>
-            {% for item in object_list %}
+            {% for item in meetings %}
                 <tr>
                     <td>{{ item.name }}</td>
                     <td>{{ item.project }}</td>
