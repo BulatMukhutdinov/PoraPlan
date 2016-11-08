@@ -4,6 +4,9 @@ from projects.models import Project, TeamMembers
 from django.core.urlresolvers import reverse_lazy
 from projects.form import ProjectForm
 from django.core.mail import send_mail
+from django.core.mail import EmailMultiAlternatives
+from django.template.loader import get_template
+from django.template import Context
 
 import smtplib
 
@@ -53,18 +56,30 @@ def join(request):
 
     return None
 
+
 def send_invite(request):
 
-    u = "http://poraplan.pro/projects/join?project_id=" + request.GET["project_id"] + "&email=" + request.GET["email"]
+    u = "ddddddddddddddddd"
 
     send_mail(
         subject='PORAPLAN.PRO: You have been invited to project',
-        html_message='Click <a href="'+u+'">here</a> to join',
-        message="",
+        #html_message='Click <a href="'+u+'">here</a> to join. Hello world!!!!!!',
+        message="asdfasdfasdfasd",
         from_email='support@poraplan.pro',
-        recipient_list=['limit-speed@yandex.ru'],
-        fail_silently=False,
+        recipient_list=['limit-speed@yandex.ru']
     )
+
+    plaintext = ""#get_template('email.txt')
+    htmly = ""#get_template('email.html')
+
+    d = Context({'username': "Igor Bobko"})
+
+    subject, from_email, to = 'hello', 'support@poraplan.ru', 'iibobko@gmail.com'
+    text_content = plaintext.render(d)
+    html_content = htmly.render(d)
+    msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+    msg.attach_alternative(html_content, "text/html")
+    msg.send()
 
     return None
 
