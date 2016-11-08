@@ -124,9 +124,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static")
-]
+
 
 LOGIN_URL = '/authorization/sign_in/'
 
@@ -134,4 +132,9 @@ MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
 MEDIA_URL = '/images/'
 
 PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
-MEDIA_ROOT = os.path.join(PROJECT_PATH, 'images')
+
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'support@poraplan.ru'
+EMAIL_HOST_PASSWORD = '123456'
+EMAIL_PORT = 465
