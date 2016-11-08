@@ -18,7 +18,7 @@ class MeetingCreate(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(MeetingCreate, self).get_context_data(**kwargs)
-        # context['meetingTypes'] = MeetingType.objects.all()
+        context['relativeMeetings'] = Meeting.objects.all()
         # context['projects'] = Project.objects.all()
         return context
 
