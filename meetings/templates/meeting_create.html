@@ -121,9 +121,8 @@
                                    placeholder="Identification of Subject matter"
                                    required/>
                         </div>
-
-
                     </div>
+
                     <div class="tab-pane fade" id="agenda" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="form-group">
                             <h3>Agenda</h3>
@@ -137,13 +136,125 @@
                         </div>
                         <input type="hidden" id="agenda-elems" name="agenda"/>
                     </div>
+
                     <div class="tab-pane fade" id="materials" role="tabpanel" aria-labelledby="profile-tab">
                         <h3>Materials</h3>
                     </div>
-                    <div class="tab-pane fade" id="time_place" role="tabpanel" aria-labelledby="profile-tab">
-                        <h3>Time and Place</h3>
-                    </div>
 
+                    <div class="tab-pane fade" id="time_place" role="tabpanel" aria-labelledby="profile-tab">
+                        <h3>Choose Place</h3>
+                        <div class="some">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="row">
+                                        <div class=" form-group col-xs-12">
+                                            <label for="meeting_name">Set place requariements</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_projector" />
+                                            <label for="checkb_projector">Projector</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_white_board" />
+                                            <label for="checkb_white_board">White board</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_black_board" />
+                                            <label for="checkb_black_board">Black board</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-right">
+                                            <button class="btn btn-primary" type="button" >
+                                                Rooms found <span class="badge">4</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="meeting_name">Meeting room photo</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <a href="#" class="thumbnail">
+                                          <img src="http://www.claytonhoteldublinairport.com/wp-content/uploads/2015/04/DA-Boardroom-1.jpg" alt="...">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="meeting_name">Change result</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_start'>
+                                                <span class="input-group-addon" id="basic-addon1">Start time</span>
+                                                <input type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_duration'>
+                                                <span class="input-group-addon" id="basic-addon1">Duration</span>
+                                                <input type='text' class="form-control" />
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1">Place</span>
+                                                <input type="text" name="name" class="form-control" id="meeting_time_start"
+                                                       placeholder="Room 104"
+                                                       oninvalid="this.setCustomValidity('Please enter the name')" required/>
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                      <li><a href="#">Room 302</a></li>
+                                                      <li><a href="#">Room 307</a></li>
+                                                      <li><a href="#">Room 212</a></li>
+                                                      <li role="separator" class="divider"></li>
+                                                      <li><a href="#">Choose manually</a></li>
+                                                    </ul>
+                                                </div><!-- /btn-group -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_duration'>
+                                                <span class="input-group-addon" id="basic-addon1">Participans</span>
+                                                <input type="text" name="name" class="form-control" id="meeting_name"
+                                                placeholder="10 people"
+                                                oninvalid="this.setCustomValidity('Please enter the name')" required/>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">...</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -226,8 +337,12 @@
         });
 
         $(function () {
-            $('#datetimepicker').datetimepicker();
+            $('#datetimepicker').datetimepicker({
+                    format: 'DD/MM/YYYY'
+                });
+
         });
+
         var topicsCount = 0;
         var ids = [];
         function addInput(divName) {
@@ -267,5 +382,13 @@
             }
             return this;
         };
+        $(function () {
+            $('#timepicker_duration').datetimepicker({
+                format: 'hh:mm'
+            });
+            $('#timepicker_start').datetimepicker({
+                    format: 'LT'
+                });
+            });
     </script>
 {% endblock %}
