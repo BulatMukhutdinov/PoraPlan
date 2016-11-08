@@ -13,9 +13,9 @@
 
         <div>
             <label for="progress">Completes</label>
-            <div class="progress progress-striped active">
+            <div class="progress progress-striped">
 
-                <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" id="bar_progress"aria-valuemin="0" aria-valuemax="100"
                      style="width: 0%;">
 
                 </div>
@@ -171,7 +171,7 @@
                     valeur = valeur + persent;
                 }
             }
-            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur);
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
         });
         $("#meeting_type").change(function () {
             if ($("#meeting_type option:selected").val() == "") {
@@ -185,7 +185,7 @@
                     valeur = valeur + persent;
                 }
             }
-            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur);
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
         });
         {#        $(document).ready(function () {#}
         {#            if ($("#project_select option:selected").length) {#}
@@ -212,7 +212,7 @@
             if (point['datetimepicker'] == false) {
                 point['datetimepicker'] = true;
                 valeur = valeur + persent;
-                $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur);
+                $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
             }
         });
 
@@ -227,7 +227,7 @@
                 valeur = valeur - persent;
                 point[id] = false;
             }
-            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).attr('val', valeur);
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).attr('val', valeur).html(Math.round(valeur) + "%");
         });
 
         $(function () {
