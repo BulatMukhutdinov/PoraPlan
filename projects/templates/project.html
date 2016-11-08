@@ -7,11 +7,40 @@
 {% endblock %}
 
 {% block content %}
-    Description: {{ project.description}}<br/>
-    Projects members: {% for member in project.team_members.all  %}
-        {{ member.role.name }}
-    {% endfor %}
+    <strong>Description:</strong> {{ project.description }}<br/><br/>
 
-{{project.team_members }}
+    <strong>Projects members:</strong>
+    <br/>    <br/>
+
+    <table>
+
+        <th>Role</th>
+        <th>Name</th>
+
+        {% for member in project.team_members.all %}
+            <tr>
+                <td>
+                    {{ member.role.name }}
+                </td>
+                <td>
+                    {{ member.member.username }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
+    <br/>
+
+    <strong>Meetings</strong>
+
+ <br/>
+    <table>
+        {% for meeting in meetings %}
+            <tr>
+                <td>
+                    {{ meeting }}
+                </td>
+            </tr>
+        {% endfor %}
+    </table>
 
 {% endblock %}

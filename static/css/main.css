@@ -1200,7 +1200,7 @@ sup {
 ::selection {
   background-color: gray; }
 
-._btn:hover {
+._btn:hover, ._btn:visited {
   cursor: pointer; }
 
 .c-gra30 {
@@ -1266,7 +1266,7 @@ sup {
 .c-blcL {
   color: rgba(9, 9, 9, 0.12); }
 
-.c-wht, ._btn, ._btn:hover {
+.c-wht, ._btn, ._btn:hover, ._btn:visited {
   color: #fff; }
 
 .brd-0 {

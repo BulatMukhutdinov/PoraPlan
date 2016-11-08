@@ -97,7 +97,7 @@ $s: add($s, box-shadow, $Box-shadow, (
   @extend .brd-solid;
   @extend .txsh-blcM;
 }
-._btn:hover {
+._btn:hover, ._btn:visited {
   cursor:pointer;
   @extend .c-wht;
 }

@@ -49,6 +49,7 @@
             <div class="form-group col-md-4" id="relative_meeting">
                 <label for="relative_meeting">Relative meeting</label>
                 <select name="meeting_type" class="form-control" id="relative_meeting">
+                    <option value="0"></option>
                     {% for meeting in relativeMeetings %}
                         <option value="{{ meeting.id }}">{{ meeting }}</option>
                     {% endfor %}
