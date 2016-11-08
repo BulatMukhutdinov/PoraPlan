@@ -38,6 +38,10 @@ class Meeting(models.Model):
     date = models.CharField(max_length=100, null=True)
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
     agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT, null=True)
+    relative_meeting = models.ForeignKey("self", null=True, default=None)
+
+    def __str__(self):
+        return self.name
 
 
 class MeetingParticipators(models.Model):
