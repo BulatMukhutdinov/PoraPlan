@@ -63,21 +63,21 @@
             <div class="bd-example bd-example-tabs" role="tabpanel">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item active" aria-expanded="true">
-                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#general_info" role="tab"
+                        <a class="nav-link" id="general-info-tab" data-toggle="tab" href="#general_info" role="tab"
                            aria-controls="general_info" aria-expanded="true">General</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#agenda" role="tab"
+                        <a class="nav-link" id="agenda-tab" data-toggle="tab" href="#agenda" role="tab"
                            aria-controls="profile">Agenda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#materials" role="tab"
-                           aria-controls="general_info"
+                        <a class="nav-link" id="materials-tab" data-toggle="tab" href="#materials" role="tab"
+                           aria-controls="materials"
                         >Materials</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#time_place" role="tab"
-                           aria-controls="profile">Time and Place</a>
+                        <a class="nav-link" id="time-place-tab" data-toggle="tab" href="#time_place" role="tab"
+                           aria-controls="time_place">Time and Place</a>
                     </li>
                 </ul>
                 <div class="tab-content" id="myTabContent">
@@ -162,7 +162,19 @@
             relativeInput.val($("#relative_meeting option:selected").val());
         });
 
-        jQuery('a').click(function (e) {
+        $("#general-info-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#agenda-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#materials-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#time-place-tab").click(function (e) {
             e.preventDefault()
             $(this).tab('show')
         });
