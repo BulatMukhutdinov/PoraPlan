@@ -5,33 +5,43 @@
     </div>
 {% endblock %}
 {% block content %}
-    {#Should be inside of concrete meeting#}
-    {#    <a href="{% url 'agenda_list' %}">Agendas</a><br/><br/>#}
-    {% if meetings|length %}
-        <table class="table table-hover">
-            <thead>
-            <th>Name</th>
-            <th>Project</th>
-            <th>Type</th>
-            <th>Date</th>
-            <th></th>
-            <th></th>
-            </thead>
-            <tbody>
-            {% for item in meetings %}
-                <tr>
-                    <td>{{ item.name }}</td>
-                    <td>{{ item.project }}</td>
-                    <td>{{ item.meeting_type }}</td>
-                    <td>{{ item.date }}</td>
-                    <td><a href="{% url 'meeting_edit' item.id %}">edit</a></td>
-                    <td><a href="{% url 'meeting_delete' item.id %}">delete</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
 
-    <a class="btn btn-info" href="{% url 'meeting_new' %}">Add new meeting</a>
-    <br/><br/>
+    {% with related_topics="" %}
+        {#Should be inside of concrete meeting#}
+        {#    <a href="{% url 'agenda_list' %}">Agendas</a><br/><br/>#}
+        {% if meetings|length %}
+            <table class="table table-hover">
+                <thead>
+                <th>Name</th>
+                <th>Project</th>
+                <th>Type</th>
+                <th>Date</th>
+                <th>Agenda</th>
+                <th></th>
+                <th></th>
+                </thead>
+                <tbody>
+                {% for item in meetings %}
+                    <tr>
+                        <td>{{ item.name }}</td>
+                        <td>{{ item.project }}</td>
+                        <td>{{ item.meeting_type }}</td>
+                        <td>{{ item.date }}</td>
+                        <td>
+                            {% for topic in topics %}
+                                {% if topic.agenda == item.agenda %}
+                                    {{ topic.name|add:';' }}
+                                {% endif %}
+                            {% endfor %}</td>
+                        <td><a href="{% url 'meeting_edit' item.id %}">edit</a></td>
+                        <td><a href="{% url 'meeting_delete' item.id %}">delete</a></td>
+                    </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+        {% endif %}
+
+        <a class="btn btn-info" href="{% url 'meeting_new' %}">Add new meeting</a>
+        <br/><br/>
+    {% endwith %}
 {% endblock %}

@@ -11,7 +11,8 @@ class MeetingList(ListView):
 
     def get_context_data(self, **kwargs):
         context = super(MeetingList, self).get_context_data(**kwargs)
-        context['meetings'] = Meeting.objects.all
+        context['meetings'] = Meeting.objects.all()
+        context['topics'] = Topic.objects.all()
         # context['projects'] = Project.objects.all()
         return context
 
