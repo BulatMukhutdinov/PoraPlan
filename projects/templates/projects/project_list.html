@@ -18,7 +18,7 @@
         <tbody>
         {% for server in object_list %}
             <tr>
-                <td>{{ server.name }} :</td>
+                <td><a href="{% url 'project_view' %}?project_id={{ server.id }}">{{ server.name }}</a></td>
                 <td><a href="{% url 'project_edit' server.id %}">edit</a></td>
                 <td><a href="{% url 'project_delete' server.id %}">delete</a></td>
             </tr>
