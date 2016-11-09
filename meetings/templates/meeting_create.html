@@ -265,6 +265,7 @@
         <div>
             <input type="submit" onclick="onSubmit()" value="Submit" class="btn btn-primary"/>
         </div>
+    <br>
     </form>
 
     <script type="text/javascript">
@@ -354,9 +355,9 @@
 
         $(function () {
             $('#datetimepicker').datetimepicker({
-                    format: 'DD/MM/YYYY'
-                });
-
+                minDate : 'now',
+                format: 'DD/MM/YYYY'
+            });
         });
 
         var topicsCount = 0;
