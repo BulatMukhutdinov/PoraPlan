@@ -23,10 +23,10 @@
             </div>
         </div>
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/static/js/jquery-ui.js"></script>
 
         <div class="row">
             <div class="form-group col-md-4" id="project_select">
-                {{ form.project.errors }}
                 <label for="{{ form.message.id_for_label }}">Project</label>
                 {{ form.project }}
                 {#                            <select name="project" class="form-control" id="meeting_project">#}
@@ -87,8 +87,7 @@
                         <div class="form-group col-xs-8">
                             <label for="meeting_name">Name</label>
                             <input type="text" name="name" class="form-control" id="meeting_name"
-                                   placeholder="My meeting"
-                                   oninvalid="this.setCustomValidity('Please enter the name')" required/>
+                                   placeholder="My meeting" required/>
                         </div>
 
                         <div class="form-group col-xs-4">
@@ -105,35 +104,23 @@
                         <div class="form-group col-xs-8">
                             <label for="meeting_purpose">Purpose</label>
                             <input type="text" name="purpose" class="form-control" id="meeting_purpose"
-                                   placeholder="Purpose of the Meeting"
-                                   oninvalid="this.setCustomValidity('Please enter the purpose')" required/>
+                                   placeholder="Purpose of the Meeting" required/>
                         </div>
-                        {#TODO: uncommit when adding members would available#}
-                        {#                        <div class="col-xs-4">#}
-                        {#                            <label for="progress">Add members</label>#}
-                        {#                            <div class="input-group">#}
-                        {#                                <input type="text" class="form-control" placeholder="Search for person...">#}
-                        {#                                <span class="input-group-btn">#}
-                        {#                                    <button class="btn btn-default" type="button">Add</button>#}
-                        {#                                </span>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
 
                         <div class="form-group col-xs-8">
                             <label for="meeting_subject">Subject</label>
                             <input type="text" name="subject" class="form-control" id="meeting_subject"
-                                   placeholder="Identification of Subject matter"
-                                   required/>
+                                   placeholder="Identification of Subject matter" required/>
                         </div>
                     </div>
 
                     <div class="tab-pane fade" id="agenda" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="form-group">
                             <h3>Agenda</h3>
-
-                            <div id="dynamicInput" class="form-group">
+                            <div id="dynamicInput" class="form-group dynamicInput">
                             </div>
-                            <button type="button" onclick="addInput('dynamicInput');" class="btn btn-info pull-right">
+                            <button type="button" onclick="addInput('dynamicInput');"
+                                    class="btn btn-info pull-right content">
                                 Add item
                             </button>
                             <br>
@@ -143,6 +130,7 @@
 
                     <div class="tab-pane fade" id="materials" role="tabpanel" aria-labelledby="profile-tab">
                         <h3>Materials</h3>
+
                     </div>
 
                     <div class="tab-pane fade" id="time_place" role="tabpanel" aria-labelledby="profile-tab">
@@ -157,25 +145,25 @@
                                     </div>
                                     <div class="funkyradio row">
                                         <div class="funkyradio-success form-group col-xs-12">
-                                            <input type="checkbox" name="checkbox" id="checkb_projector" />
+                                            <input type="checkbox" name="checkbox" id="checkb_projector"/>
                                             <label for="checkb_projector">Projector</label>
                                         </div>
                                     </div>
                                     <div class="funkyradio row">
                                         <div class="funkyradio-success form-group col-xs-12">
-                                            <input type="checkbox" name="checkbox" id="checkb_white_board" />
+                                            <input type="checkbox" name="checkbox" id="checkb_white_board"/>
                                             <label for="checkb_white_board">White board</label>
                                         </div>
                                     </div>
                                     <div class="funkyradio row">
                                         <div class="funkyradio-success form-group col-xs-12">
-                                            <input type="checkbox" name="checkbox" id="checkb_black_board" />
+                                            <input type="checkbox" name="checkbox" id="checkb_black_board"/>
                                             <label for="checkb_black_board">Black board</label>
                                         </div>
                                     </div>
                                     <div class="row">
                                         <div class="col-xs-12 text-right">
-                                            <button class="btn btn-primary" type="button" >
+                                            <button class="btn btn-primary" type="button">
                                                 Rooms found <span class="badge">4</span>
                                             </button>
                                         </div>
@@ -189,7 +177,8 @@
                                     </div>
                                     <div class="row">
                                         <a href="#" class="thumbnail">
-                                          <img src="http://www.claytonhoteldublinairport.com/wp-content/uploads/2015/04/DA-Boardroom-1.jpg" alt="...">
+                                            <img src="http://www.claytonhoteldublinairport.com/wp-content/uploads/2015/04/DA-Boardroom-1.jpg"
+                                                 alt="...">
                                         </a>
                                     </div>
                                 </div>
@@ -203,7 +192,7 @@
                                         <div class="form-group col-xs-12">
                                             <div class='input-group date' id='timepicker_start'>
                                                 <span class="input-group-addon" id="basic-addon1">Start time</span>
-                                                <input type='text' class="form-control" />
+                                                <input type='text' class="form-control"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-time"></span>
                                                 </span>
@@ -215,7 +204,7 @@
                                         <div class="form-group col-xs-12">
                                             <div class='input-group date' id='timepicker_duration'>
                                                 <span class="input-group-addon" id="basic-addon1">Duration</span>
-                                                <input type='text' class="form-control" />
+                                                <input type='text' class="form-control"/>
                                                 <span class="input-group-addon">
                                                     <span class="glyphicon glyphicon-time"></span>
                                                 </span>
@@ -226,17 +215,20 @@
                                         <div class="form-group col-xs-12">
                                             <div class="input-group">
                                                 <span class="input-group-addon" id="basic-addon1">Place</span>
-                                                <input type="text" name="name" class="form-control" id="meeting_time_start"
+                                                <input type="text" class="form-control"
+                                                       id="meeting_time_start"
                                                        placeholder="Room 104"
-                                                       oninvalid="this.setCustomValidity('Please enter the name')" required/>
+                                                       oninvalid="this.setCustomValidity('Please enter the name')"/>
                                                 <div class="input-group-btn">
-                                                    <button type="button" class="btn btn-default dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><span class="caret"></span></button>
+                                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false"><span class="caret"></span></button>
                                                     <ul class="dropdown-menu dropdown-menu-right">
-                                                      <li><a href="#">Room 302</a></li>
-                                                      <li><a href="#">Room 307</a></li>
-                                                      <li><a href="#">Room 212</a></li>
-                                                      <li role="separator" class="divider"></li>
-                                                      <li><a href="#">Choose manually</a></li>
+                                                        <li><a href="#">Room 302</a></li>
+                                                        <li><a href="#">Room 307</a></li>
+                                                        <li><a href="#">Room 212</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#">Choose manually</a></li>
                                                     </ul>
                                                 </div><!-- /btn-group -->
                                             </div>
@@ -246,9 +238,9 @@
                                         <div class="form-group col-xs-12">
                                             <div class='input-group date' id='timepicker_duration'>
                                                 <span class="input-group-addon" id="basic-addon1">Participans</span>
-                                                <input type="text" name="name" class="form-control" id="meeting_name"
-                                                placeholder="10 people"
-                                                oninvalid="this.setCustomValidity('Please enter the name')" required/>
+                                                <input type="text" class="form-control" id="meeting_name"
+                                                       placeholder="10 people"
+                                                       oninvalid="this.setCustomValidity('Please enter the name')"/>
                                                 <span class="input-group-btn">
                                                     <button class="btn btn-default" type="button">...</button>
                                                 </span>
@@ -265,10 +257,59 @@
         <div>
             <input type="submit" onclick="onSubmit()" value="Submit" class="btn btn-primary"/>
         </div>
-    <br>
+        <br>
     </form>
 
     <script type="text/javascript">
+        var dragSrcEl = null;
+
+        function handleDragStart(e) {
+            // Target (this) element is the source node.
+            dragSrcEl = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary. Allows us to drop.
+            }
+            e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            // this / e.target is the current hover target.
+
+            this.classList.add('over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('over');  // this / e.target is previous target element.
+        }
+
+        function handleDrop(e) {
+            // this/e.target is current target element.
+            if (e.stopPropagation) {
+                e.stopPropagation(); // Stops some browsers from redirecting.
+            }
+            // Don't do anything if dropping the same column we're dragging.
+            if (dragSrcEl != this) {
+                var temp = $('#' + dragSrcEl.id + '').val();
+                $('#' + dragSrcEl.id + '').val($('#' + this.id + '').val())
+                $('#' + this.id + '').val(temp);
+            }
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            // this/e.target is the source node.
+            [].forEach.call(di, function (col) {
+                col.classList.remove('over');
+            });
+        }
+
+
         $("#relative_meeting").change(function () {
             var relativeInput = $("#relative_meeting_value");
             relativeInput.val($("#relative_meeting option:selected").val());
@@ -355,37 +396,54 @@
 
         $(function () {
             $('#datetimepicker').datetimepicker({
-                minDate : 'now',
+                minDate: 'now',
                 format: 'DD/MM/YYYY'
             });
         });
 
         var topicsCount = 0;
         var ids = [];
+        var di = document.querySelectorAll('#dynamicInput .draggable');
         function addInput(divName) {
-            topicsCount++;
             var newdiv = document.createElement('div');
-            newdiv.setAttribute('id', topicsCount);
+            topicsCount++;
             newdiv.setAttribute('class', 'input-group');
-            ids.push(topicsCount);
+            newdiv.setAttribute('id', topicsCount * 2);
+            ids.push(topicsCount * 2 + 1);
             newdiv.innerHTML =
-                    "<input type='text' class='form-control' placeholder='Topic'>" +
+                    "<input id='" + (topicsCount * 2 + 1) + "' draggable='true' type='text' class='form-control draggable' placeholder='Topic'>" +
                     "<span class='input-group-btn'>" +
                     "<button type='button' class='btn btn-danger' onclick='removeElement("
-                    + topicsCount + ")');'>Remove</button>" +
+                    + (topicsCount * 2) + ")'>Remove</button>" +
                     "</span>";
             document.getElementById(divName).appendChild(newdiv);
+
+            $("#" + topicsCount + "").draggable({
+                containment: "parent"
+            });
+            $(".draggable").draggable();
+
+
+            di = document.querySelectorAll('#dynamicInput .draggable');
+            [].forEach.call(di, function (col) {
+                col.addEventListener('dragstart', handleDragStart, false);
+                col.addEventListener('dragenter', handleDragEnter, false)
+                col.addEventListener('dragover', handleDragOver, false);
+                col.addEventListener('dragleave', handleDragLeave, false);
+                col.addEventListener('drop', handleDrop, false);
+                col.addEventListener('dragend', handleDragEnd, false);
+            });
         }
         function removeElement(id) {
             var elem = document.getElementById(id);
             elem.parentNode.removeChild(elem);
-            ids.remove(id);
+            ids.remove(id+1);
         }
         function onSubmit() {
             var agendaInput = $("#agenda-elems");
             agendaInput.val("");
             $.each(ids, function (i, val) {
-                var agendaElem = $("#dynamicInput").find("#" + val + " input").val();
+                var agendaElem = $("#dynamicInput").find("#" + val).val();
                 agendaInput.val(agendaInput.val() + '\n' + agendaElem);
             });
         }
@@ -404,8 +462,8 @@
                 format: 'hh:mm'
             });
             $('#timepicker_start').datetimepicker({
-                    format: 'LT'
-                });
+                format: 'LT'
             });
+        });
     </script>
 {% endblock %}
