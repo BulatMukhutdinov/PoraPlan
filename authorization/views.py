@@ -48,7 +48,7 @@ def auth_and_login(request, onsuccess='/projects', onfail='sign_in'):
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
-        return redirect(next_page)
+        return redirect("/dashboard")
     else:
         request.session['login_message'] = 'Enter the username and password correctly'
         return redirect(onfail)
