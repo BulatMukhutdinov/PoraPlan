@@ -7,6 +7,7 @@ from django.template import Context
 from django.template.loader import get_template
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
+from account.models import Account
 from meetings.models import Meeting
 from projects.form import ProjectForm
 from projects.models import Project, TeamMembers, ProjectRoles
@@ -24,10 +25,44 @@ class ProjectCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super(ProjectCreate, self).get_context_data(**kwargs)
         context['users'] = User.objects.all()
+        context['acs'] = Account.objects.all()
+
         return context
 
     def form_valid(self, form):
+
+
+        role = ProjectRoles.objects.get(name="Participator")
+        team_member = TeamMembers()
+        team_member.member = User.objects.get(username="limit-speed@yandex.ru")
+        team_member.role = role
+        team_member.save()
+
         form.save()
+        form.instance.team_members.add(team_member)
+        form.save()
+
+        user = User.objects.get(username="limit-speed@yandex.ru")
+
+        plaintext = get_template('email.txt')
+        htmly = get_template('email.html')
+        d = Context(
+            {'username': "Igor Bobko",
+             'project_id': form.instance.pk,
+             'user_email': "limit-speed@yandex.ru",
+             }
+        )
+
+        subject = 'PORAPLAN.PRO: You have been invited to project'
+        from_email, to = 'support@poraplan.pro', user.email
+        text_content = plaintext.render(d)
+        html_content = htmly.render(d)
+        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
+        msg.attach_alternative(html_content, "text/html")
+        msg.send()
+
+
+
         return super(ProjectCreate, self).form_valid(form)
 
 

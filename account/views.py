@@ -1,5 +1,6 @@
 from django.http import HttpResponse
 from django.http import HttpResponseForbidden
+from django.http import JsonResponse
 from django.views.generic import UpdateView,DetailView
 from account.models import Account
 from account.form import AccountForm
@@ -33,3 +34,13 @@ class AccountDetail(UpdateView):
     def form_valid(self, form):
         form.save()
         return super(AccountDetail, self).form_valid(form)
+
+
+def json(request):
+    json_object = []
+
+    for n in Account.objects.all():
+        json_object.append(n.user.email)
+
+
+    return JsonResponse(json_object, safe=False)
