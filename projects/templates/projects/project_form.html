@@ -43,46 +43,80 @@
 
         {{ form.non_field_errors }}
 
-        <table cellpadding="5" cellspacing="5">
-            <tr>
-                <td><label for="{{ form.name.id_for_label }}">Project name:</label></td>
-                <td>{{ form.name.errors }}{{ form.name }}</td>
-            </tr>
+        <label for="{{ form.name.id_for_label }}">Project name:</label>
+        <div>
+            {{ form.name.errors }}{{ form.name }}
+        </div>
 
-            <tr>
-                <td valign="top">
-                    <label for="{{ form.description.id_for_label }}">Description:</label></td>
-                <td>{{ form.description.errors }}{{ form.description }}</td>
-            </tr>
 
-            {% if form.instance.id %}
-                <tr>
-                    <td valign="top">
-                        <label for="{{ form.description.id_for_label }}">Team members:</label></td>
-                    <td>
-                        {{ form.form.team_members.errors }}
-                        <input type="text" id="emailForSending"/>
-                        <button id="inviteButton">Invite</button>
-                        <br/>
-                        {{ form.team_members }}
-                    </td>
-                </tr>
-            {% endif %}
-        </table>
+        <label for="{{ form.description.id_for_label }}">Description:</label>
+        <div>{{ form.description.errors }}{{ form.description }}</div>
 
+        {% if form.instance.id %}
+
+            <label for="{{ form.description.id_for_label }}">Team members:</label>
+            <div>
+                {{ form.form.team_members.errors }}
+                <input type="text" id="emailForSending"/>
+                <button id="inviteButton">Invite</button>
+                <br/>
+                {{ form.team_members }}
+            </div>
+        {% endif %}
+
+        <label for="{{ form.deadline.id_for_label }}">Deadline:</label>
+        <div>{{ form.deadline.errors }}{{ form.deadline }}</div>
+
+{#        <label for="{{ form.deadline.id_for_label }}">Status:</label>#}
+{#        <div>{{ form.status.errors }}{{ form.status }}</div>#}
+
+        <label for="{{ form.deadline.id_for_label }}">Team members </label>
+
+
+        <input type="text" id="member_email" data-provide="typeahead"
+               data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+        <button id="addMemberBtn">Add member</button>
+        <div class="list-group" id="member_group"></div>
+
+
+        <script>
+            function deleteMember(t) {
+                $(t).closest().closest().remove();
+            }
+
+            $('#addMemberBtn').click(function () {
+                $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members[]" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
+                return false;
+            });
+
+
+        </script>
         <br/>
 
         <input type="submit" value="Save" class="btn btn-primary"/>
     </form>
 
     <script type="text/javascript">
+
+        $('[data-provide="typeahead"]').typeahead(
+                {
+                    {#                    source: function(c)#}
+                    {#                    {#}
+                    {#                        console.log(c);#}
+                    {#                        return $.get("/account/json");#}
+                    {#                    }#}
+
+                }
+        );
+
+
         $("#inviteButton").click(function () {
 
             var data = {
                 email: $("#emailForSending").val(),
                 project_id: {{ form.instance.id }}
             };
-            $.get("{% url 'project_invite' %}",data,function(response){
+            $.get("{% url 'project_invite' %}", data, function (response) {
                 alert(response);
             });
             return false;
