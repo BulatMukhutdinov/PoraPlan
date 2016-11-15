@@ -22,10 +22,11 @@
                 </div>
             </div>
         </div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/static/js/jquery-ui.js"></script>
 
         <div class="row">
             <div class="form-group col-md-4" id="project_select">
-                {{ form.project.errors }}
                 <label for="{{ form.message.id_for_label }}">Project</label>
                 {{ form.project }}
                 {#                            <select name="project" class="form-control" id="meeting_project">#}
@@ -46,46 +47,47 @@
                 {#                            </select>#}
             </div>
 
+
             <div class="form-group col-md-4" id="relative_meeting">
                 <label for="relative_meeting">Relative meeting</label>
-                <select name="meeting_type" class="form-control" id="relative_meeting">
-                    <option value="0"></option>
+                <select class="form-control" id="relative_meeting">
+                    <option value=""></option>
                     {% for meeting in relativeMeetings %}
                         <option value="{{ meeting.id }}">{{ meeting }}</option>
                     {% endfor %}
                 </select>
+                <input type="hidden" id="relative_meeting_value" name="relative_meeting"/>
             </div>
 
 
             <div class="bd-example bd-example-tabs" role="tabpanel">
                 <ul class="nav nav-tabs" id="myTab" role="tablist">
                     <li class="nav-item active" aria-expanded="true">
-                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#general_info" role="tab"
+                        <a class="nav-link" id="general-info-tab" data-toggle="tab" href="#general_info" role="tab"
                            aria-controls="general_info" aria-expanded="true">General</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#agenda" role="tab"
+                        <a class="nav-link" id="agenda-tab" data-toggle="tab" href="#agenda" role="tab"
                            aria-controls="profile">Agenda</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="home-tab" data-toggle="tab" href="#materials" role="tab"
-                           aria-controls="general_info"
+                        <a class="nav-link" id="materials-tab" data-toggle="tab" href="#materials" role="tab"
+                           aria-controls="materials"
                         >Materials</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" id="profile-tab" data-toggle="tab" href="#time_place" role="tab"
-                           aria-controls="profile">Time and Place</a>
+                        <a class="nav-link" id="time-place-tab" data-toggle="tab" href="#time_place" role="tab"
+                           aria-controls="time_place">Time and Place</a>
                     </li>
-
                 </ul>
                 <div class="tab-content" id="myTabContent">
-                    <div role="tabpanel" class="tab-pane fade in" aria-expanded="true" id="general_info"
+
+                    <div role="tabpanel" class="tab-pane fade in active" aria-expanded="true" id="general_info"
                          aria-labelledby="home-tab">
                         <div class="form-group col-xs-8">
                             <label for="meeting_name">Name</label>
                             <input type="text" name="name" class="form-control" id="meeting_name"
-                                   placeholder="My meeting"
-                                   oninvalid="this.setCustomValidity('Please enter the name')" required/>
+                                   placeholder="My meeting" required/>
                         </div>
 
                         <div class="form-group col-xs-4">
@@ -102,59 +104,316 @@
                         <div class="form-group col-xs-8">
                             <label for="meeting_purpose">Purpose</label>
                             <input type="text" name="purpose" class="form-control" id="meeting_purpose"
-                                   placeholder="Purpose of the Meeting"
-                                   oninvalid="this.setCustomValidity('Please enter the purpose')" required/>
+                                   placeholder="Purpose of the Meeting" required/>
                         </div>
-                        {#TODO: uncommit when adding members would available#}
-                        {#                        <div class="col-xs-4">#}
-                        {#                            <label for="progress">Add members</label>#}
-                        {#                            <div class="input-group">#}
-                        {#                                <input type="text" class="form-control" placeholder="Search for person...">#}
-                        {#                                <span class="input-group-btn">#}
-                        {#                                    <button class="btn btn-default" type="button">Add</button>#}
-                        {#                                </span>#}
-                        {#                            </div>#}
-                        {#                        </div>#}
 
                         <div class="form-group col-xs-8">
                             <label for="meeting_subject">Subject</label>
                             <input type="text" name="subject" class="form-control" id="meeting_subject"
-                                   placeholder="Identification of Subject matter"
-                                   required/>
+                                   placeholder="Identification of Subject matter" required/>
                         </div>
-
-
                     </div>
+
                     <div class="tab-pane fade" id="agenda" role="tabpanel" aria-labelledby="profile-tab">
                         <div class="form-group">
                             <h3>Agenda</h3>
-
-                            <div id="dynamicInput" class="form-group">
+                            <div id="dynamicInput" class="form-group dynamicInput">
                             </div>
-                            <button type="button" onclick="addInput('dynamicInput');" class="btn btn-info pull-right">
+                            <button type="button" onclick="addInput('dynamicInput');"
+                                    class="btn btn-info pull-right content">
                                 Add item
                             </button>
                             <br>
                         </div>
                         <input type="hidden" id="agenda-elems" name="agenda"/>
                     </div>
+
                     <div class="tab-pane fade" id="materials" role="tabpanel" aria-labelledby="profile-tab">
-                        <h3>Materials</h3>
-                    </div>
-                    <div class="tab-pane fade" id="time_place" role="tabpanel" aria-labelledby="profile-tab">
-                        <h3>Time and Place</h3>
+                        <br/>
+                        <style type="text/css">
+                            .demo-droppable {
+                                background: #eeeeee;
+                                color: #000000;
+                                padding: 50px 0;
+                                cursor: pointer;
+                                text-align: center;
+                            }
+
+                            .demo-droppable.dragover {
+                                background: #c1c1c1;
+                            }
+                        </style>
+                        <div class="demo-droppable">
+                            <p>Drag files here or click to here upload</p>
+                        </div>
+                        <div class="output"></div>
+                        <br/>
                     </div>
 
+                    <div class="tab-pane fade" id="time_place" role="tabpanel" aria-labelledby="profile-tab">
+                        <h3>Choose Place</h3>
+                        <div class="some">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="row">
+                                        <div class=" form-group col-xs-12">
+                                            <label for="meeting_name">Set place requariements</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_projector"/>
+                                            <label for="checkb_projector">Projector</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_white_board"/>
+                                            <label for="checkb_white_board">White board</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_black_board"/>
+                                            <label for="checkb_black_board">Black board</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-right">
+                                            <button class="btn btn-primary" type="button">
+                                                Rooms found <span class="badge">4</span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="meeting_name">Meeting room photo</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <a href="#" class="thumbnail">
+                                            <img src="http://www.claytonhoteldublinairport.com/wp-content/uploads/2015/04/DA-Boardroom-1.jpg"
+                                                 alt="...">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="meeting_name">Change result</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_start'>
+                                                <span class="input-group-addon" id="basic-addon1">Start time</span>
+                                                <input type='text' class="form-control"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_duration'>
+                                                <span class="input-group-addon" id="basic-addon1">Duration</span>
+                                                <input type='text' class="form-control"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1">Place</span>
+                                                <input type="text" class="form-control"
+                                                       id="meeting_time_start"
+                                                       placeholder="Room 104"
+                                                       oninvalid="this.setCustomValidity('Please enter the name')"/>
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false"><span class="caret"></span></button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li><a href="#">Room 302</a></li>
+                                                        <li><a href="#">Room 307</a></li>
+                                                        <li><a href="#">Room 212</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#">Choose manually</a></li>
+                                                    </ul>
+                                                </div><!-- /btn-group -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_duration'>
+                                                <span class="input-group-addon" id="basic-addon1">Participans</span>
+                                                <input type="text" class="form-control" id="meeting_name"
+                                                       placeholder="10 people"
+                                                       oninvalid="this.setCustomValidity('Please enter the name')"/>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">...</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
         <div>
             <input type="submit" onclick="onSubmit()" value="Submit" class="btn btn-primary"/>
         </div>
+        <br>
     </form>
 
     <script type="text/javascript">
-        $('.nav-tabs a:first').tab('show');
+        (function (window) {
+            function triggerCallback(e, callback) {
+                if (!callback || typeof callback !== 'function') {
+                    return;
+                }
+                var files;
+                if (e.dataTransfer) {
+                    files = e.dataTransfer.files;
+                } else if (e.target) {
+                    files = e.target.files;
+                }
+                callback.call(null, files);
+            }
+
+            function makeDroppable(ele, callback) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('multiple', true);
+                input.style.display = 'none';
+                input.addEventListener('change', function (e) {
+                    triggerCallback(e, callback);
+                });
+                ele.appendChild(input);
+
+                ele.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    ele.classList.add('dragover');
+                });
+
+                ele.addEventListener('dragleave', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    ele.classList.remove('dragover');
+                });
+
+                ele.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    ele.classList.remove('dragover');
+                    triggerCallback(e, callback);
+                });
+
+                ele.addEventListener('click', function () {
+                    input.value = null;
+                    input.click();
+                });
+            }
+
+            window.makeDroppable = makeDroppable;
+        })(this);
+        (function (window) {
+            makeDroppable(window.document.querySelector('.demo-droppable'), function (files) {
+                console.log(files);
+                var output = document.querySelector('.output');
+                output.innerHTML = '';
+                for (var i = 0; i < files.length; i++) {
+                    output.innerHTML += '<p>' + files[i].name + '</p>';
+                }
+            });
+        })(this);
+        var dragSrcEl = null;
+
+        function handleDragStart(e) {
+            // Target (this) element is the source node.
+            dragSrcEl = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary. Allows us to drop.
+            }
+            e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            // this / e.target is the current hover target.
+
+            this.classList.add('over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('over');  // this / e.target is previous target element.
+        }
+
+        function handleDrop(e) {
+            // this/e.target is current target element.
+            if (e.stopPropagation) {
+                e.stopPropagation(); // Stops some browsers from redirecting.
+            }
+            // Don't do anything if dropping the same column we're dragging.
+            if (dragSrcEl != this) {
+                var temp = $('#' + dragSrcEl.id + '').val();
+                $('#' + dragSrcEl.id + '').val($('#' + this.id + '').val())
+                $('#' + this.id + '').val(temp);
+
+                temp = $('#' + dragSrcEl.id + 't').val();
+                $('#' + dragSrcEl.id + 't').val($('#' + this.id + 't').val())
+                $('#' + this.id + 't').val(temp);
+            }
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            // this/e.target is the source node.
+            [].forEach.call(di, function (col) {
+                col.classList.remove('over');
+            });
+        }
+
+
+        $("#relative_meeting").change(function () {
+            var relativeInput = $("#relative_meeting_value");
+            relativeInput.val($("#relative_meeting option:selected").val());
+        });
+
+        $("#general-info-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#agenda-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#materials-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#time-place-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        {#        $('.nav-tabs a:first').tab('show');#}
         $("#project_select").change(function () {
             if ($("#project_select option:selected").val() == "") {
                 if (point['project'] == true) {
@@ -183,16 +442,7 @@
             }
             $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
         });
-        {#        $(document).ready(function () {#}
-        {#            if ($("#project_select option:selected").length) {#}
-        {#                alert('!');#}
-        {#            }#}
-        {#        });#}
 
-        {#        $(".nav a").on("click", function () {#}
-        {#            $(".nav-item").find(".active").removeClass("active");#}
-        {#            $(this).parent().addClass("active");#}
-        {#        });#}
         var valeur = 0;
         var point = {
             "meeting_subject": false,
@@ -227,34 +477,64 @@
         });
 
         $(function () {
-            $('#datetimepicker').datetimepicker();
+            $('#datetimepicker').datetimepicker({
+                minDate: 'now',
+                format: 'DD/MM/YYYY'
+            });
         });
+
         var topicsCount = 0;
         var ids = [];
+        var di = document.querySelectorAll('#dynamicInput .draggable');
         function addInput(divName) {
-            topicsCount++;
             var newdiv = document.createElement('div');
-            newdiv.setAttribute('id', topicsCount);
-            newdiv.setAttribute('class', 'input-group');
-            ids.push(topicsCount);
-            newdiv.innerHTML =
-                    "<input type='text' class='form-control' placeholder='Topic'>" +
-                    "<span class='input-group-btn'>" +
-                    "<button type='button' class='btn btn-danger' onclick='removeElement("
-                    + topicsCount + ")');'>Remove</button>" +
-                    "</span>";
+            topicsCount++;
+            newdiv.setAttribute('class', 'row');
+            newdiv.setAttribute('id', topicsCount * 2);
+            ids.push(topicsCount * 2 + 1);
+            newdiv.innerHTML = "<div class='form-group col-xs-8'>" +
+                    "<input id='" + (topicsCount * 2 + 1) + "' draggable='true' type='text'" +
+                    "class='form-control draggable ui-draggable ui-draggable-handle'" +
+                    "placeholder='Topic'></div><div class='input-group col-xs-4'>" +
+                    "<span class='input-group-addon'> <span " +
+                    "class='glyphicon glyphicon-time'></span></span>" +
+                    "<input id='" + (topicsCount * 2 + 1) + "t' type='text' class='form-control' placeholder='Time in minutes'>" +
+                    "<span class='input-group-btn'><button type='button' class='btn btn-danger'" +
+                    "onclick='removeElement(" + (topicsCount * 2 ) + ")'>Remove</button></span></div>";
+            {#            newdiv.innerHTML =#}
+            {#                    "<input id='" + (topicsCount * 2 + 1) + "' draggable='true' type='text' class='form-control draggable' placeholder='Topic'>" +#}
+            {#                    "<span class='input-group-btn'>" +#}
+            {#                    "<button type='button' class='btn btn-danger' onclick='removeElement("#}
+            {#                    + (topicsCount * 2) + ")'>Remove</button>" +#}
+            {#                    "</span>";#}
             document.getElementById(divName).appendChild(newdiv);
+
+            $("#" + (topicsCount * 2 + 1) + "").draggable({
+                containment: "parent"
+            });
+            $(".draggable").draggable();
+
+
+            di = document.querySelectorAll('#dynamicInput .draggable');
+            [].forEach.call(di, function (col) {
+                col.addEventListener('dragstart', handleDragStart, false);
+                col.addEventListener('dragenter', handleDragEnter, false)
+                col.addEventListener('dragover', handleDragOver, false);
+                col.addEventListener('dragleave', handleDragLeave, false);
+                col.addEventListener('drop', handleDrop, false);
+                col.addEventListener('dragend', handleDragEnd, false);
+            });
         }
         function removeElement(id) {
             var elem = document.getElementById(id);
             elem.parentNode.removeChild(elem);
-            ids.remove(id);
+            ids.remove(id + 1);
         }
         function onSubmit() {
             var agendaInput = $("#agenda-elems");
             agendaInput.val("");
             $.each(ids, function (i, val) {
-                var agendaElem = $("#dynamicInput").find("#" + val + " input").val();
+                var agendaElem = $("#dynamicInput").find("#" + val).val();
                 agendaInput.val(agendaInput.val() + '\n' + agendaElem);
             });
         }
@@ -268,5 +548,13 @@
             }
             return this;
         };
+        $(function () {
+            $('#timepicker_duration').datetimepicker({
+                format: 'hh:mm'
+            });
+            $('#timepicker_start').datetimepicker({
+                format: 'LT'
+            });
+        });
     </script>
 {% endblock %}

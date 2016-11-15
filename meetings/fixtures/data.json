@@ -38,7 +38,7 @@
     "model": "meetings.MeetingType",
     "pk": 6,
     "fields": {
-      "type": "Celebrational"
+      "type": "Celebration"
     }
   }
 ]

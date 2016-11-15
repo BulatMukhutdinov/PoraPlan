@@ -79,6 +79,6 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 
-@login_required(login_url='/authorization/login/')
+# @login_required(login_url='/authorization/login/')
 def secured(request):
     return render_to_response("secure.html")
