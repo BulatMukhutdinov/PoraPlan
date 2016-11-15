@@ -1434,6 +1434,9 @@ sup {
 .bgcl-wht {
   background-color: #fff; }
 
+.bgat-fixed {
+  background-attachment: fixed; }
+
 .txsh-whtH {
   text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7); }
 

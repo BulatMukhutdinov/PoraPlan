@@ -63,6 +63,10 @@ $s: add($s, background, $Background, (
 ));
 // background-color
 $s: add($s, background-color, $Background-color, $clrs);
+// background-attachment
+$s: add($s, background-attachment, $Background-attachment, (
+  fixed, fixed,
+));
 
 // Text-shadow
 // ==========================
