@@ -79,13 +79,11 @@ def join(request):
 
 
 def send_invite(request):
-
     user = User.objects.get(username=request.GET["email"])
-
     plaintext = get_template('email.txt')
     htmly = get_template('email.html')
     d = Context(
-        {'username': "Igor Bobko",
+        {'username': user.username,
          'project_id': request.GET["project_id"],
          'user_email': request.GET["email"],
          }
