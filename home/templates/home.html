@@ -1,5 +1,8 @@
 {% extends "base_site.html" %}
 {% block content %}
+<!--IMPORT CUSTOM REUSABLE ELEMENTS-->
+<link href="/static/html/block-elements.html" rel="import">
+
 <!--HEAD-->
 <div class="bgcl-blu4 brd-b-solid brcl-blu40 bxsh-blcM"
   style="padding-bottom:0px;"><!--border-line-->
@@ -14,7 +17,7 @@
             <p class="_txt-capt" style="top:-px;">by Innopolis, Managing Software Development</p>
             <p class="fnwg-bold _txt-subh">Make your planning efficient</p>
           </div>
-          <a href="/projects" target="_blank" class="_col-2 _center-x mrg-t-def
+          <a href="/dashboard" target="_blank" class="_col-2 _center-x mrg-t-def
             _txt-butt _btn _btn-blu">Try now</a>
         </div>
       </div>
@@ -60,46 +63,22 @@
       real-time tracking brings you meetings on the new level. </div>
   </div>
   <div class="_row _gutter">
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 1</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 2</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 3</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 4</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
+    <bl-feature class="_col-3" link="https://test.com">
+      <p class="title">Feature 1</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 2</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 3</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 4</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
   </div>
 
   <!-- SECTION PLAN -->
@@ -110,46 +89,22 @@
       real-time tracking brings you meetings on the new level. </div>
   </div>
   <div class="_row _gutter">
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 1</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 2</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 3</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
-    <div class="_col-3">
-      <!--feature-block-->
-      <div class="brd-solid brcl-blcM pdd-xsm">
-        <p class="pdd-b-xxsm fnwg-bold">Feature 4</p>
-        <p> Elit quaerat a vel dolorum dolores eos, natus. Maiores magnam.  </p>
-        <div class="txal-right pdd-t-xxsm">
-          <a class="_btn _btn-blc" href="#">Read more</a>
-        </div>
-      </div>
-    </div>
+    <bl-feature class="_col-3" link="https://test.com">
+      <p class="title">Feature 1</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 2</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 3</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 4</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
   </div>
 
   <!--DONT WASTE YOUR TIME-->
@@ -160,7 +115,8 @@
       <i class="material-icons pst-relative"
         style="font-size:5rem;top:-5px;">timer</i>
       <div class="_row">
-        <a class="_btn _btn-blu _col-2 _center-x fnwg-bold" target="_blank" href="/projects">Try now</a>
+        <a class="_btn _btn-blu _col-2 _center-x fnwg-bold" target="_blank"
+          href="/dashboard">Try now</a>
       </div>
     </div>
   </div>
