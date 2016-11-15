@@ -2,7 +2,7 @@
 
 {% block page-header %}
     <div class="page-header">
-        <h1>Profile details</h1>
+        <h1>Profile</h1>
     </div>
 {% endblock %}
 {% block content %}
@@ -11,10 +11,12 @@
         {{ form.non_field_errors }}
         <div class="form-group">
             {% if form.instance.avatar %}
-                <img src="/static/images/avatars/{{ form.instance.avatar }}" width="100">
+
+                <img src="/static/images/avatars/{{ form.instance.avatar }}" width="150">
             {% else %}
                 <img src="/static/images/avatars/None/no-photo.png" width="100">
             {% endif %}
+
         </div>
         <div class="form-group">
             <label class="btn btn-primary btn-file">
@@ -23,8 +25,9 @@
         </div>
         <div class="form-group">
             <label for="account_company">Company</label>
-            <input type="text" name="company"  class="form-control" id="account_company" value="{{ form.company.value }}" placeholder="My company"
-                   oninvalid="this.setCustomValidity('Please enter the name of company')"  required>
+            <input type="text" name="company" value="{{ form.company.value }}" class="form-control" id="account_company"
+                   placeholder="My company"
+                   oninvalid="this.setCustomValidity('Please enter the name of company')" required>
         </div>
         <div class="form-group">
             <label for="account_position">Position</label>
