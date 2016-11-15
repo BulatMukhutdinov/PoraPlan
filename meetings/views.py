@@ -1,4 +1,5 @@
 from django.core.urlresolvers import reverse_lazy
+from django.http import Http404
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from meetings.form import MeetingForm
@@ -15,6 +16,10 @@ class MeetingList(ListView):
         context['topics'] = Topic.objects.all()
         # context['projects'] = Project.objects.all()
         return context
+
+
+def meetings(request):
+    return "a"
 
 
 class MeetingCreate(CreateView):
@@ -62,6 +67,7 @@ class MeetingUpdate(UpdateView):
 
 class MeetingDelete(DeleteView):
     model = Meeting
+    template_name = "meeting_delete.html"
     success_url = reverse_lazy('meeting_list')
 
 
