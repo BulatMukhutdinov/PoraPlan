@@ -1,9 +1,13 @@
+import os
+
+from django.conf import settings
+from django.core.files.base import ContentFile
+from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse_lazy
-from django.http import Http404
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
 from meetings.form import MeetingForm
-from meetings.models import Meeting, Agenda, Topic
+from meetings.models import Meeting, Agenda, Topic, MeetingFile
 
 
 class MeetingList(ListView):
@@ -39,9 +43,13 @@ class MeetingCreate(CreateView):
         relative_meeting = str(self.request.POST.get("relative_meeting", ""))
         topics = topics.split("\r\n")
         topics.pop(0)
+
         agenda = Agenda()
         agenda.time = 60
         agenda.save()
+
+        files = self.request.FILES.getlist('file_list')
+
         for topic in topics:
             t = Topic()
             t.name = topic
@@ -51,6 +59,11 @@ class MeetingCreate(CreateView):
         if len(relative_meeting) != 0:
             form.instance.relative_meeting = Meeting.objects.get(pk=relative_meeting)
         form.save()
+        for f in files:
+            meeting_file = MeetingFile()
+            meeting_file.file = f
+            meeting_file.meeting = form.instance
+            meeting_file.save()
         return super(MeetingCreate, self).form_valid(form)
 
 
