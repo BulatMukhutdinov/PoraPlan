@@ -1,4 +1,6 @@
 from __future__ import unicode_literals
+
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 from projects.models import Project
 from projects.models import TeamMembers
@@ -32,6 +34,9 @@ class Topic(models.Model):
     agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT, null=True)
 
 
+fs = FileSystemStorage(location='files')
+
+
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=250, null=True)
@@ -42,6 +47,11 @@ class Meeting(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class MeetingFile(models.Model):
+    file = models.FileField(null=True, storage=fs)
+    meeting = models.ForeignKey(Meeting, on_delete=models.PROTECT, null=True)
 
 
 class MeetingParticipators(models.Model):
