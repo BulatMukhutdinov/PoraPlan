@@ -25,7 +25,68 @@
     </div>
     <hr>
     <h3>Projects members:</h3>
+    {% if form.instance.id %}
+
+            <label for="{{ form.description.id_for_label }}">Team members:</label>
+            <div>
+                {{ form.form.team_members.errors }}
+                <input type="text" id="emailForSending"/>
+                <button id="inviteButton">Invite</button>
+                <br/>
+                {{ form.team_members }}
+            </div>
+        {% endif %}
     <br/>
+    <label for="{{ form.deadline.id_for_label }}">Team members </label>
+
+
+        <input type="text" id="member_email" data-provide="typeahead"
+               data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+        <button id="addMemberBtn">Add member</button>
+        <div class="list-group" id="member_group"></div>
+
+
+        <script>
+            function deleteMember(t) {
+                $(t).closest().closest().remove();
+            }
+
+            $('#addMemberBtn').click(function () {
+                $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members[]" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
+                return false;
+            });
+
+
+        </script>
+        <script type="text/javascript">
+
+            $('[data-provide="typeahead"]').typeahead(
+                    {
+                        {#                    source: function(c)#}
+                        {#                    {#}
+                        {#                        console.log(c);#}
+                        {#                        return $.get("/account/json");#}
+                        {#                    }#}
+
+                    }
+            );
+
+
+            $("#inviteButton").click(function () {
+
+                var data = {
+                    email: $("#emailForSending").val(),
+                    project_id: {{ form.instance.id }}
+                };
+                $.get("{% url 'project_invite' %}", data, function (response) {
+                    alert(response);
+                });
+                return false;
+
+            });
+        </script>
+
+        <br/>
            {% if project.team_members.all|length %}
             <table class="table table-hover">
                 <thead>
