@@ -16,34 +16,67 @@
         </div>
         <div class="form-group">
             <label>Deadline: </label>
-            {{ form.deadline.value }}
+            {{ project.deadline }}
         </div>
         <div class="form-group">
             <label>Status: </label>
-            {{ form.status.value }}
+            {{ project.status }}
         </div>
     </div>
     <hr>
-    <h3>Projects members:</h3>
-    {% if form.instance.id %}
-        <label for="{{ form.description.id_for_label }}">Team members:</label>
-        <div class="list-group">
-            {% for member in team_members %}
-                <div class="list-group-item"><input type="hidden" name="team_members" value="{{ member.email }}"/><a
-                        href="#" style="float:right" onclick="deleteMember(this);return false;">Delete</a> <a
-                        style="margin-right:100px" href="#">{{ member.email }}</a></div>
+     <div style="width:350px">
+    <!--form method="post"-->
+        {% csrf_token %}
 
-            {% endfor %}
+        {{ form.non_field_errors }}
+        {% if form.instance.id %}
+
+            <label for="{{ form.description.id_for_label }}">Team members:</label>
+            <div>
+                {{ form.form.team_members.errors }}
+                <input type="text" id="emailForSending"/>
+                <button id="inviteButton">Invite</button>
+                <br/>
+                {{ project.team_members }}
+            </div>
+        {% endif %}
+
+        <label for="{{ form.team_members.id_for_label }}">Team members </label>
+
+        <div >
+            <input type="email" class="form-control" style="width:230px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+            &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
         </div>
-    {% endif %}
-    <br/>
-    <label for="{{ form.deadline.id_for_label }}">Team members 11</label>
+        <br/>
+        <div class="list-group" id="members"></div>
 
+        <script type="text/javascript">
+            function deleteMember(t) {
+                $(t).parent().remove();
+            }
 
-    <input type="text" id="member_email" data-provide="typeahead"
-           data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
-    <button id="addMemberBtn">Add member</button>
-    <div class="list-group" id="member_group"></div>
+            $('#addMemberBtn').click(function () {
+                var exists = false;
+                var memberEmail = $('#member_email');
+                var email = memberEmail.val();
+                $('[name="team_members"]').each(function (index, e) {
+                    if ($(e).val() == email) {
+                        exists = true;
+                        return false;
+                    }
+                });
+                if (exists) {
+                    memberEmail.parent().attr('class','has-error');
+                    return;
+                }
+                memberEmail.parent().attr('class','has-success');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                return false;
+            });
+        </script>
+        <input type="submit" value="Save" class="btn btn-primary"/>
+    </form>
+    </div>
 
 
     <script>
@@ -73,7 +106,6 @@
 
 
         $("#inviteButton").click(function () {
-
             var data = {
                 email: $("#emailForSending").val(),
                 project_id: {{ form.instance.id }}
@@ -82,7 +114,6 @@
                 alert(response);
             });
             return false;
-
         });
     </script>
 
@@ -147,7 +178,7 @@
             </table>
         {% endif %}
 
-        <a class="btn btn-info" href="{% url 'meeting_new' %}">Add new meeting</a>
+        <a class="btn btn-primary" href="{% url 'meeting_new' %}">Add new meeting</a>
         <br/><br/>
     {% endwith %}
 
