@@ -20,7 +20,7 @@
             <tr>
                 <td><a href="{% url 'project_view' %}?project_id={{ server.id }}">{{ server.name }}</a></td>
                 <td><a href="{% url 'project_edit' server.id %}">edit</a></td>
-                <td><a href="{% url 'project_delete' server.id %}">delete</a></td>
+                <td><a class="btn btn-danger" href="{% url 'project_delete' server.id %}">delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

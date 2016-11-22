@@ -92,7 +92,7 @@
                     return;
                 }
                 memberEmail.parent().attr('class','has-success');
-                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" ><span class="glyphicon glyphicon-remove"></span></a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
                 return false;
             });
         </script>
