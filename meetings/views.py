@@ -1,3 +1,5 @@
+import json
+
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
@@ -17,10 +19,6 @@ class MeetingList(ListView):
         return context
 
 
-def meetings(request):
-    return "a"
-
-
 class MeetingCreate(CreateView):
     model = Meeting
     template_name = "meeting_create.html"
@@ -35,20 +33,23 @@ class MeetingCreate(CreateView):
     def form_valid(self, form, **kwargs):
         topics = self.request.POST.get("agenda", "")
         relative_meeting = str(self.request.POST.get("relative_meeting", ""))
-        topics = topics.split("\r\n")
-        topics.pop(0)
-
+        topics = eval(json.dumps(json.loads(topics)))
         agenda = Agenda()
         agenda.time = 60
         agenda.save()
 
         files = self.request.FILES.getlist('file_list')
+        for key, value in topics.iteritems():
+            for topic in value:
+                t = Topic()
+                t.agenda = agenda
+                for k, v in topic.iteritems():
+                    if k == "name":
+                        t.name = v
+                    if k == "time":
+                        t.time = v
+                t.save()
 
-        for topic in topics:
-            t = Topic()
-            t.name = topic
-            t.agenda = agenda
-            t.save()
         form.instance.agenda = agenda
         if len(relative_meeting) != 0:
             form.instance.relative_meeting = Meeting.objects.get(pk=relative_meeting)

@@ -119,12 +119,14 @@
                                 {% if topics %}
                                     {% for topic in topics %}
                                         <script>
-                                            addInput('dynamicInput');
+                                            $(function addTopics(divName) {
+                                                addInput('dynamicInput', "{{ topic.name }}", "{{ topic.time }}");
+                                            });
                                         </script>
                                     {% endfor %}
                                 {% endif %}
                             </div>
-                            <button type="button" onclick="addInput('dynamicInput');"
+                            <button type="button" onclick="addInput('dynamicInput','','');"
                                     class="btn btn-info pull-right content">
                                 Add item
                             </button>
@@ -504,24 +506,24 @@
         var topicsCount = 0;
         var ids = [];
         var di = document.querySelectorAll('#dynamicInput .draggable');
-        function addInput(divName) {
+        function addInput(divName, name, time) {
             var newdiv = document.createElement('div');
             topicsCount++;
             newdiv.setAttribute('class', 'row');
             newdiv.setAttribute('id', topicsCount * 2);
-            ids.push(topicsCount * 2 + 1);
+            ids.push(topicsCount * 2);
             newdiv.innerHTML = "<div class='form-group col-xs-8'>" +
-                    "<input id='" + (topicsCount * 2 + 1) + "' draggable='true' type='text'" +
-                    "class='form-control draggable ui-draggable ui-draggable-handle'" +
+                    "<input id='" + (topicsCount * 2 + 1) + "n' draggable='true' type='text'" +
+                    "class='form-control draggable ui-draggable ui-draggable-handle' value='" + name + "'" +
                     "placeholder='Topic'></div><div class='input-group col-xs-4'>" +
                     "<span class='input-group-addon'> <span " +
                     "class='glyphicon glyphicon-time'></span></span>" +
-                    "<input id='" + (topicsCount * 2 + 1) + "t' type='text' class='form-control' placeholder='Time in minutes'>" +
+                    "<input id='" + (topicsCount * 2 + 1) + "t' type='text' value='" + time + "' class='form-control' placeholder='Time in minutes'>" +
                     "<span class='input-group-btn'><button type='button' class='btn btn-danger'" +
                     "onclick='removeElement(" + (topicsCount * 2 ) + ")'>Remove</button></span></div>";
             document.getElementById(divName).appendChild(newdiv);
 
-            $("#" + (topicsCount * 2 + 1) + "").draggable({
+            $("#" + (topicsCount * 2 + 1) + "n").draggable({
                 containment: "parent"
             });
             $(".draggable").draggable();
@@ -545,10 +547,19 @@
         function onSubmit() {
             var agendaInput = $("#agenda-elems");
             agendaInput.val("");
+            var topics = {
+                topic: []
+            };
             $.each(ids, function (i, val) {
-                var agendaElem = $("#dynamicInput").find("#" + val).val();
-                agendaInput.val(agendaInput.val() + '\n' + agendaElem);
+
+                var topicName = $("#dynamicInput").find("#" + (val + 1) + "n").val();
+                var topicTime = $("#dynamicInput").find("#" + (val + 1) + "t").val();
+                topics.topic.push({
+                    "name": topicName,
+                    "time": topicTime
+                });
             });
+            agendaInput.val(JSON.stringify(topics));
             var f = $("#files");
             f.val(files);
         }
