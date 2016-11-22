@@ -21,7 +21,7 @@
                 </thead>
                 <tbody>
                 {% for item in meetings %}
-                    <tr>
+                    <tr class='clickable-row' data-href='{% url 'meeting_edit' item.id %}'>
                         <td>{{ item.name }}</td>
                         <td>{{ item.project }}</td>
                         <td>{{ item.meeting_type }}</td>
@@ -32,9 +32,7 @@
                                     {{ topic.name|add:';' }}
                                 {% endif %}
                             {% endfor %}</td>
-                        {#                        <td><a href="{% url 'meeting_edit' item.id %}">edit</a></td>#}
-                        {#                        <td><a  href="{% url 'meeting_delete' item.id %}">delete</a></td>#}
-                        <td><!-- Button trigger modal -->
+                        <td>
                             <button type="button" class="btn btn-danger delete" data-toggle="modal"
                                     data-target="#delete_confirm" data-id="{{ item.id }}">
                                 Delete
@@ -72,6 +70,7 @@
     </div>
     <script>
         var id;
+        var isDelete;
         $('button.delete').on('click', function (e) {
             id = $(this).data('id');
         });
@@ -79,6 +78,20 @@
             var formAction = $('#delete_form').attr('action');
             $('#delete_form').attr('action', formAction + id);
         });
-
+        jQuery(document).ready(function ($) {
+            $("button.delete").hover(function () {
+                isDelete = true;
+            }, function () {
+                isDelete = false;
+            });
+            $(".clickable-row").click(function () {
+                if (!isDelete) {
+                    window.document.location = $(this).data("href");
+                }
+            });
+            $(".clickable-row").hover(function () {
+                $(this).css("cursor", "pointer");
+            });
+        });
     </script>
 {% endblock %}

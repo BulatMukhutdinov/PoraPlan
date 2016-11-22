@@ -71,7 +71,15 @@ class MeetingUpdate(UpdateView):
     model = Meeting
     template_name = "meeting_create.html"
     success_url = reverse_lazy('meeting_list')
-    fields = ['project', 'meeting_type', 'date', 'name']
+    form_class = MeetingForm
+
+    def get_context_data(self, **kwargs):
+        context = super(MeetingUpdate, self).get_context_data(**kwargs)
+        if self.object.relative_meeting is not None:
+            context['relativeMeeting'] = Meeting.objects.get(pk=self.object.relative_meeting.id)
+        context['relativeMeetings'] = Meeting.objects.all
+
+        return context
 
     def form_valid(self, form, **kwargs):
         form.save()

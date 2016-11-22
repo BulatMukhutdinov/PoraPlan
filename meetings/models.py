@@ -21,7 +21,6 @@ class MeetingRoles(models.Model):
 
 class Agenda(models.Model):
     time = models.IntegerField(default=0)
-    # meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
     # time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile',
     #                                 on_delete=models.PROTECT, null=True)
     # # facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile',
@@ -31,7 +30,7 @@ class Agenda(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(max_length=100)
-    agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT, null=True)
+    agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE, null=True)
 
 
 fs = FileSystemStorage(location='files')
@@ -51,7 +50,7 @@ class Meeting(models.Model):
 
 class MeetingFile(models.Model):
     file = models.FileField(null=True, storage=fs)
-    meeting = models.ForeignKey(Meeting, on_delete=models.PROTECT, null=True)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
 
 
 class MeetingParticipators(models.Model):
@@ -69,7 +68,7 @@ class AgendaDetail(models.Model):
     summary = models.TextField(null=True)
     conclusion = models.TextField(null=True)
     solution = models.TextField(null=True)
-    presenter = models.ForeignKey(MeetingParticipators, on_delete=models.PROTECT, null=True)
+    presenter = models.ForeignKey(MeetingParticipators, on_delete=models.CASCADE, null=True)
 
 
 class AgendaAction(models.Model):
