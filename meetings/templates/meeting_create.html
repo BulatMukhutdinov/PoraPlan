@@ -390,10 +390,13 @@
                 var temp = $('#' + dragSrcEl.id + '').val();
                 $('#' + dragSrcEl.id + '').val($('#' + this.id + '').val())
                 $('#' + this.id + '').val(temp);
-
-                temp = $('#' + dragSrcEl.id + 't').val();
-                $('#' + dragSrcEl.id + 't').val($('#' + this.id + 't').val())
-                $('#' + this.id + 't').val(temp);
+                var timeId = dragSrcEl.id + "";
+                var thisTimeId = this.id + "";
+                timeId = timeId.slice(0, -1) + 't';
+                thisTimeId = thisTimeId.slice(0, -1) + 't';
+                temp = $('#' + timeId).val();
+                $('#' + timeId).val($('#' + thisTimeId).val())
+                $('#' + thisTimeId).val(temp);
             }
             return false;
         }
