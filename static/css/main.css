@@ -285,8 +285,11 @@
   margin-left: auto;
   margin-right: auto; }
 
+@media screen and (min-width: 48em) {
+  ._container, .mobile_container {
+    width: 90%; } }
 ._container {
-  width: 1170px; }
+  width: 1100px; }
 
 ._container {
   padding-left: 15px;
@@ -969,19 +972,19 @@ sup {
 .z-n1 {
   z-index: -1; }
 
-.dsp-none {
+.none {
   display: none; }
 
-.dsp-block {
+.block {
   display: block; }
 
-.dsp-inline {
+.inline {
   display: inline; }
 
-.dsp-inline-block {
+.inline-block {
   display: inline-block; }
 
-.dsp-flex {
+.flex {
   display: flex; }
 
 .float-left {
@@ -1147,19 +1150,19 @@ sup {
   .mobile-pst-absolute {
     position: absolute; }
 
-  .mobile-dsp-none {
+  .mobile-none {
     display: none; }
 
-  .mobile-dsp-block {
+  .mobile-block {
     display: block; }
 
-  .mobile-dsp-inline {
+  .mobile-inline {
     display: inline; }
 
-  .mobile-dsp-inline-block {
+  .mobile-inline-block {
     display: inline-block; }
 
-  .mobile-dsp-flex {
+  .mobile-flex {
     display: flex; }
 
   .mobile-visibility-visible {
@@ -1177,19 +1180,19 @@ sup {
   .laptop-pst-absolute {
     position: absolute; }
 
-  .laptop-dsp-none {
+  .laptop-none {
     display: none; }
 
-  .laptop-dsp-block {
+  .laptop-block {
     display: block; }
 
-  .laptop-dsp-inline {
+  .laptop-inline {
     display: inline; }
 
-  .laptop-dsp-inline-block {
+  .laptop-inline-block {
     display: inline-block; }
 
-  .laptop-dsp-flex {
+  .laptop-flex {
     display: flex; }
 
   .laptop-visibility-visible {
@@ -1203,7 +1206,10 @@ sup {
 ._btn:hover, ._btn:visited {
   cursor: pointer; }
 
-.c-gra30 {
+.c-gra20 {
+  color: #fbfbfb; }
+
+.c-gra30, ._link-wht:hover {
   color: #f0f0f0; }
 
 .c-gra40 {
@@ -1266,7 +1272,7 @@ sup {
 .c-blcL {
   color: rgba(9, 9, 9, 0.12); }
 
-.c-wht, ._btn, ._btn:hover, ._btn:visited {
+.c-wht, ._btn, ._btn:hover, ._btn:visited, ._link-wht {
   color: #fff; }
 
 .brd-0 {
@@ -1298,6 +1304,9 @@ sup {
 
 .brd-l-solid {
   border-left: 1px solid; }
+
+.brcl-gra20 {
+  border-color: #fbfbfb; }
 
 .brcl-gra30 {
   border-color: #f0f0f0; }
@@ -1366,7 +1375,13 @@ sup {
   border-color: #fff; }
 
 .bg-nature {
-  background: url(../images/nature1.jpg) center center/cover; }
+  background: rgba(0, 0, 0, 0.3) url(../images/nature1.jpg) center center/cover; }
+
+.bg-city1 {
+  background: rgba(0, 0, 0, 0.3) url(../images/city1.jpg) center center/cover; }
+
+.bgcl-gra20 {
+  background-color: #fbfbfb; }
 
 .bgcl-gra30 {
   background-color: #f0f0f0; }
@@ -1425,7 +1440,7 @@ sup {
 .bgcl-blcH {
   background-color: rgba(9, 9, 9, 0.54); }
 
-.bgcl-blcM {
+.bgcl-blcM, ._link-wht:hover {
   background-color: rgba(9, 9, 9, 0.26); }
 
 .bgcl-blcL {

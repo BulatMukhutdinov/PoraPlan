@@ -1,17 +1,40 @@
 {% extends "base_site.html" %}
 {% block content %}
-<!--IMPORT CUSTOM REUSABLE ELEMENTS-->
+<!--IMPORT REUSABLE ELEMENTS-->
 <link href="/static/html/block-elements.html" rel="import">
+<link href="/static/html/gui-elements.html" rel="import">
 
-<!--HEAD-->
-<div class="bgcl-blu4 brd-b-solid brcl-blu40 bxsh-blcM"
+<!--HEADER-->
+<div id="home" class="bgcl-blu4 brd-b-solid brcl-blu40 bxsh-blcM"
   style="padding-bottom:0px;"><!--border-line-->
   <div class="_row ovr-hidden pst-relative brd-b-solid bxsh-blcM">
     <div class="_col-12 ">
+      <!--MENU-->
+      <div class="_row">
+        <div class="_col-12 pst-relative z-50 bgcl-blcL c-wht">
+          <div class="_row _reverse txal-center">
+            <div class="_col-1">
+              <div class=""><a class="pdd-def block _link-wht" href="#home">Home</a></div>
+            </div>
+            <div class="_col-1">
+              <div class=""><a class="pdd-def block _link-wht" href="#">Team</a></div>
+            </div>
+            <div class="_col-1">
+              <div class=""><a class="pdd-def block _link-wht" href="#">About</a></div>
+            </div>
+            <div class="_col-1">
+              <div class=""><a class="pdd-def block _link-wht"
+                  href="#">Contacts</a></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
       <div class="fill bgcl-blc z-1 opc-lg"></div><!--fill-->
       <div class="fill bg-nature z-0"></div><!--fill-->
       <div class="container">
-        <div class="pst-relative z-5 c-wht txsh-blcM-md txal-center pdd-t-lg pdd-b-lg ">
+        <div class="pst-relative z-5 c-wht txsh-blcM-md txal-center pdd-t-lg
+          pdd-b-xlg ">
           <h1 class="_txt-disp4">PoraPlan<span class="_txt-subh">.pro</span></h1>
           <div class="pst-relative" style="top:-15px;">
             <p class="_txt-capt" style="top:-px;">by Innopolis, Managing Software Development</p>
@@ -25,111 +48,149 @@
   </div>
 </div>
 
-<!--HEAD-->
-<div class="container">
-
-  <!-- FEATURE IMAGES -->
-  <div class="pdd-t-md pdd-b-md">
-    <h2 class="_txt-head txal-center fnwg-bold">All the features you need!</h2>
-    <p class="_txt-capt txal-center pst-relative c-gra60" style="top:-5px;">to
-      bring your meetings on the new level</p>
-    <div class="_row _gutter pdd-t-def">
-      <div class="_col-2 _offs-2 txal-center">
-        <i class="material-icons" style="font-size:5rem">https</i>
-        <p class="fnwg-bold">Fast reservation</p>
-      </div>
-      <div class="_col-2 txal-center">
-        <i class="material-icons" style="font-size:5rem">explore</i>
-        <p class="fnwg-bold">Smart guidelines</p>
-      </div>
-      <div class="_col-2 txal-center">
-        <i class="material-icons" style="font-size:5rem">timeline</i>
-        <p class="fnwg-bold">Tracking</p>
-      </div>
-      <div class="_col-2 txal-center"> <i class="material-icons" style="font-size:5rem">poll</i>
-        <p class="fnwg-bold">Statistics</p>
-      </div>
-    </div>
+<div class="_container z-1 txal-center pdd-t-xlg pdd-b-xlg">
+  <div class="_row _txt-head">
+    <div class="_col-12 c-gra80">PoraPlan.pro is an innovation service to plan
+      meetings that require fast access, guidance and efficiency. We are focusing on building next generation
+      environment that brings your collaborative energy on
+      the new level.</div>
+    <p class="_txt-body txal-center c-gra60 fnst-italic" >&horbar; &nbsp; New
+      York Times &nbsp; &horbar;</p>
   </div>
-
-  <!--separator-->
-  <div class="brd-t-solid brcl-blcL pdd-b-sm mrg-t-"></div>
-
-  <!-- SECTION PLAN -->
-  <h2 class="_txt-head fnwg-bold">Plan your meetings</h2>
-  <div class="_row">
-    <div class="_col-6 pdd-b-def">We provide high quality service to appoint and
-      track day to day meetings. Hints, manuals, real world practice and
-      real-time tracking brings you meetings on the new level. </div>
-  </div>
-  <div class="_row _gutter">
-    <bl-feature class="_col-3" link="https://test.com">
-      <p class="title">Feature 1</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-    <bl-feature class="_col-3" link="#">
-      <p class="title">Feature 2</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-    <bl-feature class="_col-3" link="#">
-      <p class="title">Feature 3</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-    <bl-feature class="_col-3" link="#">
-      <p class="title">Feature 4</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-  </div>
-
-  <!-- SECTION PLAN -->
-  <h2 class="_txt-head txal-right fnwg-bold pdd-t-md">Hold your meeting</h2>
-  <div class="_row">
-    <div class="_col-6 _offs-6 pdd-b-def">We provide high quality service to appoint and
-      track day to day meetings. Hints, manuals, real world practice and
-      real-time tracking brings you meetings on the new level. </div>
-  </div>
-  <div class="_row _gutter">
-    <bl-feature class="_col-3" link="https://test.com">
-      <p class="title">Feature 1</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-    <bl-feature class="_col-3" link="#">
-      <p class="title">Feature 2</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-    <bl-feature class="_col-3" link="#">
-      <p class="title">Feature 3</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-    <bl-feature class="_col-3" link="#">
-      <p class="title">Feature 4</p>
-      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
-    </bl-feature>
-  </div>
-
-  <!--DONT WASTE YOUR TIME-->
-  <div class="_row brd-t-solid brcl-blcM pdd-t-sm mrg-t-md pdd-b-lg">
-    <div class="container txal-center">
-      <h2 class="_txt-head fnwg-bold">Don't waste your time,<br><span
-          class="fnwg-normal pst-relative" style="top:-10px;">start planning!</span></h2>
-      <i class="material-icons pst-relative"
-        style="font-size:5rem;top:-5px;">timer</i>
-      <div class="_row">
-        <a class="_btn _btn-blu _col-2 _center-x fnwg-bold" target="_blank"
-          href="/dashboard">Try now</a>
-      </div>
-    </div>
-  </div>
-
 </div>
+
+
+<!-- <e-separator></e-separator> -->
+
+<!-- SECTION -->
+<div class="_row">
+  <div class="_col-12 pdd-xlg pst-relative">
+    <div class="fill bgcl-wht z-1 opc-xlg"></div><!--fill-->
+    <div class="fill bg-city1 z-0"></div><!--fill-->
+    <div class="_container z-1 txal-center">
+      <h2 class="_txt-head txal-center fnwg-bold">FEATURES</h2>
+    </div>
+  </div>
+</div>
+
+<!-- FEATURES -->
+<div class="pdd-t-lg pdd-b-xlg">
+  <!-- <p class="_txt-capt txal-center pst-relative c-gra60" style="top:-5px;">to
+    bring your meetings on the new level</p> -->
+  <div class="_row _gutter pdd-t-def">
+    <div class="_col-2 _offs-2 txal-center">
+      <i class="material-icons" style="font-size:5rem">https</i>
+      <p class="fnwg-bold">Fast reservation</p>
+    </div>
+    <div class="_col-2 txal-center">
+      <i class="material-icons" style="font-size:5rem">explore</i>
+      <p class="fnwg-bold">Smart guidelines</p>
+    </div>
+    <div class="_col-2 txal-center">
+      <i class="material-icons" style="font-size:5rem">timeline</i>
+      <p class="fnwg-bold">Tracking</p>
+    </div>
+    <div class="_col-2 txal-center"> <i class="material-icons" style="font-size:5rem">poll</i>
+      <p class="fnwg-bold">Statistics</p>
+    </div>
+  </div>
+</div>
+
+<!-- SECTION BLOCKS -->
+<div class="_container">
+  <div class="_row _gutter">
+    <bl-feature class="_col-3" link="https://test.com">
+      <p class="title">Projects</p>
+      You can easily create project group to keep track of any related meetings
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Guidance</p>
+      For
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 3</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 4</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+  </div>
+</div>
+
+<!-- SECTION BLOCKS -->
+<div class="_container">
+  <div class="_row _gutter">
+    <bl-feature class="_col-3" link="https://test.com">
+      <p class="title">Feature 1</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="https://test.com">
+      <p class="title">Feature 2</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 3</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+    <bl-feature class="_col-3" link="#">
+      <p class="title">Feature 4</p>
+      Elit quaerat a vel dolorum dolores eos, natus.  Maiores magnam.
+    </bl-feature>
+  </div>
+</div>
+
+<!-- SECTION -->
+<div class="_row">
+  <div class="_col-12 pdd-xlg pst-relative">
+    <div class="fill bgcl-wht z-1 opc-xlg"></div><!--fill-->
+    <div class="fill bg-city1 z-0"></div><!--fill-->
+    <div class="_container z-1 txal-center">
+      <h2 class="_txt-head txal-center fnwg-bold">TEAM</h2>
+    </div>
+  </div>
+</div>
+
+
+<div class="_row">
+  <div class="_col-12 pdd-xlg pst-relative">
+    <div class="fill bgcl-wht z-1 opc-xlg"></div><!--fill-->
+    <div class="fill bg-city1 z-0"></div><!--fill-->
+    <div class="_container z-1 txal-center">
+      <h2 class="_txt-disp1 fnwg-bold">INNOVATIONS</h2>
+    </div>
+  </div>
+</div>
+
+<!--DONT WASTE YOUR TIME-->
+<div class="_row pdd-b-lg">
+  <div class="_container txal-center">
+    <h2 class="_txt-head fnwg-bold">Don't waste your time,<br><span
+        class="fnwg-normal pst-relative" style="top:-10px;">start planning!</span></h2>
+    <i class="material-icons pst-relative"
+      style="font-size:5rem;top:-5px;">timer</i>
+    <div class="_row">
+      <a class="_btn _btn-blu _col-2 _center-x fnwg-bold" target="_blank"
+        href="/dashboard">Try now</a>
+    </div>
+  </div>
+</div>
+
 
 <!--FOOTER-->
 <div class="pdd-t-xxsm brd-t-sol brcl-blu40 bgcl-blu50">
   <div class="pst-relative bgcl-gra90 bg-nature bgsz-cover" style="background-position-y: 0%;">
     <div class="fill bgcl-blc"></div><!--fill-->
     <!--container-->
-    <div class="container">
-      <div class="_row _gutter c-gra50 txal-left pdd-t-def">
+    <div class="_container">
+      <div class="_row _gutter c-gra50 txal-left pdd-t-lg pdd-b-md">
+        <div class="_col-3">
+          <h4 class="fnwg-bold pdd-b-xxsm">About</h4>
+          <p> This is Innopolis MSD project supervised by Vasilii Artemyev.
+            Python based app that strives for simplicity, performance and
+            great user experience. If you agree - save a link for the future!
+            :)</p>
+        </div>
         <div class="_col-3">
           <h4 class="fnwg-bold pdd-b-xxsm">Development team</h4>
           <p>Bobrov Evgnii <a class="txdc-under" href="https://github.com/Eugenebobrov">@EugeneBobrov</a></p>
@@ -137,10 +198,6 @@
           <p>Bobko Igor <a class="txdc-under" href="https://github.com/IBobko">@IBobko</a> </p>
           <p>Vyacheslav Stepanov <a class="txdc-under" href="https://github.com/sweb2020">@sweb2020</a></p>
           <p>Timur Fayzrakhmanov <a class="txdc-under" href="https://github.com/timfayz">@timfayz</a></p>
-        </div>
-        <div class="_col-3">
-          <h4 class="fnwg-bold pdd-b-xxsm">About</h4>
-          <p> Sit aspernatur corrupti recusandae consequatur veritatis? Facilis commodi nam eos officiis excepturi, pariatur architecto, error? Doloribus vitae nulla quia eaque </p>
         </div>
         <div class="_col-3">
           <h4 class="fnwg-bold pdd-b-xxsm">Technology stack</h4>
@@ -161,7 +218,8 @@
           <br>
         </div>
       </div>
-      <div class="pst-relative pdd-t-xxsm pdd-b-xxsm mrg-t-xsm brd-t-solid brcl-blc">
+      <div class="pst-relative pdd-t-xxsm pdd-b-xxsm mrg-t-xsm brd-t-solid
+        c-gra80 brcl-blc">
         Innopolis University, 2016-2017
       </div>
     </div>
