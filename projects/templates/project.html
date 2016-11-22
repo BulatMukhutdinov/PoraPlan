@@ -57,12 +57,12 @@
             </thead>
             <tbody>
             {% for member in project.team_members.all %}
-                <tr>
-                    <td>{{ member.member.name }}</td>
+                <tr rowid="{{member.member.pk}}">
+                    <td >{{ member.member.name }}</td>
                     <td>{{ member.member.lastname }}</td>
                     <td>{{ member.member.role }}</td>
                     <td>{{ member.member.email }}</td>
-                    <td><a href="{% url 'meeting_delete' member.id %}">delete</a></td>
+                    <td><a href="javascript:deleteMember({{member.member.pk}})">delete</a></td>
                 </tr>
             {% endfor %}
             </tbody>
@@ -73,7 +73,7 @@
 
         <script type="text/javascript">
             function deleteMember(t) {
-                $(t).parent().remove();
+                $("[rowid='"+t+"']").remove();
             }
 
             $('#addMemberBtn').click(function () {
@@ -113,15 +113,15 @@
 
 
         $("#inviteButton").click(function () {
-
-            var data = {
-                email: $("#emailForSending").val(),
-                project_id: {{ form.instance.id }}
-            };
-            $.get("{% url 'project_invite' %}", data, function (response) {
-                alert(response);
-            });
-            return false;
+{##}
+{#            var data = {#}
+{#                email: $("#emailForSending").val(),#}
+{#                project_id: {{ form.instance.id }}#}
+{#            };#}
+{#            $.get("{% url 'project_invite' %}", data, function (response) {#}
+{#                alert(response);#}
+{#            });#}
+{#            return false;#}
 
         });
     </script>
