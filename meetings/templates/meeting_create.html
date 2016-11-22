@@ -29,11 +29,6 @@
             <div class="form-group col-md-4" id="project_select">
                 <label for="{{ form.message.id_for_label }}">Project</label>
                 {{ form.project }}
-                {#                            <select name="project" class="form-control" id="meeting_project">#}
-                {#                                {% for project in projects %}#}
-                {#                                    <option value="{{ project }}">{{ project }}</option>#}
-                {#                                {% endfor %}#}
-                {#                            </select>#}
             </div>
 
 
@@ -51,7 +46,14 @@
                 <select class="form-control" id="relative_meeting">
                     <option value=""></option>
                     {% for meeting in relativeMeetings %}
-                        <option value="{{ meeting.id }}">{{ meeting }}</option>
+                        {% if meeting.id != editMeetingId %}
+                            {% if relativeMeeting and relativeMeeting == meeting %}
+                                <option selected value="{{ meeting.id }}">{{ meeting }}</option>
+                            {% else %}
+                                <option value="{{ meeting.id }}">{{ meeting }}</option>
+                            {% endif %}
+                        {% endif %}
+
                     {% endfor %}
                 </select>
                 <input type="hidden" id="relative_meeting_value" name="relative_meeting"/>
@@ -84,15 +86,15 @@
                          aria-labelledby="home-tab">
                         <div class="form-group col-xs-8">
                             <label for="meeting_name">Name</label>
-                            <input type="text" name="name" class="form-control" id="meeting_name"
-                                   placeholder="My meeting" required/>
+                            {{ form.name }}
+                            {#                            <input type="text" name="name" class="form-control" id="meeting_name"#}
+                            {#                                   placeholder="My meeting" required/>#}
                         </div>
 
                         <div class="form-group col-xs-4">
                             <label for="datetimepicker">Date</label>
                             <div class='input-group date' id='datetimepicker'>
-                                <input name="date" type='text' class="form-control"
-                                       required/>
+                                {{ form.date }}
                                 <span class="input-group-addon">
                                     <span class="glyphicon glyphicon-calendar"></span>
                                 </span>
@@ -101,14 +103,12 @@
 
                         <div class="form-group col-xs-8">
                             <label for="meeting_purpose">Purpose</label>
-                            <input type="text" name="purpose" class="form-control" id="meeting_purpose"
-                                   placeholder="Purpose of the Meeting" required/>
+                            {{ form.purpose }}
                         </div>
 
                         <div class="form-group col-xs-8">
                             <label for="meeting_subject">Subject</label>
-                            <input type="text" name="subject" class="form-control" id="meeting_subject"
-                                   placeholder="Identification of Subject matter" required/>
+                            {{ form.subject }}
                         </div>
                     </div>
 
@@ -116,6 +116,13 @@
                         <div class="form-group">
                             <h3>Agenda</h3>
                             <div id="dynamicInput" class="form-group dynamicInput">
+                                {% if topics %}
+                                    {% for topic in topics %}
+                                        <script>
+                                            addInput('dynamicInput');
+                                        </script>
+                                    {% endfor %}
+                                {% endif %}
                             </div>
                             <button type="button" onclick="addInput('dynamicInput');"
                                     class="btn btn-info pull-right content">
@@ -484,16 +491,21 @@
         });
 
         $(function () {
+            var date = $('#date');
+            var dateValue = date.val();
             $('#datetimepicker').datetimepicker({
                 minDate: 'now',
                 format: 'DD/MM/YYYY'
             });
+            date.val(dateValue);
+            valeur = 0;
         });
 
         var topicsCount = 0;
         var ids = [];
         var di = document.querySelectorAll('#dynamicInput .draggable');
         function addInput(divName) {
+            alert("!");
             var newdiv = document.createElement('div');
             topicsCount++;
             newdiv.setAttribute('class', 'row');
@@ -519,7 +531,7 @@
             di = document.querySelectorAll('#dynamicInput .draggable');
             [].forEach.call(di, function (col) {
                 col.addEventListener('dragstart', handleDragStart, false);
-                col.addEventListener('dragenter', handleDragEnter, false)
+                col.addEventListener('dragenter', handleDragEnter, false);
                 col.addEventListener('dragover', handleDragOver, false);
                 col.addEventListener('dragleave', handleDragLeave, false);
                 col.addEventListener('drop', handleDrop, false);

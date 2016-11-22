@@ -1,8 +1,3 @@
-import os
-
-from django.conf import settings
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
@@ -35,7 +30,6 @@ class MeetingCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super(MeetingCreate, self).get_context_data(**kwargs)
         context['relativeMeetings'] = Meeting.objects.all
-        # context['projects'] = Project.objects.all()
         return context
 
     def form_valid(self, form, **kwargs):
@@ -75,8 +69,11 @@ class MeetingUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(MeetingUpdate, self).get_context_data(**kwargs)
-        if self.object.relative_meeting is not None:
-            context['relativeMeeting'] = Meeting.objects.get(pk=self.object.relative_meeting.id)
+        meeting = self.object
+        context['editMeetingId'] = meeting.id
+        context['topics'] = Topic.objects.filter(agenda=meeting.agenda)
+        if meeting.relative_meeting is not None:
+            context['relativeMeeting'] = Meeting.objects.get(pk=meeting.relative_meeting.id)
         context['relativeMeetings'] = Meeting.objects.all
 
         return context
