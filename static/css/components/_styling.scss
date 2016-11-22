@@ -61,8 +61,11 @@ $s: add($s, border-color, $Border-color, $clrs
 // ==========================
 $s: add($s, background, $Background, (
   nature, rgba(0,0,0,.3) url(../images/nature1.jpg) center center/cover,
-  city1, rgba(0,0,0,.3) url(../images/city1.jpg) center center/cover,
+  city1, url(../images/city1.jpg) center center/cover,
+  city2, url(../images/city2.jpg) center center/cover,
+  city3, url(../images/city3.jpg) center center/cover,
 ));
+
 // background-color
 $s: add($s, background-color, $Background-color, $clrs);
 // background-attachment

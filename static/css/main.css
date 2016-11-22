@@ -1378,7 +1378,13 @@ sup {
   background: rgba(0, 0, 0, 0.3) url(../images/nature1.jpg) center center/cover; }
 
 .bg-city1 {
-  background: rgba(0, 0, 0, 0.3) url(../images/city1.jpg) center center/cover; }
+  background: url(../images/city1.jpg) center center/cover; }
+
+.bg-city2 {
+  background: url(../images/city2.jpg) center center/cover; }
+
+.bg-city3 {
+  background: url(../images/city3.jpg) center center/cover; }
 
 .bgcl-gra20 {
   background-color: #fbfbfb; }
