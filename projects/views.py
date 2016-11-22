@@ -30,38 +30,35 @@ class ProjectCreate(CreateView):
         return context
 
     def form_valid(self, form):
-
-
         role = ProjectRoles.objects.get(name="Participator")
-        team_member = TeamMembers()
-        team_member.member = User.objects.get(username="limit-speed@yandex.ru")
-        team_member.role = role
-        team_member.save()
 
-        form.save()
-        form.instance.team_members.add(team_member)
-        form.save()
+        project = form.save()
 
-        user = User.objects.get(username="limit-speed@yandex.ru")
+        for mail in self.request.POST.getlist("team_members"):
 
-        plaintext = get_template('email.txt')
-        htmly = get_template('email.html')
-        d = Context(
-            {'username': "Igor Bobko",
-             'project_id': form.instance.pk,
-             'user_email': "limit-speed@yandex.ru",
-             }
-        )
+            team_member = TeamMembers()
+            team_member.member = User.objects.get(username=mail)
+            team_member.role = role
+            team_member.save()
+            project.team_members.add(team_member)
 
-        subject = 'PORAPLAN.PRO: You have been invited to project'
-        from_email, to = 'support@poraplan.pro', user.email
-        text_content = plaintext.render(d)
-        html_content = htmly.render(d)
-        msg = EmailMultiAlternatives(subject, text_content, from_email, [to])
-        msg.attach_alternative(html_content, "text/html")
-        msg.send()
+            # Sending mail
+            plaintext = get_template('email.txt')
+            htmly = get_template('email.html')
+            d = Context(
+                {'username': team_member.member.first_name + " " ,
+                 'project_id': form.instance.pk,
+                 'user_email': mail,
+                 }
+            )
 
-
+            subject = 'PORAPLAN.PRO: You have been invited to project'
+            from_email = 'support@poraplan.pro'
+            text_content = plaintext.render(d)
+            html_content = htmly.render(d)
+            msg = EmailMultiAlternatives(subject, text_content, from_email, [mail])
+            msg.attach_alternative(html_content, "text/html")
+            msg.send()
 
         return super(ProjectCreate, self).form_valid(form)
 
@@ -76,16 +73,19 @@ class ProjectDelete(DeleteView):
     model = Project
     success_url = reverse_lazy('project_list')
 
+
 def view(request):
     pk = request.GET["project_id"]
 
     meetings = Meeting.objects.filter(project=Project.objects.get(pk=pk))
+    project = Project.objects.get(pk=pk)
     context = {
-        "project": Project.objects.get(pk=pk),
-        "meetings": meetings
+        "project": project,
+        "meetings": meetings,
+        "team_members" :project.team_members
     }
 
-    return render(request,"project.html",context)
+    return render(request, "project.html", context)
 
 
 def join(request):
@@ -96,8 +96,6 @@ def join(request):
 
     role = ProjectRoles.objects.get(name="Participator")
 
-
-
     team_member = TeamMembers()
     team_member.member = User.objects.get(username=email)
     team_member.role = role
@@ -106,11 +104,11 @@ def join(request):
     obj.save()
 
     context = {
-        "project" : obj,
+        "project": obj,
 
     }
 
-    return render(request,"joined.html",context)
+    return render(request, "joined.html", context)
 
 
 def send_invite(request):

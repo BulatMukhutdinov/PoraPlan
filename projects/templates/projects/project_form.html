@@ -59,8 +59,8 @@
         <label for="{{ form.deadline.id_for_label }}">Deadline:</label>
         <div>{{ form.deadline.errors }}{{ form.deadline }}</div>
 
-        {#        <label for="{{ form.deadline.id_for_label }}">Status:</label>#}
-        {#        <div>{{ form.status.errors }}{{ form.status }}</div>#}
+                <label for="{{ form.deadline.id_for_label }}">Status:</label>
+                <div>{{ form.status.errors }}{{ form.status }}</div>
 
         <label for="{{ form.team_members.id_for_label }}">Team members </label>
 
@@ -92,7 +92,7 @@
                     return;
                 }
                 memberEmail.parent().attr('class','has-success');
-                $('#{{ form.team_members.id_for_label }}').append('<div class="list-group-item"><input type="hidden" name="team_members[]" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                $('#{{ form.team_members.id_for_label }}').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
                 return false;
             });
         </script>
