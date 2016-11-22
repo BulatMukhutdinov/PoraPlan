@@ -17,12 +17,15 @@ class TeamMembers(models.Model):
 class ProjectStatus(models.Model):
     Name = models.CharField(max_length=50)
 
+    def __str__(self):
+        return self.Name
+
 
 class Project(models.Model):
     name = models.CharField(max_length=255)
     description = models.TextField(null=True)
     deadline = models.DateField(null=True)
-    team_members = models.ManyToManyField(TeamMembers)
+    team_members = models.ManyToManyField(TeamMembers,blank=True)
     status = models.ForeignKey(ProjectStatus, on_delete=models.PROTECT, null=True)
 
     def __str__(self):

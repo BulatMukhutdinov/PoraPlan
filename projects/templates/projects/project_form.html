@@ -7,14 +7,6 @@
 {% endblock %}
 
 {% block content %}
-
-    <script type="text/javascript">
-        function t(v) {
-            // $('#members tbody').append($(v).html());
-            $('#id_team_members').append("<option selected value='" + $(v).html() + "'>" + $(v).html() + "</option>");
-        }
-    </script>
-
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document">
@@ -67,29 +59,42 @@
         <label for="{{ form.deadline.id_for_label }}">Deadline:</label>
         <div>{{ form.deadline.errors }}{{ form.deadline }}</div>
 
-{#        <label for="{{ form.deadline.id_for_label }}">Status:</label>#}
-{#        <div>{{ form.status.errors }}{{ form.status }}</div>#}
+                <label for="{{ form.deadline.id_for_label }}">Status:</label>
+                <div>{{ form.status.errors }}{{ form.status }}</div>
 
-        <label for="{{ form.deadline.id_for_label }}">Team members </label>
+        <label for="{{ form.team_members.id_for_label }}">Team members </label>
 
+        <div >
+            <input type="email" class="form-control" style="width:200px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+            &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
+        </div>
+        <br/>
+        <div class="list-group" id="{{ form.team_members.id_for_label }}"></div>
 
-        <input type="text" id="member_email" data-provide="typeahead"
-               data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
-        <button id="addMemberBtn">Add member</button>
-        <div class="list-group" id="member_group"></div>
-
-
-        <script>
+        <script type="text/javascript">
             function deleteMember(t) {
-                $(t).closest().closest().remove();
+                console.log(t);
+                $(t).parent().remove();
             }
 
             $('#addMemberBtn').click(function () {
-                $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members[]" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
+                var exists = false;
+                var memberEmail = $('#member_email');
+                var email = memberEmail.val();
+                $('[name="team_members[]"]').each(function (index, e) {
+                    if ($(e).val() == email) {
+                        exists = true;
+                        return false;
+                    }
+                });
+                if (exists) {
+                    memberEmail.parent().attr('class','has-error');
+                    return;
+                }
+                memberEmail.parent().attr('class','has-success');
+                $('#{{ form.team_members.id_for_label }}').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
                 return false;
             });
-
-
         </script>
         <br/>
 
@@ -109,9 +114,7 @@
                 }
         );
 
-
         $("#inviteButton").click(function () {
-
             var data = {
                 email: $("#emailForSending").val(),
                 project_id: {{ form.instance.id }}
@@ -120,8 +123,8 @@
                 alert(response);
             });
             return false;
-
         });
+
     </script>
 
 {% endblock %}

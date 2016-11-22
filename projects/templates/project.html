@@ -18,7 +18,7 @@
             <label>Deadline: </label>
             {{ form.deadline.value }}
         </div>
-         <div class="form-group">
+        <div class="form-group">
             <label>Status: </label>
             {{ form.status.value }}
         </div>
@@ -26,93 +26,93 @@
     <hr>
     <h3>Projects members:</h3>
     {% if form.instance.id %}
+        <label for="{{ form.description.id_for_label }}">Team members:</label>
+        <div class="list-group">
+            {% for member in team_members %}
+                <div class="list-group-item"><input type="hidden" name="team_members" value="{{ member.email }}"/><a
+                        href="#" style="float:right" onclick="deleteMember(this);return false;">Delete</a> <a
+                        style="margin-right:100px" href="#">{{ member.email }}</a></div>
 
-            <label for="{{ form.description.id_for_label }}">Team members:</label>
-            <div>
-                {{ form.form.team_members.errors }}
-                <input type="text" id="emailForSending"/>
-                <button id="inviteButton">Invite</button>
-                <br/>
-                {{ form.team_members }}
-            </div>
-        {% endif %}
+            {% endfor %}
+        </div>
+    {% endif %}
     <br/>
-    <label for="{{ form.deadline.id_for_label }}">Team members </label>
+    <label for="{{ form.deadline.id_for_label }}">Team members 11</label>
 
 
-        <input type="text" id="member_email" data-provide="typeahead"
-               data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
-        <button id="addMemberBtn">Add member</button>
-        <div class="list-group" id="member_group"></div>
+    <input type="text" id="member_email" data-provide="typeahead"
+           data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+    <button id="addMemberBtn">Add member</button>
+    <div class="list-group" id="member_group"></div>
 
 
-        <script>
-            function deleteMember(t) {
-                $(t).closest().closest().remove();
-            }
+    <script>
+        function deleteMember(t) {
+            $(t).closest().closest().remove();
+        }
 
-            $('#addMemberBtn').click(function () {
-                $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members[]" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
-                return false;
+        $('#addMemberBtn').click(function () {
+            $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
+            return false;
+        });
+
+
+    </script>
+    <script type="text/javascript">
+
+        $('[data-provide="typeahead"]').typeahead(
+                {
+                    {#                    source: function(c)#}
+                    {#                    {#}
+                    {#                        console.log(c);#}
+                    {#                        return $.get("/account/json");#}
+                    {#                    }#}
+
+                }
+        );
+
+
+        $("#inviteButton").click(function () {
+
+            var data = {
+                email: $("#emailForSending").val(),
+                project_id: {{ form.instance.id }}
+            };
+            $.get("{% url 'project_invite' %}", data, function (response) {
+                alert(response);
             });
+            return false;
 
+        });
+    </script>
 
-        </script>
-        <script type="text/javascript">
-
-            $('[data-provide="typeahead"]').typeahead(
-                    {
-                        {#                    source: function(c)#}
-                        {#                    {#}
-                        {#                        console.log(c);#}
-                        {#                        return $.get("/account/json");#}
-                        {#                    }#}
-
-                    }
-            );
-
-
-            $("#inviteButton").click(function () {
-
-                var data = {
-                    email: $("#emailForSending").val(),
-                    project_id: {{ form.instance.id }}
-                };
-                $.get("{% url 'project_invite' %}", data, function (response) {
-                    alert(response);
-                });
-                return false;
-
-            });
-        </script>
-
-        <br/>
-           {% if project.team_members.all|length %}
-            <table class="table table-hover">
-                <thead>
-                <th>First name</th>
-                <th>Last name</th>
-                <th>Role</th>
-                <th>E-mail</th>
-                <th></th>
-                </thead>
-                <tbody>
-                {% for member in project.team_members.all %}
-                    <tr>
-                        <td>{{ member.member.name }}</td>
-                        <td>{{ member.member.lastname }}</td>
-                        <td>{{ member.member.role }}</td>
-                        <td>{{ member.member.email }}</td>
-                        <td><a href="{% url 'meeting_delete' item.id %}">delete</a></td>
-                    </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-        {% endif %}
-<hr>
+    <br/>
+    {% if project.team_members.all|length %}
+        <table class="table table-hover">
+            <thead>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Role</th>
+            <th>E-mail</th>
+            <th></th>
+            </thead>
+            <tbody>
+            {% for member in project.team_members.all %}
+                <tr>
+                    <td>{{ member.member.name }}</td>
+                    <td>{{ member.member.lastname }}</td>
+                    <td>{{ member.member.role }}</td>
+                    <td>{{ member.member.email }}</td>
+                    <td><a href="{% url 'meeting_delete' member.id %}">delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+    <hr>
     <h3>Meetings list</h3>
 
- <br/>
+    <br/>
     {% with related_topics="" %}
         {#Should be inside of concrete meeting#}
         {#    <a href="{% url 'agenda_list' %}">Agendas</a><br/><br/>#}
