@@ -80,6 +80,7 @@
                 var exists = false;
                 var memberEmail = $('#member_email');
                 var email = memberEmail.val();
+                if (email.trim() == "") return;
                 $('[name="team_members"]').each(function (index, e) {
                     if ($(e).val() == email) {
                         exists = true;

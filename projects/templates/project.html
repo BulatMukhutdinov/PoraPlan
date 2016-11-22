@@ -40,24 +40,64 @@
     <label for="{{ form.deadline.id_for_label }}">Team members 11</label>
 
 
-    <input type="text" id="member_email" data-provide="typeahead"
-           data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
-    <button id="addMemberBtn">Add member</button>
-    <div class="list-group" id="member_group"></div>
+          <div >
+            <input type="email" class="form-control" style="width:230px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+            &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
+        </div>
+        <br/>
+        <div class="list-group" id="members">
+    {% if project.team_members.all|length %}
+        <table class="table table-hover">
+            <thead>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Role</th>
+            <th>E-mail</th>
+            <th></th>
+            </thead>
+            <tbody>
+            {% for member in project.team_members.all %}
+                <tr>
+                    <td>{{ member.member.name }}</td>
+                    <td>{{ member.member.lastname }}</td>
+                    <td>{{ member.member.role }}</td>
+                    <td>{{ member.member.email }}</td>
+                    <td><a href="{% url 'meeting_delete' member.id %}">delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+        </div>
+
+        <script type="text/javascript">
+            function deleteMember(t) {
+                $(t).parent().remove();
+            }
+
+            $('#addMemberBtn').click(function () {
+                var exists = false;
+                var memberEmail = $('#member_email');
+                var email = memberEmail.val();
+                if (email.trim() == "") return;
+                $('[name="team_members"]').each(function (index, e) {
+                    if ($(e).val() == email) {
+                        exists = true;
+                        return false;
+                    }
+                });
+                if (exists) {
+                    memberEmail.parent().attr('class','has-error');
+                    return;
+                }
+                memberEmail.parent().attr('class','has-success');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                return false;
+            });
+        </script>
 
 
-    <script>
-        function deleteMember(t) {
-            $(t).closest().closest().remove();
-        }
-
-        $('#addMemberBtn').click(function () {
-            $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
-            return false;
-        });
-
-
-    </script>
     <script type="text/javascript">
 
         $('[data-provide="typeahead"]').typeahead(
@@ -87,28 +127,7 @@
     </script>
 
     <br/>
-    {% if project.team_members.all|length %}
-        <table class="table table-hover">
-            <thead>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Role</th>
-            <th>E-mail</th>
-            <th></th>
-            </thead>
-            <tbody>
-            {% for member in project.team_members.all %}
-                <tr>
-                    <td>{{ member.member.name }}</td>
-                    <td>{{ member.member.lastname }}</td>
-                    <td>{{ member.member.role }}</td>
-                    <td>{{ member.member.email }}</td>
-                    <td><a href="{% url 'meeting_delete' member.id %}">delete</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+
     <hr>
     <h3>Meetings list</h3>
 
