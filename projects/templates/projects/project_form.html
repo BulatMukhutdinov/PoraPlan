@@ -69,7 +69,9 @@
             &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
         </div>
         <br/>
-        <div class="list-group" id="members"></div>
+        <div class="list-group" id="members">
+
+        </div>
 
         <script type="text/javascript">
             function deleteMember(t) {
@@ -80,6 +82,7 @@
                 var exists = false;
                 var memberEmail = $('#member_email');
                 var email = memberEmail.val();
+                if (email.trim() == "") return;
                 $('[name="team_members"]').each(function (index, e) {
                     if ($(e).val() == email) {
                         exists = true;
@@ -88,10 +91,10 @@
                 });
                 if (exists) {
                     memberEmail.parent().attr('class','has-error');
-                    return;
+                    return false;
                 }
                 memberEmail.parent().attr('class','has-success');
-                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" ><span class="glyphicon glyphicon-remove"></span></a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
                 return false;
             });
         </script>

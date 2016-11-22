@@ -16,49 +16,71 @@
         </div>
         <div class="form-group">
             <label>Deadline: </label>
-            {{ project.deadline }}
+            {{ form.deadline.value }}
         </div>
         <div class="form-group">
             <label>Status: </label>
-            {{ project.status }}
+            {{ form.status.value }}
         </div>
     </div>
     <hr>
-     <div style="width:350px">
-    <!--form method="post"-->
-        {% csrf_token %}
+    <h3>Projects members:</h3>
+    {% if form.instance.id %}
+        <label for="{{ form.description.id_for_label }}">Team members:</label>
+        <div class="list-group">
+            {% for member in team_members %}
+                <div class="list-group-item"><input type="hidden" name="team_members" value="{{ member.email }}"/><a
+                        href="#" style="float:right" onclick="deleteMember(this);return false;">Delete</a> <a
+                        style="margin-right:100px" href="#">{{ member.email }}</a></div>
 
-        {{ form.non_field_errors }}
-        {% if form.instance.id %}
+            {% endfor %}
+        </div>
+    {% endif %}
+    <br/>
+    <label for="{{ form.deadline.id_for_label }}">Team members 11</label>
 
-            <label for="{{ form.description.id_for_label }}">Team members:</label>
-            <div>
-                {{ form.form.team_members.errors }}
-                <input type="text" id="emailForSending"/>
-                <button id="inviteButton">Invite</button>
-                <br/>
-                {{ project.team_members }}
-            </div>
-        {% endif %}
 
-        <label for="{{ form.team_members.id_for_label }}">Team members </label>
-
-        <div >
+          <div >
             <input type="email" class="form-control" style="width:230px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
             &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
         </div>
         <br/>
-        <div class="list-group" id="members"></div>
+        <div class="list-group" id="members">
+    {% if project.team_members.all|length %}
+        <table class="table table-hover">
+            <thead>
+            <th>First name</th>
+            <th>Last name</th>
+            <th>Role</th>
+            <th>E-mail</th>
+            <th></th>
+            </thead>
+            <tbody>
+            {% for member in project.team_members.all %}
+                <tr rowid="{{member.member.pk}}">
+                    <td >{{ member.member.name }}</td>
+                    <td>{{ member.member.lastname }}</td>
+                    <td>{{ member.member.role }}</td>
+                    <td>{{ member.member.email }}</td>
+                    <td><a href="javascript:deleteMember({{member.member.pk}})">delete</a></td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+        </div>
 
         <script type="text/javascript">
             function deleteMember(t) {
-                $(t).parent().remove();
+                $("[rowid='"+t+"']").remove();
             }
 
             $('#addMemberBtn').click(function () {
                 var exists = false;
                 var memberEmail = $('#member_email');
                 var email = memberEmail.val();
+                if (email.trim() == "") return;
                 $('[name="team_members"]').each(function (index, e) {
                     if ($(e).val() == email) {
                         exists = true;
@@ -70,27 +92,12 @@
                     return;
                 }
                 memberEmail.parent().attr('class','has-success');
-                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" ><span class="glyphicon glyphicon-remove"></span></a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
                 return false;
             });
         </script>
-        <input type="submit" value="Save" class="btn btn-primary"/>
-    </form>
-    </div>
 
 
-    <script>
-        function deleteMember(t) {
-            $(t).closest().closest().remove();
-        }
-
-        $('#addMemberBtn').click(function () {
-            $('#member_group').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + $('#member_email').val() + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + $('#member_email').val() + '</a></div>');
-            return false;
-        });
-
-
-    </script>
     <script type="text/javascript">
 
         $('[data-provide="typeahead"]').typeahead(
@@ -106,40 +113,21 @@
 
 
         $("#inviteButton").click(function () {
-            var data = {
-                email: $("#emailForSending").val(),
-                project_id: {{ form.instance.id }}
-            };
-            $.get("{% url 'project_invite' %}", data, function (response) {
-                alert(response);
-            });
-            return false;
+{##}
+{#            var data = {#}
+{#                email: $("#emailForSending").val(),#}
+{#                project_id: {{ form.instance.id }}#}
+{#            };#}
+{#            $.get("{% url 'project_invite' %}", data, function (response) {#}
+{#                alert(response);#}
+{#            });#}
+{#            return false;#}
+
         });
     </script>
 
     <br/>
-    {% if project.team_members.all|length %}
-        <table class="table table-hover">
-            <thead>
-            <th>First name</th>
-            <th>Last name</th>
-            <th>Role</th>
-            <th>E-mail</th>
-            <th></th>
-            </thead>
-            <tbody>
-            {% for member in project.team_members.all %}
-                <tr>
-                    <td>{{ member.member.name }}</td>
-                    <td>{{ member.member.lastname }}</td>
-                    <td>{{ member.member.role }}</td>
-                    <td>{{ member.member.email }}</td>
-                    <td><a href="{% url 'meeting_delete' member.id %}">delete</a></td>
-                </tr>
-            {% endfor %}
-            </tbody>
-        </table>
-    {% endif %}
+
     <hr>
     <h3>Meetings list</h3>
 
@@ -178,7 +166,7 @@
             </table>
         {% endif %}
 
-        <a class="btn btn-primary" href="{% url 'meeting_new' %}">Add new meeting</a>
+        <a class="btn btn-info" href="{% url 'meeting_new' %}">Add new meeting</a>
         <br/><br/>
     {% endwith %}
 
