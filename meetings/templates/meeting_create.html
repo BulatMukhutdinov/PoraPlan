@@ -519,7 +519,7 @@
                     "placeholder='Topic'></div><div class='input-group col-xs-4'>" +
                     "<span class='input-group-addon'> <span " +
                     "class='glyphicon glyphicon-time'></span></span>" +
-                    "<input id='" + (topicsCount * 2 + 1) + "t' type='text' value='" + time + "' class='form-control' placeholder='Time in minutes'>" +
+                    "<input onkeypress='return event.charCode >= 48 && event.charCode <= 57' id='" + (topicsCount * 2 + 1) + "t' type='text' value='" + time + "' class='form-control' placeholder='Time in minutes'>" +
                     "<span class='input-group-btn'><button type='button' class='btn btn-danger'" +
                     "onclick='removeElement(" + (topicsCount * 2 ) + ")'>Remove</button></span></div>";
             document.getElementById(divName).appendChild(newdiv);
