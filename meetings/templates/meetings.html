@@ -29,7 +29,7 @@
                         <td>
                             {% for topic in topics %}
                                 {% if topic.agenda == item.agenda %}
-                                    {{ topic.name|add:';' }}
+                                    {{ topic.name|add:' - ' }} {{ topic.time }} minute(s)<br/>
                                 {% endif %}
                             {% endfor %}</td>
                         <td>

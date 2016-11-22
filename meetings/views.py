@@ -1,8 +1,5 @@
-import os
+import json
 
-from django.conf import settings
-from django.core.files.base import ContentFile
-from django.core.files.storage import default_storage
 from django.core.urlresolvers import reverse_lazy
 from django.views.generic import ListView, CreateView, UpdateView, DeleteView
 
@@ -22,10 +19,6 @@ class MeetingList(ListView):
         return context
 
 
-def meetings(request):
-    return "a"
-
-
 class MeetingCreate(CreateView):
     model = Meeting
     template_name = "meeting_create.html"
@@ -35,26 +28,28 @@ class MeetingCreate(CreateView):
     def get_context_data(self, **kwargs):
         context = super(MeetingCreate, self).get_context_data(**kwargs)
         context['relativeMeetings'] = Meeting.objects.all
-        # context['projects'] = Project.objects.all()
         return context
 
     def form_valid(self, form, **kwargs):
         topics = self.request.POST.get("agenda", "")
         relative_meeting = str(self.request.POST.get("relative_meeting", ""))
-        topics = topics.split("\r\n")
-        topics.pop(0)
-
+        topics = eval(json.dumps(json.loads(topics)))
         agenda = Agenda()
         agenda.time = 60
         agenda.save()
 
         files = self.request.FILES.getlist('file_list')
+        for key, value in topics.iteritems():
+            for topic in value:
+                t = Topic()
+                t.agenda = agenda
+                for k, v in topic.iteritems():
+                    if k == "name":
+                        t.name = v
+                    if k == "time":
+                        t.time = v
+                t.save()
 
-        for topic in topics:
-            t = Topic()
-            t.name = topic
-            t.agenda = agenda
-            t.save()
         form.instance.agenda = agenda
         if len(relative_meeting) != 0:
             form.instance.relative_meeting = Meeting.objects.get(pk=relative_meeting)
@@ -75,8 +70,11 @@ class MeetingUpdate(UpdateView):
 
     def get_context_data(self, **kwargs):
         context = super(MeetingUpdate, self).get_context_data(**kwargs)
-        if self.object.relative_meeting is not None:
-            context['relativeMeeting'] = Meeting.objects.get(pk=self.object.relative_meeting.id)
+        meeting = self.object
+        context['editMeetingId'] = meeting.id
+        context['topics'] = Topic.objects.filter(agenda=meeting.agenda)
+        if meeting.relative_meeting is not None:
+            context['relativeMeeting'] = Meeting.objects.get(pk=meeting.relative_meeting.id)
         context['relativeMeetings'] = Meeting.objects.all
 
         return context

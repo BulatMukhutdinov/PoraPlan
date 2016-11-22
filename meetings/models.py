@@ -30,6 +30,7 @@ class Agenda(models.Model):
 
 class Topic(models.Model):
     name = models.CharField(max_length=100)
+    time = models.IntegerField(default=0)
     agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE, null=True)
 
 
@@ -39,9 +40,11 @@ fs = FileSystemStorage(location='files')
 class Meeting(models.Model):
     project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
     name = models.CharField(max_length=250, null=True)
+    purpose = models.CharField(max_length=250, null=True)
+    subject = models.CharField(max_length=250, null=True)
     date = models.CharField(max_length=100, null=True)
     meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
-    agenda = models.ForeignKey(Agenda, on_delete=models.PROTECT, null=True)
+    agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE, null=True)
     relative_meeting = models.ForeignKey("self", null=True, default=None, blank=True)
 
     def __str__(self):
