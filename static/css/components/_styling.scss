@@ -5,6 +5,7 @@ $s: (); // temp sets storage
 // global color set
 $clrs: (
   // gray
+  gra20, m($c,gray200),
   gra30, m($c,gray300),
   gra40, m($c,gray400),
   gra50, m($c,gray500),
@@ -59,10 +60,18 @@ $s: add($s, border-color, $Border-color, $clrs
 // Background
 // ==========================
 $s: add($s, background, $Background, (
-  nature, url(../images/nature1.jpg) center center/cover,
+  nature, rgba(0,0,0,.3) url(../images/nature1.jpg) center center/cover,
+  city1, url(../images/city1.jpg) center center/cover,
+  city2, url(../images/city2.jpg) center center/cover,
+  city3, url(../images/city3.jpg) center center/cover,
 ));
+
 // background-color
 $s: add($s, background-color, $Background-color, $clrs);
+// background-attachment
+$s: add($s, background-attachment, $Background-attachment, (
+  fixed, fixed,
+));
 
 // Text-shadow
 // ==========================
@@ -133,6 +142,17 @@ $s: add($s, box-shadow, $Box-shadow, (
 ._btn-blc:hover {
   @extend .bgcl-gra70;
 }
+
+// LINK
+._link-wht {
+  @extend .c-wht;
+}
+
+._link-wht:hover {
+  @extend .c-gra30;
+  @extend .bgcl-blcM;
+}
+
 
 
 // MISC

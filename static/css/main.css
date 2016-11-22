@@ -375,9 +375,16 @@
     margin-right: auto;
 }
 
+@media screen and (min-width: 48em) {
+  ._container, .mobile_container {
+    width: 90%; } }
 ._container {
+<<<<<<< HEAD
     width: 1170px;
 }
+=======
+  width: 1100px; }
+>>>>>>> PORAPLAN-122
 
 ._container {
     padding-left: 15px;
@@ -1269,25 +1276,20 @@ sup {
     z-index: -1;
 }
 
-.dsp-none {
-    display: none;
-}
+.none {
+  display: none; }
 
-.dsp-block {
-    display: block;
-}
+.block {
+  display: block; }
 
-.dsp-inline {
-    display: inline;
-}
+.inline {
+  display: inline; }
 
-.dsp-inline-block {
-    display: inline-block;
-}
+.inline-block {
+  display: inline-block; }
 
-.dsp-flex {
-    display: flex;
-}
+.flex {
+  display: flex; }
 
 .float-left {
     flt: left;
@@ -1510,25 +1512,20 @@ sup {
         display: none;
     }
 
-    .mobile-dsp-block {
-        display: block;
-    }
+  .mobile-none {
+    display: none; }
 
-    .mobile-dsp-inline {
-        display: inline;
-    }
+  .mobile-block {
+    display: block; }
 
-    .mobile-dsp-inline-block {
-        display: inline-block;
-    }
+  .mobile-inline {
+    display: inline; }
 
-    .mobile-dsp-flex {
-        display: flex;
-    }
+  .mobile-inline-block {
+    display: inline-block; }
 
-    .mobile-visibility-visible {
-        vsb: visible;
-    }
+  .mobile-flex {
+    display: flex; }
 
     .mobile-visibility-hidden {
         vsb: hidden;
@@ -1552,25 +1549,20 @@ sup {
         display: none;
     }
 
-    .laptop-dsp-block {
-        display: block;
-    }
+  .laptop-none {
+    display: none; }
 
-    .laptop-dsp-inline {
-        display: inline;
-    }
+  .laptop-block {
+    display: block; }
 
-    .laptop-dsp-inline-block {
-        display: inline-block;
-    }
+  .laptop-inline {
+    display: inline; }
 
-    .laptop-dsp-flex {
-        display: flex;
-    }
+  .laptop-inline-block {
+    display: inline-block; }
 
-    .laptop-visibility-visible {
-        vsb: visible;
-    }
+  .laptop-flex {
+    display: flex; }
 
     .laptop-visibility-hidden {
         vsb: hidden;
@@ -1585,9 +1577,11 @@ sup {
     cursor: pointer;
 }
 
-.c-gra30 {
-    color: #f0f0f0;
-}
+.c-gra20 {
+  color: #fbfbfb; }
+
+.c-gra30, ._link-wht:hover {
+  color: #f0f0f0; }
 
 .c-gra40 {
     color: #dedede;
@@ -1669,9 +1663,8 @@ sup {
     color: rgba(9, 9, 9, 0.12);
 }
 
-.c-wht, ._btn, ._btn:hover, ._btn:visited {
-    color: #fff;
-}
+.c-wht, ._btn, ._btn:hover, ._btn:visited, ._link-wht {
+  color: #fff; }
 
 .brd-0 {
     border: 0;
@@ -1712,6 +1705,9 @@ sup {
 .brd-l-solid {
     border-left: 1px solid;
 }
+
+.brcl-gra20 {
+  border-color: #fbfbfb; }
 
 .brcl-gra30 {
     border-color: #f0f0f0;
@@ -1802,8 +1798,19 @@ sup {
 }
 
 .bg-nature {
-    background: url(../images/nature1.jpg) center center/cover;
-}
+  background: rgba(0, 0, 0, 0.3) url(../images/nature1.jpg) center center/cover; }
+
+.bg-city1 {
+  background: url(../images/city1.jpg) center center/cover; }
+
+.bg-city2 {
+  background: url(../images/city2.jpg) center center/cover; }
+
+.bg-city3 {
+  background: url(../images/city3.jpg) center center/cover; }
+
+.bgcl-gra20 {
+  background-color: #fbfbfb; }
 
 .bgcl-gra30 {
     background-color: #f0f0f0;
@@ -1881,9 +1888,8 @@ sup {
     background-color: rgba(9, 9, 9, 0.54);
 }
 
-.bgcl-blcM {
-    background-color: rgba(9, 9, 9, 0.26);
-}
+.bgcl-blcM, ._link-wht:hover {
+  background-color: rgba(9, 9, 9, 0.26); }
 
 .bgcl-blcL {
     background-color: rgba(9, 9, 9, 0.12);
@@ -1892,6 +1898,9 @@ sup {
 .bgcl-wht {
     background-color: #fff;
 }
+
+.bgat-fixed {
+  background-attachment: fixed; }
 
 .txsh-whtH {
     text-shadow: 0 1px 1px rgba(255, 255, 255, 0.7);
