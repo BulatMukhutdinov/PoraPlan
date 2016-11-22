@@ -11,9 +11,10 @@ class ProjectForm(forms.ModelForm):
         self.fields['name'].widget.attrs = {'class':'form-control','required':'required'}
         self.fields['description'] = forms.CharField(widget=forms.Textarea)
         self.fields['description'].widget.attrs = {'class':'form-control'}
-        self.fields['deadline'].widget.attrs = {'class': 'form-control'}
+        self.fields['deadline'].widget.attrs = {'class': 'form-control datepicker'}
         self.fields['status'] = forms.ModelChoiceField(
         queryset=ProjectStatus.objects.all())
+        self.fields['status'].widget.attrs = {'class':'form-control'}
 
     class Meta:
          model = Project

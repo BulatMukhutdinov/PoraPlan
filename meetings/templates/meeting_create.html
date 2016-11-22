@@ -10,11 +10,9 @@
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         {{ form.non_field_errors }}
-
         <div>
             <label for="progress">Completes</label>
             <div class="progress progress-striped">
-
                 <div class="progress-bar" role="progressbar" aria-valuenow="60" id="bar_progress" aria-valuemin="0"
                      aria-valuemax="100"
                      style="width: 0%;">

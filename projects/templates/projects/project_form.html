@@ -29,8 +29,8 @@
         </div>
     </div>
 
-
-    <form method="post">
+    <div style="width:350px">
+    <!--form method="post"-->
         {% csrf_token %}
 
         {{ form.non_field_errors }}
@@ -65,15 +65,14 @@
         <label for="{{ form.team_members.id_for_label }}">Team members </label>
 
         <div >
-            <input type="email" class="form-control" style="width:200px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+            <input type="email" class="form-control" style="width:230px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
             &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
         </div>
         <br/>
-        <div class="list-group" id="{{ form.team_members.id_for_label }}"></div>
+        <div class="list-group" id="members"></div>
 
         <script type="text/javascript">
             function deleteMember(t) {
-                console.log(t);
                 $(t).parent().remove();
             }
 
@@ -81,7 +80,7 @@
                 var exists = false;
                 var memberEmail = $('#member_email');
                 var email = memberEmail.val();
-                $('[name="team_members[]"]').each(function (index, e) {
+                $('[name="team_members"]').each(function (index, e) {
                     if ($(e).val() == email) {
                         exists = true;
                         return false;
@@ -92,7 +91,7 @@
                     return;
                 }
                 memberEmail.parent().attr('class','has-success');
-                $('#{{ form.team_members.id_for_label }}').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" >Delete</a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
                 return false;
             });
         </script>
@@ -100,6 +99,7 @@
 
         <input type="submit" value="Save" class="btn btn-primary"/>
     </form>
+    </div>
 
     <script type="text/javascript">
 
@@ -123,6 +123,14 @@
                 alert(response);
             });
             return false;
+        });
+
+
+        $(function () {
+            $('.datepicker').datetimepicker({
+                minDate: 'now',
+                format: 'DD/MM/YYYY'
+            });
         });
 
     </script>
