@@ -1,0 +1,30 @@
+[
+  {
+    "model": "projects.ProjectRoles",
+    "pk": 1,
+    "fields": {
+      "name": "Participator"
+    }
+  },
+  {
+    "model": "projects.ProjectRoles",
+    "pk": 2,
+    "fields": {
+      "name": "Moderator"
+    }
+  },
+  {
+    "model": "projects.ProjectStatus",
+    "pk": 1,
+    "fields": {
+      "Name": "Opened"
+    }
+  },
+    {
+    "model": "projects.ProjectStatus",
+    "pk": 2,
+    "fields": {
+      "Name": "Closed"
+    }
+  }
+]

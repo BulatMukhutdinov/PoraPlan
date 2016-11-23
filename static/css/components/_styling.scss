@@ -1,0 +1,148 @@
+// _set-styling.scss adds visual styles. Do not forget to use colors from _palette.scss.
+// Customize it yourself.
+
+$s: (); // temp sets storage
+// global color set
+$clrs: (
+  // gray
+  gra30, m($c,gray300),
+  gra40, m($c,gray400),
+  gra50, m($c,gray500),
+  gra60, m($c,gray600),
+  gra70, m($c,gray700),
+  gra80, m($c,gray800),
+  gra90, m($c,gray900),
+  // green
+  grn30, m($c,green300),
+  grn40, m($c,green400),
+  grn50, m($c,green500),
+  // blue
+  blu30, m($c,blue300),
+  blu40, m($c,blue400),
+  blu50, m($c,blue500),
+  blu60, m($c,blue600),
+  // violet
+  vlt30, m($c,violet300),
+  vlt40, m($c,violet400),
+  vlt50, m($c,violet500),
+  // blacks
+  blc, m($c,black),
+  blcH, m($c,blackHigh),
+  blcM, m($c,blackMid),
+  blcL, m($c,blackLow),
+  wht, m($c,white),
+);
+
+// Define Sets
+// --------------------------------------------------
+// Color
+// ==========================
+
+$s: add($s, color, $Color, $clrs
+);
+
+// Border
+// ==========================
+$border-set: (
+  0, 0,
+  solid, 1px solid,
+);
+$s: add($s, border, $Border, $border-set);
+$s: add($s, border-top, $Border-top, $border-set);
+$s: add($s, border-right, $Border-right, $border-set);
+$s: add($s, border-bottom, $Border-bottom, $border-set);
+$s: add($s, border-left, $Border-left, $border-set);
+// border-color
+$s: add($s, border-color, $Border-color, $clrs
+);
+
+// Background
+// ==========================
+$s: add($s, background, $Background, (
+  nature, url(../images/nature1.jpg) center center/cover,
+));
+// background-color
+$s: add($s, background-color, $Background-color, $clrs);
+
+// Text-shadow
+// ==========================
+$s: add($s, text-shadow, $Text-shadow, (
+  whtH, 0 1px 1px m($c, whiteHigh),
+  blcH, 0 1px 1px m($c, blackHigh),
+  blcM, 0 1px 1px m($c, blackMid),
+  blcM-md, 0 2px 2px m($c, blackHigh),
+));
+
+// Box-shadow
+// ==========================
+$s: add($s, box-shadow, $Box-shadow, (
+  whtH, 0 1px 1px m($c, whiteHigh),
+  blcH, 0 1px 1px m($c, blackHigh),
+  blcM, 0 1px 1px m($c, blackMid),
+  blcM-md, 0 2px 2px m($c, blackHigh),
+));
+
+// Render Styles
+// --------------------------------------------------
+// cursor selection color
+::selection {
+  background-color: gray;
+}
+
+// Buttons
+// ======================
+._btn {
+  @extend .pdd-xxsm;
+  @extend .c-wht;
+  @extend .brd-solid;
+  @extend .txsh-blcM;
+}
+._btn:hover, ._btn:visited {
+  cursor:pointer;
+  @extend .c-wht;
+}
+// blue
+._btn-blu {
+  @extend .brcl-blu30;
+  @extend .bgcl-blu50;
+}
+._btn-blu:hover {
+  @extend .bgcl-blu40;
+}
+// green
+._btn-grn {
+  @extend .brcl-grn30;
+  @extend .bgcl-grn50;
+}
+._btn-grn:hover {
+  @extend .bgcl-grn40;
+}
+// violet
+._btn-vlt {
+  @extend .brcl-vlt30;
+  @extend .bgcl-vlt50;
+}
+._btn-vlt:hover {
+  @extend .bgcl-vlt40;
+}
+// black
+._btn-blc {
+  @extend .brcl-gra90;
+  @extend .bgcl-gra80;
+}
+._btn-blc:hover {
+  @extend .bgcl-gra70;
+}
+
+
+// MISC
+// ======================
+.fill {
+  @extend .w-100;
+  @extend .h-100;
+  @extend .l-0;
+  @extend .t-0;
+  @extend .pst-absolute;
+}
+// render all stored sets
+@include sets($s, $media);

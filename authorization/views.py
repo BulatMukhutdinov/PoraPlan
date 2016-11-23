@@ -1,7 +1,6 @@
 # Create your views here.
 
 from django.http import HttpResponse
-from django.template import loader
 from django.contrib.auth import authenticate, login, logout
 from django.shortcuts import render, redirect, render_to_response
 from django.contrib.auth.models import User
@@ -23,15 +22,16 @@ def profile(request):
 def sign_up_process(request):
     post = request.POST
     if not user_exists(post['email']):
-        user = create_user(username=post['email'], email=post['email'], password=post['password'])
+        create_user(username=post['email'], email=post['email'], password=post['password'])
         return auth_and_login(request)
     else:
         return redirect("/error")
 
 
 def sign_in(request):
+    if 'next' in request.GET:
+        request.next_page = request.GET['next']
     return render(request, 'sign_in.html')
-
 
 
 def user_exists(username):
@@ -41,12 +41,16 @@ def user_exists(username):
     return True
 
 
-def auth_and_login(request, onsuccess='/', onfail='/error/'):
+def auth_and_login(request, onsuccess='/projects', onfail='sign_in'):
+    next_page = onsuccess
+    if 'next' in request.GET:
+        next_page = request.POST['next']
     user = authenticate(username=request.POST['email'], password=request.POST['password'])
     if user is not None:
         login(request, user)
-        return redirect(onsuccess)
+        return redirect(next_page)
     else:
+        request.session['login_message'] = 'Enter the username and password correctly'
         return redirect(onfail)
 
 
@@ -75,6 +79,6 @@ def vote(request, question_id):
     return HttpResponse("You're voting on question %s." % question_id)
 
 
-@login_required(login_url='/authorization/login/')
+# @login_required(login_url='/authorization/login/')
 def secured(request):
     return render_to_response("secure.html")

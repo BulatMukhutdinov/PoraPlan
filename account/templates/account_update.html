@@ -1,0 +1,76 @@
+{% extends "base.html" %}
+
+{% block page-header %}
+    <div class="page-header">
+        <h1>Profile</h1>
+    </div>
+{% endblock %}
+{% block content %}
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div class="form-group">
+            {% if form.instance.avatar %}
+
+                <img src="/static/images/avatars/{{ form.instance.avatar }}" width="150">
+            {% else %}
+                <img src="/static/images/avatars/None/no-photo.png" width="100">
+            {% endif %}
+
+        </div>
+        <div class="form-group">
+            <label class="btn btn-primary btn-file">
+                Browse <input type="file" name="avatar" style="display: none;">
+            </label>
+        </div>
+        <div class="form-group">
+            <label for="account_company">Company</label>
+            <input type="text" name="company" value="{{ form.company.value }}" class="form-control" id="account_company"
+                   placeholder="My company"
+                   oninvalid="this.setCustomValidity('Please enter the name of company')" required>
+        </div>
+        <div class="form-group">
+            <label for="account_position">Position</label>
+            <input type="text" name="position" value="{{ form.position.value }}" class="form-control"
+                   id="account_position" placeholder="My position"
+                   oninvalid="this.setCustomValidity('Please enter your position in the company')" required>
+        </div>
+        <div class="form-group">
+            <label for="account_phone">Phone</label>
+            <input type="text" name="phone" value="{{ form.phone.value }}" class="form-control"
+                   id="account_phone" placeholder="My phone">
+        </div>
+        <div class="form-group">
+            <label for="account_city">City</label>
+            <input type="text" name="city" value="{{ form.city.value }}" class="form-control"
+                   id="account_city" placeholder="My city">
+        </div>
+        <div class="form-group">
+            <label for="account_country">Country</label>
+            <input type="text" name="country" value="{{ form.country.value }}" class="form-control"
+                   id="account_country" placeholder="My country">
+        </div>
+        <div class="form-group">
+            <label for="account_website">Website</label>
+            <input type="text" name="website" value="{{ form.website.value }}" class="form-control"
+                   id="account_website" placeholder="My website">
+        </div>
+
+        <div class="form-group">
+            <label for="datetimepicker">Birthday</label>
+            <div class='input-group date' id='datetimepicker'>
+                <input name="birthday" type='text' value="{{ form.birthday.value }}" class="form-control"
+                       required/>
+                <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-th"></span>
+                </span>
+            </div>
+        </div>
+        <input type="submit" value="Save" class="btn btn-primary"/>
+    </form>
+    <script type="text/javascript">
+        $(function () {
+            $('#datetimepicker').datetimepicker({format: 'DD/MM/YYYY'});
+        });
+    </script>
+{% endblock %}

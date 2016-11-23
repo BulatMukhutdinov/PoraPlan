@@ -11,6 +11,7 @@ https://docs.djangoproject.com/en/1.10/ref/settings/
 """
 
 import os
+import os.path
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -33,17 +34,19 @@ STATICFILES_DIRS = [
 ]
 
 INSTALLED_APPS = [
+    'authorization.apps.ScriptsConfig',
+    'meetings.apps.MeetingsConfig',
+    'projects.apps.ProjectsConfig',
+    'home.apps.HomeConfig',
+    'account',
+    'place.apps.PlaceConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'authorization',
-    'meetings',
-    'projects',
-    'home',
-    'account',
+
 ]
 
 MIDDLEWARE = [
@@ -121,3 +124,18 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.10/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+LOGIN_URL = '/authorization/sign_in/'
+
+MEDIA_ROOT = os.path.join(BASE_DIR, 'static/images')
+MEDIA_URL = '/images/'
+
+PROJECT_PATH = os.path.dirname(os.path.abspath(__file__))
+
+
+EMAIL_HOST = 'smtp.yandex.ru'
+EMAIL_HOST_USER = 'support@poraplan.pro'
+EMAIL_HOST_PASSWORD = '123456'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True

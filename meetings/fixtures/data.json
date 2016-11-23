@@ -1,0 +1,44 @@
+[
+  {
+    "model": "meetings.MeetingType",
+    "pk": 1,
+    "fields": {
+      "type": "Informational"
+    }
+  },
+  {
+    "model": "meetings.MeetingType",
+    "pk": 2,
+    "fields": {
+      "type": "Planning"
+    }
+  },
+  {
+    "model": "meetings.MeetingType",
+    "pk": 3,
+    "fields": {
+      "type": "Problem solving"
+    }
+  },
+  {
+    "model": "meetings.MeetingType",
+    "pk": 4,
+    "fields": {
+      "type": "Evaluation"
+    }
+  },
+  {
+    "model": "meetings.MeetingType",
+    "pk": 5,
+    "fields": {
+      "type": "Training"
+    }
+  },
+  {
+    "model": "meetings.MeetingType",
+    "pk": 6,
+    "fields": {
+      "type": "Celebration"
+    }
+  }
+]

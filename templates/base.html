@@ -1,14 +1,14 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="gr__getbootstrap_com">
 {% block header %}
     {% include "header.html" %}
 {% endblock %}
 
-<div class="col-sm-9 offset-sm-3 col-md-10 offset-md-2 main">
-    {% block content %}My Cool Website{% endblock %}
-</div>
+<div class="container">
+    {% block page-header %} {% endblock %}
+    {% block content %} {% endblock %}
 
-{% block footer %}
-    {% include "footer.html" %}
-{% endblock %}
+    {% block footer %}
+        {% include "footer.html" %}
+    {% endblock %}
 </html>

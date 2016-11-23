@@ -1,10 +1,141 @@
 {% extends "base.html" %}
 
+{% block page-header %}
+    <div class="page-header">
+        <h1>Create new project</h1>
+    </div>
+{% endblock %}
+
 {% block content %}
-    <h1>Projects</h1>
-    <br/>
-<form method="post">{% csrf_token %}
-    {{ form.as_p }}
-    <input type="submit" value="Submit" />
-</form>
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title" id="myModalLabel">Modal title</h4>
+                </div>
+                <div class="modal-body">
+                    {% for user in users %}
+                        <div onclick="t(this)">{{ user }}</div>
+                    {% endfor %}
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div style="width:350px">
+        <form method="post">
+        {% csrf_token %}
+
+        {{ form.non_field_errors }}
+
+        <label for="{{ form.name.id_for_label }}">Project name:</label>
+        <div>
+            {{ form.name.errors }}{{ form.name }}
+        </div>
+
+
+        <label for="{{ form.description.id_for_label }}">Description:</label>
+        <div>{{ form.description.errors }}{{ form.description }}</div>
+
+        {% if form.instance.id %}
+
+            <label for="{{ form.description.id_for_label }}">Team members:</label>
+            <div>
+                {{ form.form.team_members.errors }}
+                <input type="text" id="emailForSending"/>
+                <button id="inviteButton">Invite</button>
+                <br/>
+                {{ form.team_members }}
+            </div>
+        {% endif %}
+
+        <label for="{{ form.deadline.id_for_label }}">Deadline:</label>
+        <div>{{ form.deadline.errors }}{{ form.deadline }}</div>
+
+                <label for="{{ form.deadline.id_for_label }}">Status:</label>
+                <div>{{ form.status.errors }}{{ form.status }}</div>
+
+        <label for="{{ form.team_members.id_for_label }}">Team members </label>
+
+        <div >
+            <input type="email" class="form-control" style="width:230px;float:left" id="member_email" data-provide="typeahead" data-source='[{% for ac in acs %}"{{ ac.user.email }}",{% endfor %}""]'/>
+            &nbsp;  <button class="btn btn-default" id="addMemberBtn">Add member</button>
+        </div>
+        <br/>
+        <div class="list-group" id="members">
+
+        </div>
+
+        <script type="text/javascript">
+            function deleteMember(t) {
+                $(t).parent().remove();
+            }
+
+            $('#addMemberBtn').click(function () {
+                var exists = false;
+                var memberEmail = $('#member_email');
+                var email = memberEmail.val();
+                if (email.trim() == "") return;
+                $('[name="team_members"]').each(function (index, e) {
+                    if ($(e).val() == email) {
+                        exists = true;
+                        return false;
+                    }
+                });
+                if (exists) {
+                    memberEmail.parent().attr('class','has-error');
+                    return false;
+                }
+                memberEmail.parent().attr('class','has-success');
+                $('#members').append('<div class="list-group-item"><input type="hidden" name="team_members" value="' + email + '"/><a href="#" style="float:right" onclick="deleteMember(this);return false;" ><span class="glyphicon glyphicon-remove"></span></a> <a style="margin-right:100px" href="#">' + email + '</a></div>');
+                return false;
+            });
+        </script>
+        <br/>
+
+        <input type="submit" value="Save" class="btn btn-primary"/>
+    </form>
+    </div>
+
+    <script type="text/javascript">
+
+        $('[data-provide="typeahead"]').typeahead(
+                {
+                    {#                    source: function(c)#}
+                    {#                    {#}
+                    {#                        console.log(c);#}
+                    {#                        return $.get("/account/json");#}
+                    {#                    }#}
+
+                }
+        );
+
+        $("#inviteButton").click(function () {
+            var data = {
+                email: $("#emailForSending").val(),
+                project_id: {{ form.instance.id }}
+            };
+            $.get("{% url 'project_invite' %}", data, function (response) {
+                alert(response);
+            });
+            return false;
+        });
+
+
+        $(function () {
+            $('.datepicker').datetimepicker({
+                minDate: 'now',
+                format: 'DD/MM/YYYY'
+            });
+        });
+
+    </script>
+
 {% endblock %}

@@ -1,10 +1,12 @@
 {% extends "base.html" %}
 
 
-
+{% block page-header %}
+    <div class="page-header">
+        <h1>Projects</h1>
+    </div>
+{% endblock %}
 {% block content %}
-    <h1>Projects</h1>
-    <br/>
     <a class="btn btn-info" href="{% url 'project_new' %}">Add new project</a>
     <br/><br/>
     <table class="table table-hover">
@@ -16,9 +18,9 @@
         <tbody>
         {% for server in object_list %}
             <tr>
-                <td>{{ server.name }} :</td>
+                <td><a href="{% url 'project_view' %}?project_id={{ server.id }}">{{ server.name }}</a></td>
                 <td><a href="{% url 'project_edit' server.id %}">edit</a></td>
-                <td><a href="{% url 'project_delete' server.id %}">delete</a></td>
+                <td><a class="btn btn-danger" href="{% url 'project_delete' server.id %}">delete</a></td>
             </tr>
         {% endfor %}
         </tbody>

@@ -1,31 +1,81 @@
 from __future__ import unicode_literals
+
+from django.core.files.storage import FileSystemStorage
 from django.db import models
 from projects.models import Project
+from projects.models import TeamMembers
+from authorization.models import UserProfile
+
+
+class MeetingType(models.Model):
+    type = models.CharField(max_length=50)
+
+    def __str__(self):
+        return self.type
+
+
+class MeetingRoles(models.Model):
+    type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
+    name = models.CharField(max_length=25)
 
 
 class Agenda(models.Model):
-    date_time = models.DateTimeField(null=True)
+    time = models.IntegerField(default=0)
+    # time_keeper = models.ForeignKey(MeetingParticipators, related_name='time_keeper_user_profile',
+    #                                 on_delete=models.PROTECT, null=True)
+    # # facilitator = models.ForeignKey(MeetingParticipators, related_name='facilitator_user_profile',
+    #                                 on_delete=models.PROTECT, null=True)
+    # created_by = models.ForeignKey(UserProfile, on_delete=models.PROTECT, null=True)
+
+
+class Topic(models.Model):
+    name = models.CharField(max_length=100)
+    time = models.IntegerField(default=0)
+    agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE, null=True)
+
+
+fs = FileSystemStorage(location='files')
+
+
+class Meeting(models.Model):
+    project = models.ForeignKey(Project, on_delete=models.CASCADE, null=True)
+    name = models.CharField(max_length=250, null=True)
+    purpose = models.CharField(max_length=250, null=True)
+    subject = models.CharField(max_length=250, null=True)
+    date = models.CharField(max_length=100, null=True)
+    meeting_type = models.ForeignKey(MeetingType, on_delete=models.PROTECT, null=True)
+    agenda = models.ForeignKey(Agenda, on_delete=models.CASCADE, null=True)
+    relative_meeting = models.ForeignKey("self", null=True, default=None, blank=True)
+
+    def __str__(self):
+        return self.name
+
+
+class MeetingFile(models.Model):
+    file = models.FileField(null=True, storage=fs)
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
+
+
+class MeetingParticipators(models.Model):
+    meeting = models.ForeignKey(Meeting, on_delete=models.CASCADE, null=True)
+    participator = models.ForeignKey(TeamMembers, on_delete=models.PROTECT)
+    role = models.ForeignKey(MeetingRoles, on_delete=models.PROTECT)
+    rate = int
 
 
 class AgendaDetail(models.Model):
     meeting = models.ForeignKey(Agenda, on_delete=models.CASCADE)
-    topic = models.TextField()
+    topic = models.TextField(null=True)
     time_allocated = int
     priority = int
-    summary = models.TextField()
-    conclusion = models.TextField()
-    summary = models.TextField()
+    summary = models.TextField(null=True)
+    conclusion = models.TextField(null=True)
+    solution = models.TextField(null=True)
+    presenter = models.ForeignKey(MeetingParticipators, on_delete=models.CASCADE, null=True)
 
 
 class AgendaAction(models.Model):
     agenda_detail = models.ForeignKey(AgendaDetail, on_delete=models.CASCADE)
     name = models.CharField(max_length=250)
+    responsible = models.ForeignKey(MeetingParticipators, on_delete=models.PROTECT, null=True)
     deadline = models.DateField()
-
-
-class Meeting(models.Model):
-    project = models.ForeignKey(Project, on_delete=models.CASCADE)
-    topic = models.CharField(max_length=250,null=True)
-    date = models.DateTimeField(null=True)
-    agenda = models.OneToOneField(Agenda, on_delete=None,null=True)
-

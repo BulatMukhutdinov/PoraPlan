@@ -11,7 +11,6 @@ class UserProfile(models.Model):
     user = models.OneToOneField(settings.AUTH_USER_MODEL, primary_key=True)
     homepage = models.URLField()
 
-
 def assure_user_profile_exists(pk):
     """
     Creates a user profile if a User exists, but the
