@@ -365,20 +365,8 @@
                     valeur = valeur + persent;
                 }
             }
+            //we do not have to check 'datetimepicker' because it's automatically checks on change when page loads
 
-
-{#            if ($("#datetimepicker1").find("input").val() == "") {#}
-{#                if (point['datetimepicker'] == true) {#}
-{#                    point['datetimepicker'] = false;#}
-{#                    valeur = valeur - persent;#}
-{#                }#}
-{#            } else {#}
-{#                if (point['datetimepicker'] == false) {#}
-{#                    point['datetimepicker'] = true;#}
-{#                    valeur = valeur + persent;#}
-{#                    alert("check data");#}
-{#                }#}
-{#            }#}
             $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
 
         }
@@ -552,6 +540,7 @@
             }
             $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
         });
+
         function findRooms() {
 
         $('#findRoomsButton').html("Rooms found <span class=\"badge\" id=\"spanBageRooms\"></span>");
@@ -575,20 +564,23 @@
 
         $("#datetimepicker1").on("dp.change", function () {
 
-            if ($("#datetimepicker1").val() != "") {
-
+            if ($("#datetimepicker1").find("input").val().length != 10) { //if the lengh 25 (when the page first time load than we do not have to increase progress bar)
+                alert($("#datetimepicker1").find("input").val().length)
                 if (point['datetimepicker'] == true) {
+                    alert("check2");
                     point['datetimepicker'] = false;
                     valeur = valeur - persent;
                 }
-                else {
-                    if (point['datetimepicker'] == false) {
-                        point['datetimepicker'] = true;
-                        valeur = valeur + persent;
+            }
+            else {
+                alert("is it still work? " + $("#datetimepicker1").find("input").val().length)
+                if (point['datetimepicker'] == false) {
+                    point['datetimepicker'] = true;
+                    valeur = valeur + persent;
 
-                    }
                 }
             }
+
             $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
 
         });
@@ -600,7 +592,7 @@
                 valeur = valeur + persent;
                 point[id] = true;
             }
-            if (SubkectElem == "") {
+            if ((SubkectElem == "") && (id != "date")) { //we use $("#datetimepicker1").on("dp.change", function () to substrackt date if it's lenght 0
                 valeur = valeur - persent;
                 point[id] = false;
             }
