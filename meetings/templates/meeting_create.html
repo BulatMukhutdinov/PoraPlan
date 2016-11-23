@@ -552,12 +552,12 @@
             "checkb_projector" : document.getElementById("checkb_projector").checked
         };
 
-            alert(
-                    "projector = " + check['checkb_projector'] + "\n" +
-                    "white board = " + check['checkb_white_board'] + "\n" +
-                    "black board = " + check['checkb_black_board'] + "\n" +
-                    "conference equipment = " + check['checkb_conference_equipment'] + "\n"
-            );
+{#            alert(#}
+{#                    "projector = " + check['checkb_projector'] + "\n" +#}
+{#                    "white board = " + check['checkb_white_board'] + "\n" +#}
+{#                    "black board = " + check['checkb_black_board'] + "\n" +#}
+{#                    "conference equipment = " + check['checkb_conference_equipment'] + "\n"#}
+{#            );#}
             $('#spanBageRooms').html("10")
 
         }
@@ -565,16 +565,13 @@
         $("#datetimepicker1").on("dp.change", function () {
 
             if ($("#datetimepicker1").find("input").val().length != 10) { //if the lengh 25 (when the page first time load than we do not have to increase progress bar)
-                alert($("#datetimepicker1").find("input").val().length)
                 if (point['datetimepicker'] == true) {
-                    alert("check2");
                     point['datetimepicker'] = false;
                     valeur = valeur - persent;
                 }
             }
             else {
-                alert("is it still work? " + $("#datetimepicker1").find("input").val().length)
-                if (point['datetimepicker'] == false) {
+               if (point['datetimepicker'] == false) {
                     point['datetimepicker'] = true;
                     valeur = valeur + persent;
 
