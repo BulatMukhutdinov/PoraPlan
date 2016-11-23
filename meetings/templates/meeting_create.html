@@ -1,0 +1,702 @@
+{% extends "base.html" %}
+
+{#<body onload="script();">#}
+
+{% block page-header %}
+    <div class="page-header">
+        <h1>Create new meeting</h1>
+    </div>
+{% endblock %}
+{% block content %}
+
+    <form method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.non_field_errors }}
+        <div>
+            <label for="progress">Completes</label>
+            <div class="progress progress-striped">
+                <div class="progress-bar" role="progressbar" aria-valuenow="60" id="bar_progress" aria-valuemin="0"
+                     aria-valuemax="100"
+                     style="width: 0%;">
+
+                </div>
+            </div>
+        </div>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        <script src="/static/js/jquery-ui.js"></script>
+
+        <div class="row">
+            <div class="form-group col-md-4" id="project_select">
+                <label for="{{ form.message.id_for_label }}">Project</label>
+                {{ form.project }}
+            </div>
+
+
+            <div class="form-group col-md-4" id="meeting_type">
+                <label for="meeting_type">Meeting type</label>
+                {{ form.meeting_type }}
+                {#                            <select name="meeting_type" class="form-control" id="meeting_type">#}
+                {#                                {% for type in meetingTypes %}#}
+                {#                                    <option value="{{ type }}">{{ type }}</option>#}
+                {#                                {% endfor %}#}
+                {#                            </select>#}
+            </div>
+            <div class="form-group col-md-4" id="relative_meeting">
+                <label for="relative_meeting">Relative meeting</label>
+                <select class="form-control" id="relative_meeting">
+                    <option value=""></option>
+                    {% for meeting in relativeMeetings %}
+                        {% if meeting.id != editMeetingId %}
+                            {% if relativeMeeting and relativeMeeting == meeting %}
+                                <option selected value="{{ meeting.id }}">{{ meeting }}</option>
+                            {% else %}
+                                <option value="{{ meeting.id }}">{{ meeting }}</option>
+                            {% endif %}
+                        {% endif %}
+
+                    {% endfor %}
+                </select>
+                <input type="hidden" id="relative_meeting_value" name="relative_meeting"/>
+            </div>
+
+
+            <div class="bd-example bd-example-tabs" role="tabpanel">
+                <ul class="nav nav-tabs" id="myTab" role="tablist">
+                    <li class="nav-item active" aria-expanded="true">
+                        <a class="nav-link" id="general-info-tab" data-toggle="tab" href="#general_info" role="tab"
+                           aria-controls="general_info" aria-expanded="true">General</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="agenda-tab" data-toggle="tab" href="#agenda" role="tab"
+                           aria-controls="profile">Agenda</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="materials-tab" data-toggle="tab" href="#materials" role="tab"
+                           aria-controls="materials"
+                        >Materials</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" id="time-place-tab" data-toggle="tab" href="#time_place" role="tab"
+                           aria-controls="time_place">Time and Place</a>
+                    </li>
+                </ul>
+                <div class="tab-content" id="myTabContent">
+
+                    <div role="tabpanel" class="tab-pane fade in active" aria-expanded="true" id="general_info"
+                         aria-labelledby="home-tab">
+                        <div class="form-group col-xs-8">
+                            <label for="meeting_name">Name</label>
+                            {{ form.name }}
+                            {#                            <input type="text" name="name" class="form-control" id="meeting_name"#}
+                            {#                                   placeholder="My meeting" required/>#}
+                        </div>
+
+                        <div class="form-group col-xs-4">
+                            <label for="datetimepicker1">Date</label>
+                            <div class='input-group date' id='datetimepicker1'>
+                                {{ form.date }}
+                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="form-group col-xs-8">
+                            <label for="meeting_purpose">Purpose</label>
+                            {{ form.purpose }}
+                        </div>
+
+                        <div class="form-group col-xs-8">
+                            <label for="meeting_subject">Subject</label>
+                            {{ form.subject }}
+                        </div>
+                    </div>
+
+                    <div class="tab-pane fade" id="agenda" role="tabpanel" aria-labelledby="profile-tab">
+                        <div class="form-group">
+                            <h3>Agenda</h3>
+                            <div id="dynamicInput" class="form-group dynamicInput">
+                                {% if topics %}
+                                    {% for topic in topics %}
+                                        <script>
+                                            $(function addTopics(divName) {
+                                                addInput('dynamicInput', "{{ topic.name }}", "{{ topic.time }}");
+                                            });
+                                        </script>
+                                    {% endfor %}
+                                {% endif %}
+                            </div>
+                            <button type="button" onclick="addInput('dynamicInput','','');"
+                                    class="btn btn-info pull-right content">
+                                Add item
+                            </button>
+                            <br>
+                        </div>
+                        <input type="hidden" id="agenda-elems" name="agenda"/>
+                    </div>
+
+                    <div class="tab-pane fade" id="materials" role="tabpanel" aria-labelledby="profile-tab">
+                        <br/>
+                        <style type="text/css">
+                            .demo-droppable {
+                                background: #eeeeee;
+                                color: #000000;
+                                padding: 50px 0;
+                                cursor: pointer;
+                                text-align: center;
+                            }
+
+                            .demo-droppable.dragover {
+                                background: #c1c1c1;
+                            }
+                        </style>
+                        <div class="demo-droppable">
+                            <p>Drag files here or click here to upload</p>
+                        </div>
+                        <div class="output"></div>
+                        <input type="hidden" id="files" name="files"/>
+                        <br/>
+                    </div>
+
+                    <div class="tab-pane fade" id="time_place" role="tabpanel" aria-labelledby="profile-tab">
+                        <h3>Choose Place</h3>
+                        <div class="some">
+                            <div class="row">
+                                <div class="col-xs-3">
+                                    <div class="row">
+                                        <div class=" form-group col-xs-12">
+                                            <label for="meeting_name">Set place requariements</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_projector"/>
+                                            <label for="checkb_projector">Projector</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_white_board"/>
+                                            <label for="checkb_white_board">White board</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_black_board"/>
+                                            <label for="checkb_black_board">Black board</label>
+                                        </div>
+                                    </div>
+                                    <div class="funkyradio row">
+                                        <div class="funkyradio-success form-group col-xs-12">
+                                            <input type="checkbox" name="checkbox" id="checkb_conference_equipment"/>
+                                            <label for="checkb_conference_equipment">Conference equipment</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-xs-12 text-right">
+                                            <button  onclick="findRooms()" class="btn btn-primary" type="button" id="findRoomsButton">
+                                                Search rooms
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-6">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="meeting_name">Meeting room photo</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <a href="#" class="thumbnail">
+                                            <img src="http://www.claytonhoteldublinairport.com/wp-content/uploads/2015/04/DA-Boardroom-1.jpg"
+                                                 alt="...">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="form-group col-xs-3">
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <label for="meeting_name">Change result</label>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_start'>
+                                                <span class="input-group-addon" id="basic-addon1">Start time</span>
+                                                <input type='text' class="form-control"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_duration'>
+                                                <span class="input-group-addon" id="basic-addon1">Duration</span>
+                                                <input type='text' class="form-control"/>
+                                                <span class="input-group-addon">
+                                                    <span class="glyphicon glyphicon-time"></span>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class="input-group">
+                                                <span class="input-group-addon" id="basic-addon1">Place</span>
+                                                <input type="text" class="form-control"
+                                                       id="meeting_time_start"
+                                                       placeholder="Room 104"
+                                                       oninvalid="this.setCustomValidity('Please enter the name')"/>
+                                                <div class="input-group-btn">
+                                                    <button type="button" class="btn btn-default dropdown-toggle"
+                                                            data-toggle="dropdown" aria-haspopup="true"
+                                                            aria-expanded="false"><span class="caret"></span></button>
+                                                    <ul class="dropdown-menu dropdown-menu-right">
+                                                        <li><a href="#">Room 302</a></li>
+                                                        <li><a href="#">Room 307</a></li>
+                                                        <li><a href="#">Room 212</a></li>
+                                                        <li role="separator" class="divider"></li>
+                                                        <li><a href="#">Choose manually</a></li>
+                                                    </ul>
+                                                </div><!-- /btn-group -->
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="form-group col-xs-12">
+                                            <div class='input-group date' id='timepicker_duration'>
+                                                <span class="input-group-addon" id="basic-addon1">Participans</span>
+                                                <input type="text" class="form-control" id="meeting_name"
+                                                       placeholder="10 people"
+                                                       oninvalid="this.setCustomValidity('Please enter the name')"/>
+                                                <span class="input-group-btn">
+                                                    <button class="btn btn-default" type="button">...</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div>
+            <input type="submit" onclick="onSubmit()" value="Submit" class="btn btn-primary"/>
+        </div>
+        <br>
+    </form>
+
+    <script type="text/javascript">
+
+        var valeur = 0;
+        var point = {
+            "project": false,
+            "meeting_type": false,
+            "meeting_name": false,
+            "meeting_purpose": false,
+            "meeting_subject": false,
+            "datetimepicker": false
+        };
+        var persent = 100 / Object.keys(point).length;
+
+    window.onload = function(){
+
+            if ($("#meeting_type option:selected").val() == "") {
+                if (point['meeting_type'] == true) {
+                    point['meeting_type'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['meeting_type'] == false) {
+                    point['meeting_type'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+
+             if ($("#project_select option:selected").val() == "") {
+                if (point['project'] == true) {
+                    point['project'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['project'] == false) {
+                    point['project'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+
+            if ($("#meeting_subject").val() == "") {
+                if (point['meeting_subject'] == true) {
+                    point['meeting_subject'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['meeting_subject'] == false) {
+                    point['meeting_subject'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+
+             if ($("#meeting_name").val() == "") {
+                if (point['meeting_name'] == true) {
+                    point['meeting_name'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['meeting_name'] == false) {
+                    point['meeting_name'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+
+             if ($("#meeting_purpose").val() == "") {
+                if (point['meeting_purpose'] == true) {
+                    point['meeting_purpose'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['meeting_purpose'] == false) {
+                    point['meeting_purpose'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+
+
+{#            if ($("#datetimepicker1").find("input").val() == "") {#}
+{#                if (point['datetimepicker'] == true) {#}
+{#                    point['datetimepicker'] = false;#}
+{#                    valeur = valeur - persent;#}
+{#                }#}
+{#            } else {#}
+{#                if (point['datetimepicker'] == false) {#}
+{#                    point['datetimepicker'] = true;#}
+{#                    valeur = valeur + persent;#}
+{#                    alert("check data");#}
+{#                }#}
+{#            }#}
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
+
+        }
+
+        var files;
+        (function (window) {
+            function triggerCallback(e, callback) {
+                if (!callback || typeof callback !== 'function') {
+                    return;
+                }
+                if (e.dataTransfer) {
+                    files = e.dataTransfer.files;
+                } else if (e.target) {
+                    files = e.target.files;
+                }
+                callback.call(null, files);
+            }
+
+            function makeDroppable(ele, callback) {
+                var input = document.createElement('input');
+                input.setAttribute('type', 'file');
+                input.setAttribute('multiple', true);
+                input.setAttribute('id', 'file_list');
+                input.setAttribute('name', 'file_list');
+                input.style.display = 'none';
+                input.addEventListener('change', function (e) {
+                    triggerCallback(e, callback);
+                });
+                ele.appendChild(input);
+
+                ele.addEventListener('dragover', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    ele.classList.add('dragover');
+                });
+
+                ele.addEventListener('dragleave', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    ele.classList.remove('dragover');
+                });
+
+                ele.addEventListener('drop', function (e) {
+                    e.preventDefault();
+                    e.stopPropagation();
+                    ele.classList.remove('dragover');
+                    triggerCallback(e, callback);
+                });
+
+                ele.addEventListener('click', function () {
+                    input.value = null;
+                    input.click();
+                });
+            }
+
+            window.makeDroppable = makeDroppable;
+        })(this);
+        (function (window) {
+            makeDroppable(window.document.querySelector('.demo-droppable'), function (files) {
+                console.log(files);
+                var output = document.querySelector('.output');
+                output.innerHTML = '';
+                for (var i = 0; i < files.length; i++) {
+                    output.innerHTML += '<p>' + files[i].name + '</p>';
+                }
+            });
+        })(this);
+        var dragSrcEl = null;
+
+        function handleDragStart(e) {
+            // Target (this) element is the source node.
+            dragSrcEl = this;
+            e.dataTransfer.effectAllowed = 'move';
+            e.dataTransfer.setData('text/html', this.innerHTML);
+        }
+
+        function handleDragOver(e) {
+            if (e.preventDefault) {
+                e.preventDefault(); // Necessary. Allows us to drop.
+            }
+            e.dataTransfer.dropEffect = 'move';  // See the section on the DataTransfer object.
+            return false;
+        }
+
+        function handleDragEnter(e) {
+            // this / e.target is the current hover target.
+
+            this.classList.add('over');
+        }
+
+        function handleDragLeave(e) {
+            this.classList.remove('over');  // this / e.target is previous target element.
+        }
+
+        function handleDrop(e) {
+            // this/e.target is current target element.
+            if (e.stopPropagation) {
+                e.stopPropagation(); // Stops some browsers from redirecting.
+            }
+            // Don't do anything if dropping the same column we're dragging.
+            if (dragSrcEl != this) {
+                var temp = $('#' + dragSrcEl.id + '').val();
+                $('#' + dragSrcEl.id + '').val($('#' + this.id + '').val())
+                $('#' + this.id + '').val(temp);
+                var timeId = dragSrcEl.id + "";
+                var thisTimeId = this.id + "";
+                timeId = timeId.slice(0, -1) + 't';
+                thisTimeId = thisTimeId.slice(0, -1) + 't';
+                temp = $('#' + timeId).val();
+                $('#' + timeId).val($('#' + thisTimeId).val())
+                $('#' + thisTimeId).val(temp);
+            }
+            return false;
+        }
+
+        function handleDragEnd(e) {
+            // this/e.target is the source node.
+            [].forEach.call(di, function (col) {
+                col.classList.remove('over');
+            });
+        }
+
+
+        $("#relative_meeting").change(function () {
+            var relativeInput = $("#relative_meeting_value");
+            relativeInput.val($("#relative_meeting option:selected").val());
+        });
+
+        $("#general-info-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#agenda-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#materials-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        $("#time-place-tab").click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        {#        $('.nav-tabs a:first').tab('show');#}
+        $("#project_select").change(function () {
+            if ($("#project_select option:selected").val() == "") {
+                if (point['project'] == true) {
+                    point['project'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['project'] == false) {
+                    point['project'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
+        });
+        $("#meeting_type").change(function () {
+            if ($("#meeting_type option:selected").val() == "") {
+                if (point['meeting_type'] == true) {
+                    point['meeting_type'] = false;
+                    valeur = valeur - persent;
+                }
+            } else {
+                if (point['meeting_type'] == false) {
+                    point['meeting_type'] = true;
+                    valeur = valeur + persent;
+                }
+            }
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
+        });
+        function findRooms() {
+
+        $('#findRoomsButton').html("Rooms found <span class=\"badge\" id=\"spanBageRooms\"></span>");
+
+            var check = {
+            "checkb_black_board" : document.getElementById("checkb_black_board").checked,
+            "checkb_conference_equipment" : document.getElementById("checkb_conference_equipment").checked,
+            "checkb_white_board" : document.getElementById("checkb_white_board").checked,
+            "checkb_projector" : document.getElementById("checkb_projector").checked
+        };
+
+            alert(
+                    "projector = " + check['checkb_projector'] + "\n" +
+                    "white board = " + check['checkb_white_board'] + "\n" +
+                    "black board = " + check['checkb_black_board'] + "\n" +
+                    "conference equipment = " + check['checkb_conference_equipment'] + "\n"
+            );
+            $('#spanBageRooms').html("10")
+
+        }
+
+        $("#datetimepicker1").on("dp.change", function () {
+
+            if ($("#datetimepicker1").val() != "") {
+
+                if (point['datetimepicker'] == true) {
+                    point['datetimepicker'] = false;
+                    valeur = valeur - persent;
+                }
+                else {
+                    if (point['datetimepicker'] == false) {
+                        point['datetimepicker'] = true;
+                        valeur = valeur + persent;
+
+                    }
+                }
+            }
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).html(Math.round(valeur) + "%");
+
+        });
+
+        $('input').on('input', function () {
+            var SubkectElem = $(this).val();
+            var id = this.id.toString()
+            if ((SubkectElem != "") && (point[id] == false)) {
+                valeur = valeur + persent;
+                point[id] = true;
+            }
+            if (SubkectElem == "") {
+                valeur = valeur - persent;
+                point[id] = false;
+            }
+            $('.progress-bar').css('width', valeur + '%').attr('aria-valuenow', valeur).attr('val', valeur).html(Math.round(valeur) + "%");
+        });
+
+
+        $(function () {
+            var date = $('#date');
+            var dateValue = date.val();
+            $('#datetimepicker1').datetimepicker({
+                minDate: 'now',
+                format: 'DD/MM/YYYY'
+            });
+            date.val(dateValue);
+
+        });
+
+        var topicsCount = 0;
+        var ids = [];
+        var di = document.querySelectorAll('#dynamicInput .draggable');
+        function addInput(divName, name, time) {
+            var newdiv = document.createElement('div');
+            topicsCount++;
+            newdiv.setAttribute('class', 'row');
+            newdiv.setAttribute('id', topicsCount * 2);
+            ids.push(topicsCount * 2);
+            newdiv.innerHTML = "<div class='form-group col-xs-8'>" +
+                    "<input id='" + (topicsCount * 2 + 1) + "n' draggable='true' type='text'" +
+                    "class='form-control draggable ui-draggable ui-draggable-handle' value='" + name + "'" +
+                    "placeholder='Topic'></div><div class='input-group col-xs-4'>" +
+                    "<span class='input-group-addon'> <span " +
+                    "class='glyphicon glyphicon-time'></span></span>" +
+                    "<input onkeypress='return event.charCode >= 48 && event.charCode <= 57' id='" + (topicsCount * 2 + 1) + "t' type='text' value='" + time + "' class='form-control' placeholder='Time in minutes'>" +
+                    "<span class='input-group-btn'><button type='button' class='btn btn-danger'" +
+                    "onclick='removeElement(" + (topicsCount * 2 ) + ")'>Remove</button></span></div>";
+            document.getElementById(divName).appendChild(newdiv);
+
+            $("#" + (topicsCount * 2 + 1) + "n").draggable({
+                containment: "parent"
+            });
+            $(".draggable").draggable();
+
+
+            di = document.querySelectorAll('#dynamicInput .draggable');
+            [].forEach.call(di, function (col) {
+                col.addEventListener('dragstart', handleDragStart, false);
+                col.addEventListener('dragenter', handleDragEnter, false);
+                col.addEventListener('dragover', handleDragOver, false);
+                col.addEventListener('dragleave', handleDragLeave, false);
+                col.addEventListener('drop', handleDrop, false);
+                col.addEventListener('dragend', handleDragEnd, false);
+            });
+        }
+        function removeElement(id) {
+            var elem = document.getElementById(id);
+            elem.parentNode.removeChild(elem);
+            ids.remove(id + 1);
+        }
+        function onSubmit() {
+            var agendaInput = $("#agenda-elems");
+            agendaInput.val("");
+            var topics = {
+                topic: []
+            };
+            $.each(ids, function (i, val) {
+
+                var topicName = $("#dynamicInput").find("#" + (val + 1) + "n").val();
+                var topicTime = $("#dynamicInput").find("#" + (val + 1) + "t").val();
+                topics.topic.push({
+                    "name": topicName,
+                    "time": topicTime
+                });
+            });
+            agendaInput.val(JSON.stringify(topics));
+            var f = $("#files");
+            f.val(files);
+        }
+        Array.prototype.remove = function () {
+            var what, a = arguments, L = a.length, ax;
+            while (L && this.length) {
+                what = a[--L];
+                while ((ax = this.indexOf(what)) !== -1) {
+                    this.splice(ax, 1);
+                }
+            }
+            return this;
+        };
+        $(function () {
+            $('#timepicker_duration').datetimepicker({
+                format: 'hh:mm'
+            });
+            $('#timepicker_start').datetimepicker({
+                format: 'LT'
+            });
+        });
+
+    </script>
+{% endblock %}
