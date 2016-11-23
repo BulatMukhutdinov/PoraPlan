@@ -31,13 +31,8 @@ $media: em (
 // Container
 @include container((
   mobile: 90%,
-  root: 1100px,
+  root: 1050px,
   ), $media);
-
-._container {
-  padding-left: 15px;
-  padding-right: 15px;
-}
 
 // Components
 // --------------------------------------------------

@@ -32,6 +32,7 @@ $clrs: (
   blcM, m($c,blackMid),
   blcL, m($c,blackLow),
   wht, m($c,white),
+  whtM, m($c,whiteMid),
 );
 
 // Define Sets
@@ -60,10 +61,11 @@ $s: add($s, border-color, $Border-color, $clrs
 // Background
 // ==========================
 $s: add($s, background, $Background, (
-  nature, rgba(0,0,0,.3) url(../images/nature1.jpg) center center/cover,
+  nature, rgba(0,0,0,.3) url(../images/nature1.jpg) center center/cover fixed,
   city1, url(../images/city1.jpg) center center/cover,
   city2, url(../images/city2.jpg) center center/cover,
   city3, url(../images/city3.jpg) center center/cover,
+  city4, url(../images/city4.jpg) center center/cover fixed,
 ));
 
 // background-color
@@ -147,8 +149,14 @@ $s: add($s, box-shadow, $Box-shadow, (
 ._link-wht {
   @extend .c-wht;
 }
-
 ._link-wht:hover {
+  @extend .c-gra30;
+  @extend .bgcl-blcM;
+}
+._link-blc {
+  @extend .c-blc;
+}
+._link-blc:hover {
   @extend .c-gra30;
   @extend .bgcl-blcM;
 }
