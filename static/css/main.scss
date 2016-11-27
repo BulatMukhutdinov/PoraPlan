@@ -7,8 +7,9 @@
 
 // Elementcss
 // --------------------------------------------------
-@import 'elementcss/core.scss';
 $Width: w;
+$Display: none;
+@import 'elementcss/core.scss';
 
 
 // Globals
@@ -28,11 +29,10 @@ $media: em (
 ), $media);
 
 // Container
-@include container((root: 1170px), $media);
-._container {
-  padding-left: 15px;
-  padding-right: 15px;
-}
+@include container((
+  mobile: 90%,
+  root: 1050px,
+  ), $media);
 
 // Components
 // --------------------------------------------------

@@ -37,7 +37,7 @@
         </div>
     {% endif %}
     <br/>
-    <label for="{{ form.deadline.id_for_label }}">Team members 11</label>
+    <label for="{{ form.deadline.id_for_label }}">Team members</label>
 
 
           <div >
@@ -58,9 +58,9 @@
             <tbody>
             {% for member in project.team_members.all %}
                 <tr rowid="{{member.member.pk}}">
-                    <td >{{ member.member.name }}</td>
-                    <td>{{ member.member.lastname }}</td>
-                    <td>{{ member.member.role }}</td>
+                    <td >{{ member.member.first_name }}</td>
+                    <td>{{ member.member.last_name }}</td>
+                    <td>{{ member.member.role.name }}</td>
                     <td>{{ member.member.email }}</td>
                     <td><a href="javascript:deleteMember({{member.member.pk}})">delete</a></td>
                 </tr>
